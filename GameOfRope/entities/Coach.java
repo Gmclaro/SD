@@ -2,28 +2,7 @@ package GameOfRope.entities;
 
 import GameOfRope.sharedRegions.*;
 
-
-public class Coach extends Thread{
-
-    /**
-     * Reference to the Contestants Bench 
-    */
-
-    private ContestantBench bench;
-
-    /**
-     * Reference to the Playground
-    */
-
-    private Playground playground;
-
-    /**
-     * Reference to the Referee Site
-     */
-
-    private RefereeSite refereeSite;
-
-
+public class Coach extends Thread {
     /**
      * Coach ID
      */
@@ -39,23 +18,40 @@ public class Coach extends Thread{
     /**
      * Coach team id
      */
-     
+
     private int teamId;
 
+    /**
+     * Reference to the Contestants Bench
+     */
+
+    private ContestantBench contestantBench;
 
     /**
-    * Set the coach state
-    */
+     * Reference to the Playground
+     */
 
-    public void setCoachState(int couchState){
-        this.coachState = couchState;
+    private Playground playground;
+
+    /**
+     * Reference to the Referee Site
+     */
+
+    private RefereeSite refereeSite;
+
+    /**
+     * Set the coach state
+     */
+
+    public void setCoachState(int state) {
+        this.coachState = state;
     }
 
     /**
      * Get the coach state
      */
 
-    public int getCoachState(){
+    public int getCoachState() {
         return this.coachState;
     }
 
@@ -63,7 +59,7 @@ public class Coach extends Thread{
      * Get the coach ID
      */
 
-    public int getcoachId(){
+    public int getcoachId() {
         return this.coachId;
     }
 
@@ -71,36 +67,39 @@ public class Coach extends Thread{
      * Get the coach team
      */
 
-    public int getcoachTeamID(){
+    public int getcoachTeamID() {
         return this.teamId;
     }
 
     /**
      * Coach instantiation
+     * 
      * @param coachID
      */
 
-    public Coach(int coachId,int teamId, ContestantBench bench, Playground playground, RefereeSite refereeSite){
+    public Coach(int coachId, int teamId, ContestantBench contestantBench, Playground playground, RefereeSite refereeSite) {
         super("Coach_" + coachId + "T" + teamId);
         this.coachId = coachId;
-        this.bench = bench;
+        this.coachState = CoachState.WAIT_FOR_REFEREE_COMMAND;
+        this.contestantBench = contestantBench;
         this.playground = playground;
         this.refereeSite = refereeSite;
-        coachState = CoachState.WAIT_FOR_REFEREE_COMMAND;
     }
 
     /**
      * Coach life cycle
-    */
+     */
     @Override
-
-    public void run(){
-
+    public void run() {
+        /**
+         * while(!endOfTheMatch()) {
+         *  callContestants();
+         *  informReferee();
+         *  reviewNotes();
+         * }
+         */
     }
 
 
 
-
 }
-
-
