@@ -1,5 +1,5 @@
 package GameOfRope.sharedRegions;
 
-public class ReferreSite {
+public class RefereeSite {
     
 }
