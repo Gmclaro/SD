@@ -8,11 +8,8 @@ public class ContestantBench {
     /**
      * Reference to Contestants threads
      */
-    private final Contestant[] contestants;
+    private final Contestant[][] contestants;
 
-    /**
-     * Waiting for contestants to be amDone
-     */
-    private final MemFIFO<Integer>[] contestantsAmDone;
+    
 
 }
