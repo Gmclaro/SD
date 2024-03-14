@@ -9,7 +9,6 @@ public class RefereeSite {
 
     private final GeneralRepository generalRepository;
 
-    
 
     /**
      * Number of games played
@@ -60,12 +59,4 @@ public class RefereeSite {
         // TODO : implement declareMatchWinner
 
     }
-
-    
-    
-    
-    // TODO: announce a new game 
-    public synchronized void announceNewGame(){}   
-
-    public synchronized void 
 }
