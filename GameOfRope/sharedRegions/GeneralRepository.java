@@ -40,5 +40,7 @@ public class GeneralRepository {
 
     private int[] strength;
 
+    private Boolean endOfGame = false;
+
     
 }

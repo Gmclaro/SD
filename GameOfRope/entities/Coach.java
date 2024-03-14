@@ -88,6 +88,7 @@ public class Coach extends Thread {
         /**
          * while(!endOfTheMatch()) {
          *  callContestants();
+         *  waitForFollowCoachAdvice -> with while inside of it in the playground
          *  informReferee();
          *  reviewNotes();
          * }

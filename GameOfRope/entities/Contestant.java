@@ -123,6 +123,7 @@ public class Contestant extends Thread {
     public void run() {
         /*
          * while(!endOfTheMatch()){
+         * 
          * followCoachAdvice();
          * getReady();
          * pullTheRope();
@@ -141,7 +142,4 @@ public class Contestant extends Thread {
     public int pullTheRope() {
         // TODO: return a the strength and decrease by one
     }
-
-    public void followCoachAdvice(int[] contestants){}
-
 }

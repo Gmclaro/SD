@@ -29,4 +29,7 @@ public class Playground {
     public synchronized void startTrial(){}
 
     public synchronized void getReady(){}
+
+    public synchronized void followCoachAdvice(int[] contestants){}
+
 }
