@@ -16,12 +16,6 @@ public class Coach extends Thread {
     private int coachState;
 
     /**
-     * Coach team id
-     */
-
-    private int teamId;
-
-    /**
      * Reference to the Contestants Bench
      */
 
@@ -77,8 +71,8 @@ public class Coach extends Thread {
      * @param coachID
      */
 
-    public Coach(int coachId, int teamId, ContestantBench contestantBench, Playground playground, RefereeSite refereeSite) {
-        super("Coach_" + coachId + "T" + teamId);
+    public Coach(int coachId, ContestantBench contestantBench, Playground playground, RefereeSite refereeSite) {
+        super("Coach_" + coachId);
         this.coachId = coachId;
         this.coachState = CoachState.WAIT_FOR_REFEREE_COMMAND;
         this.contestantBench = contestantBench;
