@@ -138,10 +138,8 @@ public class Contestant extends Thread {
      * @return strength of the contestant
      */
     public int pullTheRope() {
-        // TODO: must sleep for a random time and then return a the strength and decrease by one
+        // TODO: return a the strength and decrease by one
     }
-
-    // TODO: amDone is a method in the shared memory region
 
     
 
