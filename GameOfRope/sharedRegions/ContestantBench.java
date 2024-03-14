@@ -6,7 +6,6 @@ import GameOfRope.entities.*;
 
 public class ContestantBench {
 
-    private final Coach[] coach;
 
     private final int[][] selectedContestants;
 
