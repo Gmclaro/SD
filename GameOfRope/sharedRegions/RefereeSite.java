@@ -59,4 +59,8 @@ public class RefereeSite {
         // TODO : implement declareMatchWinner
 
     }
+
+    public synchronized void informReferee() {
+        // TODO : implement informReferee
+    }
 }

@@ -1,6 +1,7 @@
 package GameOfRope.entities;
 
 import GameOfRope.sharedRegions.ConstestantBench;
+import GameOfRope.sharedRegions.ContestantBench;
 import GameOfRope.sharedRegions.Playground;
 import GameOfRope.sharedRegions.RefereeSite;
 
@@ -141,6 +142,6 @@ public class Contestant extends Thread {
         // TODO: return a the strength and decrease by one
     }
 
-    
+    public void followCoachAdvice(int[] contestants){}
 
 }

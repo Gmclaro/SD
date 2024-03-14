@@ -95,5 +95,11 @@ public class Coach extends Thread {
     }
 
 
+    /**
+     * Based on the information from the match defines which is the next strategy to the team
+     */
+    public void reviewNotes() {}
+
+
 
 }

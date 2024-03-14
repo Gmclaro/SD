@@ -19,8 +19,14 @@ public class Playground {
 
 
     // TODO: amDone  is a method in the shared memory region that will  sleep for a random time and then inform it already pulled the rope
-    public synchronized void amDone(int strength){}
+    public synchronized Boolean amDone(int strength){
+        
+    }
 
     // TODO: call Trial
     public synchronized void callTrial(){}
+
+    public synchronized void startTrial(){}
+
+    public synchronized void getReady(){}
 }
