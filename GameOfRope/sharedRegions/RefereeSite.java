@@ -25,8 +25,6 @@ public class RefereeSite {
         this.gamesPlayed = 0;
     }
 
-
-
     /**
      * The referee announces a new game
      */

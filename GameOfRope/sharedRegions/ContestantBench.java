@@ -10,6 +10,12 @@ public class ContestantBench {
      */
     private final Contestant[][] contestants;
 
+    /**
+     * Reference to the Coach
+     */
+    private final Coach[] coach;
+
+    
     
 
 }
