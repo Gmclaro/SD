@@ -23,13 +23,20 @@ public class Playground {
         
     }
 
-    // TODO: call Trial
-    public synchronized void callTrial(){}
+    public synchronized void callTrial(){
+        // TODO: call trial
+    }
 
-    public synchronized void startTrial(){}
+    public synchronized void startTrial(){
+        // TODO: start trial
+    }
 
-    public synchronized void getReady(){}
+    public synchronized void getReady(){
+        // TODO: get ready
+    }
 
-    public synchronized void followCoachAdvice(int[] contestants){}
+    public synchronized void followCoachAdvice(int[] contestants){
+        // TODO: follow coach advice
+    }
 
 }

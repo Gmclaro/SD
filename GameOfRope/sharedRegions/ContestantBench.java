@@ -21,8 +21,12 @@ public class ContestantBench {
 
     
     
-    public synchronized void callContestants(int teamID){}
+    public synchronized void callContestants(int teamID){
+        // TODO : call contestants
+    }
 
-    public synchronized void seatDown(int id){}
+    public synchronized void seatDown(int id){
+        // TODO : seat down
+    }
 
 }

@@ -121,6 +121,7 @@ public class Contestant extends Thread {
      */
     @Override
     public void run() {
+        // TODO: implement contestant life cycle
         /*
          * while(!endOfTheMatch()){
          * 
