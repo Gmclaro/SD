@@ -16,6 +16,11 @@ public class RefereeSite {
 
     private int gamesPlayed;
 
+
+    /**
+     * 
+     */
+
      /**
       * ReferreSite instantiation
         * @param generalRepository

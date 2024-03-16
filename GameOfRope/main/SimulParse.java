@@ -20,6 +20,19 @@ public class SimulParse {
 
     private static final int PS = 0;
 
+    /**
+     * Number of Games 
+     */
+
+    private static final int GAMES = 3;
+
+    /**
+     * Number of trials 
+     */
+
+    private static final int TRIALS = 6;
+
+     
     
 
 
