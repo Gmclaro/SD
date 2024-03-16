@@ -85,7 +85,6 @@ public class Coach extends Thread {
      */
     @Override
     public void run() {
-        // TODO : implement coach life cycle
         /**
          * while(!endOfTheMatch()) {
          *  callContestants();
@@ -94,6 +93,23 @@ public class Coach extends Thread {
          *  reviewNotes();
          * }
          */
+
+        // TODO create a function to instantiate the teams and wait for next trial
+         ContestantBench.getInstance().waitforNextTrial();
+
+         while(!RefereeSite.getInstance().endOfTheMatch()) {
+            switch(coachState){
+                case CoachState.WAIT_FOR_REFEREE_COMMAND:
+                    playground.callContestants();
+                    break;
+                case CoachState.ASSEMBLE_TEAM:
+                    Playground.informReferee();
+                    break;
+                case CoachState.WATCH_TRIAL:
+                    reviewNotes();
+                    break;
+            }
+        }
     }
 
 

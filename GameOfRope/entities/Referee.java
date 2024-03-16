@@ -64,27 +64,27 @@ public class Referee extends Thread {
          */
 
         while(state != RefereeState.END_OF_THE_MATCH) {
-            switch(state){
+            switch(refereeState){
 
                 case RefereeState.START_OF_THE_MATCH:
-                    refereeSite.announceNewGame();
+                    RefereeSite.announceNewGame();
                     break;
 
                 case RefereeState.START_OF_A_GAME:
-                    playground.callTrial();
+                    Playground.callTrial();
                     break;
 
                 case RefereeState.TEAMS_READY:
-                    playground.startTrial();
+                    Playground.startTrial();
                     break;
 
                 case RefereeState.WAIT_FOR_TRIAL_CONCLUSION:
-                    playground.assertTrialDecision();
+                    Playground.assertTrialDecision();
                     break;
                     // TODO :need to implement if the game is over (create a function to check if the game is ended)
 
                 case RefereeState.END_OF_A_GAME:
-                    playground.declareMatchWinner();
+                    Playground.declareMatchWinner();
                     // TODO :need to implement if the match is over (create a function to check if the match is ended)
                     break;
 

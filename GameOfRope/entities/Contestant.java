@@ -131,6 +131,24 @@ public class Contestant extends Thread {
          * amDone();
          * }
          */
+
+        ContestantBench.seatDown();
+        while(!RefereeSite.getInstance().endOfTheMatch()){
+            switch(contestantState){
+                case SEAT_AT_THE_BENCH:
+                    Playground.followCoachAdvice();
+                    break;
+                case STAND_IN_POSITION:
+                    Playground.getReady();
+                    break;
+                case DO_YOUR_BEST:
+                    pullTheRope();
+                    ContestantBench.seatDown();
+                    break;
+
+            }
+        }
+
     }
 
     /**
