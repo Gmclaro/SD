@@ -29,21 +29,21 @@ public class Referee extends Thread {
     public Referee(Playground playground, RefereeSite refereeSite) {
         this.playground = playground;
         this.refereeSite = refereeSite;
-        this.refereeState = RefereeState.START_OF_THE_MATCH;
+        this.state = RefereeState.START_OF_THE_MATCH;
     }
 
     /**
      * Set the referee state
      */
     public void setEntityState(int state) {
-        this.refereeState = state;
+        this.state = state;
     }
 
     /**
      * Get the referee state
      */
     public int getEntityState() {
-        return this.refereeState;
+        return this.state;
     }
 
     /**

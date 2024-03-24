@@ -1,7 +1,6 @@
 package GameOfRope.sharedRegions;
 
 import GameOfRope.commonInfra.MemFIFO;
-import GameOfRope.commInfra.*;
 import GameOfRope.entities.*;
 
 public class ContestantBench {

@@ -61,7 +61,7 @@ public class Playground {
 
     public synchronized boolean assertTrialDecision() {
         // TODO: missing assertTrialDecision
-        return null;
+        return false;
     }
 
 }

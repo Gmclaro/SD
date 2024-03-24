@@ -71,9 +71,9 @@ public class Coach extends Thread {
      */
 
     public Coach(int team, ContestantBench contestantBench, Playground playground, RefereeSite refereeSite) {
-        super("Coach_" + coachId);
+        super("Coach_" + team);
         this.team = team;
-        this.coachState = CoachState.WAIT_FOR_REFEREE_COMMAND;
+        this.state = CoachState.WAIT_FOR_REFEREE_COMMAND;
         this.contestantBench = contestantBench;
         this.playground = playground;
         this.refereeSite = refereeSite;
