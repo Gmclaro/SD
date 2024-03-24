@@ -14,11 +14,6 @@ public class SimulParse {
 
     private static final int COACH = 2;
 
-    /**
-     * Position of the Roap in the begging of the trial
-     */
-
-    private static final int PS = 0;
 
     /**
      * Number of Games 
