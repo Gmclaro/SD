@@ -7,7 +7,7 @@ public class Referee extends Thread {
     /**
      * Referee State
      */
-    private int refereeState;
+    private int state;
 
     /**
      * Reference to the Playground
@@ -35,14 +35,14 @@ public class Referee extends Thread {
     /**
      * Set the referee state
      */
-    public void setRefereeState(int state) {
+    public void setEntityState(int state) {
         this.refereeState = state;
     }
 
     /**
      * Get the referee state
      */
-    public int getRefereeState() {
+    public int getEntityState() {
         return this.refereeState;
     }
 
@@ -53,44 +53,17 @@ public class Referee extends Thread {
     public void run() {
         // TODO: implement referee life cycle
         /**
-         * announceNewGame();
+         * refereeSite.announceNewGame();
+         * 
          * for(int n = 0; n < nGames; n++) {
          *  do {
-         *   callTrial();
-         *   startTrial();
-         *  } while(assertTrialDecision() == 'c');
+         *   playground.callTrial();
+         *   playground.startTrial();
+         *  } while(playground.assertTrialDecision() == True);
+         *  refereeSite.declareGameWinner();
          * }
-         * declareMatchWinner();
+         * 
+         * refereeSite.declareMatchWinner();
          */
-
-        while(state != RefereeState.END_OF_THE_MATCH) {
-            switch(refereeState){
-
-                case RefereeState.START_OF_THE_MATCH:
-                    RefereeSite.announceNewGame();
-                    break;
-
-                case RefereeState.START_OF_A_GAME:
-                    Playground.callTrial();
-                    break;
-
-                case RefereeState.TEAMS_READY:
-                    Playground.startTrial();
-                    break;
-
-                case RefereeState.WAIT_FOR_TRIAL_CONCLUSION:
-                    Playground.assertTrialDecision();
-                    break;
-                    // TODO :need to implement if the game is over (create a function to check if the game is ended)
-
-                case RefereeState.END_OF_A_GAME:
-                    Playground.declareMatchWinner();
-                    // TODO :need to implement if the match is over (create a function to check if the match is ended)
-                    break;
-
-                case RefereeState.END_OF_THE_MATCH:
-                    break;
-            }
-        }
     }
 }

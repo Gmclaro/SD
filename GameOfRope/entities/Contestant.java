@@ -16,7 +16,7 @@ public class Contestant extends Thread {
     /**
      * Constestant Identification
      */
-    private int constestantID;
+    private int id;
 
     /**
      * Contestant Strength
@@ -26,12 +26,12 @@ public class Contestant extends Thread {
     /**
      * Contestant Team Identification
      */
-    private int teamID;
+    private int team;
 
     /**
      * Contestant State
      */
-    private int contestantState;
+    private int state;
 
     /**
      * Shared memory region declaration
@@ -50,16 +50,16 @@ public class Contestant extends Thread {
      * @param refereeSite  reference to refereeSite
      * @param bench        reference to contestantBench
      */
-    public Contestant(int contestantID, int teamID, Playground playground, RefereeSite refereeSite,
-            ContestantBench bench) {
-        super("Co" + contestantID + "T" + teamID);
-        this.constestantID = contestantID;
-        this.teamID = teamID;
+    public Contestant(int id, int team, Playground playground, RefereeSite refereeSite,
+            ContestantBench contestantBench) {
+        super("Co" + id + "T" + team);
+        this.id = id;
+        this.team = team;
         this.contestantState = ContestantState.SEAT_AT_THE_BENCH;
         this.strength = (int) (Math.random() * 4 + 6);
         this.playground = playground;
         this.refereeSite = refereeSite;
-        this.bench = bench;
+        this.contestantBench = contestantBench;
     }
 
     /**
@@ -67,8 +67,8 @@ public class Contestant extends Thread {
      * 
      * @param contestantID contestant id
      */
-    public void setContestantID(int id) {
-        this.teamID = id;
+    public void setID(int id) {
+        this.id = id;
     }
 
     /**
@@ -76,8 +76,17 @@ public class Contestant extends Thread {
      * 
      * @return contestant id
      */
-    public int getTeamID() {
-        return this.constestantID;
+    public int getID() {
+        return this.id;
+    }
+
+    /**
+     * Get contestant id
+     * 
+     * @return contestant id
+     */
+    public int getTeam() {
+        return this.team;
     }
 
     /**
@@ -85,17 +94,8 @@ public class Contestant extends Thread {
      * 
      * @param contestantID contestant id
      */
-    public void setTeamID(int id) {
-        this.constestantID = id;
-    }
-
-    /**
-     * Get contestant id
-     * 
-     * @return contestant id
-     */
-    public int getContestantID() {
-        return this.constestantID;
+    public void setTeam(int team) {
+        this.team = team;
     }
 
     /**
@@ -103,8 +103,8 @@ public class Contestant extends Thread {
      * 
      * @param contestantState contestant state
      */
-    public void setContestantState(int state) {
-        this.contestantState = state;
+    public void setEntityState(int state) {
+        this.state = state;
     }
 
     /**
@@ -112,8 +112,8 @@ public class Contestant extends Thread {
      * 
      * @return contestant state
      */
-    public int getContestantState() {
-        return this.contestantState;
+    public int getEntityState() {
+        return this.state;
     }
 
     /**
@@ -123,31 +123,16 @@ public class Contestant extends Thread {
     public void run() {
         // TODO: implement contestant life cycle
         /*
-         * while(!endOfTheMatch()){
+         * contestantBench.seatDown(contestantID, teamID);
          * 
-         * followCoachAdvice();
-         * getReady();
-         * pullTheRope();
-         * amDone();
+         * while(RefereeSite.referee.getState() != RefereeState.END_OF_THE_MATCH){
+         *  contestantBench.followCoachAdvice();
+         *  playground.getReady();
+         *  strength = pullTheRope();
+         *  playground.amDone(strength, teamID);
          * }
+         * 
          */
-
-        ContestantBench.seatDown();
-        while(!RefereeSite.getInstance().endOfTheMatch()){
-            switch(contestantState){
-                case SEAT_AT_THE_BENCH:
-                    Playground.followCoachAdvice();
-                    break;
-                case STAND_IN_POSITION:
-                    Playground.getReady();
-                    break;
-                case DO_YOUR_BEST:
-                    pullTheRope();
-                    ContestantBench.seatDown();
-                    break;
-
-            }
-        }
 
     }
 
@@ -160,5 +145,6 @@ public class Contestant extends Thread {
      */
     public int pullTheRope() {
         // TODO: return a the strength and decrease by one
+        return 0;
     }
 }

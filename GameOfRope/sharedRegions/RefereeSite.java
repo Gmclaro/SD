@@ -1,33 +1,36 @@
 package GameOfRope.sharedRegions;
 
+import java.util.LinkedList;
+
 import GameOfRope.entities.*;
 public class RefereeSite {
 
     /**
      * Reference to the General Repository
      */
+    private final GeneralRepository repo;
 
-    private final GeneralRepository generalRepository;
+    private final Referee referee;
 
+    private final Coach[] coaches;
+
+    private final int teamsReady;
 
     /**
      * Number of games played
      */
 
-    private int gamesPlayed;
+    private final int gamesPlayed;
+
+    private final LinkedList<Integer> histOfGames = new LinkedList<Integer>();
 
 
-    /**
-     * 
-     */
-
-     /**
-      * ReferreSite instantiation
-        * @param generalRepository
-      */
-    public RefereeSite(GeneralRepository generalRepository) {
-        this.generalRepository = generalRepository;
-        this.gamesPlayed = 0;
+    public RefereeSite(GeneralRepository repo, Referee referee,Coach[] coaches) {
+        this.repo = repo;
+        this.referee = referee;
+        this.coaches = coaches;
+        gamesPlayed = 0;
+        teamsReady = 0;
     }
 
     /**
@@ -38,19 +41,21 @@ public class RefereeSite {
         // TODO : implement announceNewGame
     }
 
-    /**
-     * The referee asserts the trial decision
-     */
 
-    public synchronized void assertTrialDecision() {
-        // TODO : implement assertTrialDecision
+    public synchronized void informReferee() {
+        // TODO : implement informReferee
     }
+
+    public synchronized void waitForInformReferee() {
+        // TODO : implement waitForInformReferee
+    }
+    
 
     /**
      * The referee declares the game winner
      */
 
-    public synchronized void declareGameWinner() {
+    public synchronized void declareGameWinner(LinkedList<Integer> histOfTrials) {
         // TODO : implement declareGameWinner
     }
 
@@ -63,7 +68,4 @@ public class RefereeSite {
 
     }
 
-    public synchronized void informReferee() {
-        // TODO : implement informReferee
-    }
 }

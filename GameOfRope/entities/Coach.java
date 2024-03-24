@@ -7,13 +7,13 @@ public class Coach extends Thread {
      * Coach ID
      */
 
-    private int coachId;
+    private int team;
 
     /**
      * Coach State
      */
 
-    private int coachState;
+    private int state;
 
     /**
      * Reference to the Contestants Bench
@@ -37,32 +37,31 @@ public class Coach extends Thread {
      * Set the coach state
      */
 
-    public void setCoachState(int state) {
-        this.coachState = state;
+    public void setEntityState(int state) {
+        this.state = state;
     }
 
     /**
      * Get the coach state
      */
 
-    public int getCoachState() {
-        return this.coachState;
+    public int getEntityState() {
+        return this.state;
     }
 
     /**
-     * Get the coach ID
+     * Set the coach team
      */
-
-    public int getcoachId() {
-        return this.coachId;
+    public void setTeam(int team) {
+        this.team = team;
     }
 
     /**
      * Get the coach team
      */
 
-    public int getcoachTeamID() {
-        return this.teamId;
+    public int getTeam() {
+        return this.team;
     }
 
     /**
@@ -71,9 +70,9 @@ public class Coach extends Thread {
      * @param coachID
      */
 
-    public Coach(int coachId, ContestantBench contestantBench, Playground playground, RefereeSite refereeSite) {
+    public Coach(int team, ContestantBench contestantBench, Playground playground, RefereeSite refereeSite) {
         super("Coach_" + coachId);
-        this.coachId = coachId;
+        this.team = team;
         this.coachState = CoachState.WAIT_FOR_REFEREE_COMMAND;
         this.contestantBench = contestantBench;
         this.playground = playground;
@@ -85,41 +84,28 @@ public class Coach extends Thread {
      */
     @Override
     public void run() {
+        // TODO create a function to instantiate the teams and wait for next trial
+
         /**
-         * while(!endOfTheMatch()) {
-         *  callContestants();
-         *  waitForFollowCoachAdvice -> with while inside of it in the playground
-         *  informReferee();
-         *  reviewNotes();
+         * selected = {1,2,3}
+         * while(RefereeSite.referee.getState() != RefereeState.END_OF_THE_MATCH) {
+         * contestantBench.callContestants(selected,teamID);
+         * // TODO: waitForFollowCoachAdvice -> with while inside of it in the
+         * playground
+         * refereeSite.informReferee();
+         * selected = reviewNotes();
          * }
          */
 
-        // TODO create a function to instantiate the teams and wait for next trial
-         ContestantBench.getInstance().waitforNextTrial();
-
-         while(!RefereeSite.getInstance().endOfTheMatch()) {
-            switch(coachState){
-                case CoachState.WAIT_FOR_REFEREE_COMMAND:
-                    playground.callContestants();
-                    break;
-                case CoachState.ASSEMBLE_TEAM:
-                    Playground.informReferee();
-                    break;
-                case CoachState.WATCH_TRIAL:
-                    reviewNotes();
-                    break;
-            }
-        }
     }
-
 
     /**
-     * Based on the information from the match defines which is the next strategy to the team
+     * Based on the information from the match defines which is the next strategy to
+     * the team
      */
-    public void reviewNotes() {
+    public int[] reviewNotes() {
         // TODO : implement reviewNotes
+        return null;
     }
-
-
 
 }
