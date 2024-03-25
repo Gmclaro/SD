@@ -1,17 +1,14 @@
 package GameOfRope.main;
 
 public class SimulParse {
-    
     /**
      * Number of contestants
      */
-
      private static final int CONT = 10;
-
+     
     /**
      * Number of coaches 
-     */
-
+    */
     private static final int COACH = 2;
 
 
@@ -28,7 +25,6 @@ public class SimulParse {
     private static final int TRIALS = 6;
 
      
-    
-
+    private SimulParse() {}
 
 }
