@@ -1,4 +1,4 @@
-package GameOfRope.entities;
+package entities;
 
 public class ContestantState {
     public static final int SEAT_AT_THE_BENCH = 0;

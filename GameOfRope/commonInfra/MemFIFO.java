@@ -1,4 +1,4 @@
-package GameOfRope.commonInfra;
+package commonInfra;
 
 /**
  *    Parametric FIFO derived from a parametric memory.

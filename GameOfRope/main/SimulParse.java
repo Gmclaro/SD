@@ -1,4 +1,4 @@
-package GameOfRope.main;
+package main;
 
 public class SimulParse {
     

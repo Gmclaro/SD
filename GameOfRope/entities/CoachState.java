@@ -1,4 +1,4 @@
-package GameOfRope.entities;
+package entities;
 
 public class CoachState {
     public static final int WAIT_FOR_REFEREE_COMMAND = 0;

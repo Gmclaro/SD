@@ -1,7 +1,7 @@
-package GameOfRope.sharedRegions;
+package sharedRegions;
 
-import GameOfRope.commonInfra.MemFIFO;
-import GameOfRope.entities.*;
+import commonInfra.MemFIFO;
+import entities.*;
 import java.util.LinkedList;
 
 public class Playground {

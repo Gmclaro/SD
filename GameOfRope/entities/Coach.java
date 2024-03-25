@@ -1,6 +1,6 @@
-package GameOfRope.entities;
+package entities;
 
-import GameOfRope.sharedRegions.*;
+import sharedRegions.*;
 
 public class Coach extends Thread {
     /**

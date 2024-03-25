@@ -1,4 +1,4 @@
-package GameOfRope.commonInfra;
+package commonInfra;
 
 /**
  *    Memory exception.

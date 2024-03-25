@@ -1,11 +1,11 @@
-package GameOfRope.sharedRegions;
+package sharedRegions;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
-import GameOfRope.commonInfra.MemException;
-import GameOfRope.commonInfra.MemFIFO;
-import GameOfRope.entities.*;
+import commonInfra.MemException;
+import commonInfra.MemFIFO;
+import entities.*;
 
 public class ContestantBench {
 

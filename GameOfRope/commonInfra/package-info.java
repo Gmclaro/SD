@@ -2,4 +2,4 @@
  *   Common infrastructure.
  */
 
-package GameOfRope.commonInfra;
+package commonInfra;
