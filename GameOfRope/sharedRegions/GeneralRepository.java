@@ -1,18 +1,11 @@
 package sharedRegions;
 
-import java.io.FileWriter;
-import java.io.IOException;
-
 import commonInfra.*;
 import entities.*;
 import main.*;
 
 import genclass.GenericIO;
 import genclass.TextFile;
-
-// TODO: remove these imports
-import java.io.FileWriter;
-import java.io.IOException;
 
 /**
  * General Repository
@@ -65,6 +58,7 @@ public class GeneralRepository {
     }
 
     // TODO: Nao e assim que se faz tem de ser com printf
+
     log.writelnString("Game of the Rope - Description of the internal state");
     log.writelnString("Ref Coa 1 Cont 1 Cont 2 Cont 3 Cont 4 Cont 5 Coa 2 Cont 1 Cont 2 Cont 3 Cont 4 Cont 5 Trial");
     log.writelnString("Sta  Stat Sta SG Sta SG Sta SG Sta SG Sta SG  Stat Sta SG Sta SG Sta SG Sta SG Sta SG 3 2 1 . 1 2 3 NB PS");
@@ -74,28 +68,28 @@ public class GeneralRepository {
     }
 
   }
-
-  // TODO: change from FileWrite to TextFile
   public synchronized void legend() {
-    try {
-      FileWriter writer = new FileWriter(this.logFileName, true);
-      writer.write("Legend:%n");
-      writer.write("Ref Sta - state of the referee\n");
-      writer.write("Coa # Stat - state of the coach of team # (# - 1 .. 2)\n");
-      writer.write(
-          "Cont # Sta - state of the contestant # (# - 1 .. 5) of team whose coach was listed to the immediate left\n");
-      writer.write(
-          "Cont # SG - strength of the contestant # (# - 1 .. 5) of team whose coach was listed to the immediate lef\n");
-      writer.write(
-          "TRIAL - ? - contestant identification at the position ? at the end of the rope for present trial (? - 1 .. 3)\n");
-      writer.write("TRIAL - NB - trial number\n");
-      writer.write("TRIAL - PS - position of the centre of the rope at the beginning of the trial\n");
-    } catch (IOException e) {
-      e.printStackTrace();
+    TextFile log = new TextFile();
+    if(!log.openForAppending(".", logFileName)){
+      GenericIO.writelnString("The operation of opening the file " + logFileName + " failed!");
+      System.exit(1);
+    }
+
+    log.writelnString("Legend:");
+    log.writelnString("Ref Sta - state of the referee");
+    log.writelnString("Coa # Stat - state of the coach of team # (# - 1 .. 2)");
+    log.writelnString("Cont # Sta - state of the contestant # (# - 1 .. 5) of team whose coach was listed to the immediate left");
+    log.writelnString("Cont # SG - strength of the contestant # (# - 1 .. 5) of team whose coach was listed to the immediate lef");
+    log.writelnString("TRIAL - ? - contestant identification at the position ? at the end of the rope for present trial (? - 1 .. 3)");
+    log.writelnString("TRIAL - NB - trial number");
+    log.writelnString("TRIAL - PS - position of the centre of the rope at the beginning of the trial");
+    if(!log.close()){
+      GenericIO.writelnString("The operation of closing the file " + logFileName + " failed!");
+      System.exit(1);
     }
   }
 
-  public synchronized void updateInfoTemplate(FileWriter writer) {
+  public synchronized void updateInfoTemplate(TextFile log) {
     String referreState = "";
 
     switch (this.refereeState) {
