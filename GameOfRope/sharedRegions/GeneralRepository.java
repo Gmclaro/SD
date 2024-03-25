@@ -64,9 +64,10 @@ public class GeneralRepository {
       System.exit(1);
     }
 
-    log.writelnString("Game of the Rope - Description of the internal state\n");
-    log.writelnString("Ref Coa 1 Cont 1 Cont 2 Cont 3 Cont 4 Cont 5 Coa 2 Cont 1 Cont 2 Cont 3 Cont 4 Cont 5 Trial\n");
-    log.writelnString("Sta  Stat Sta SG Sta SG Sta SG Sta SG Sta SG  Stat Sta SG Sta SG Sta SG Sta SG Sta SG 3 2 1 . 1 2 3 NB PS\n");
+    // TODO: Nao e assim que se faz tem de ser com printf
+    log.writelnString("Game of the Rope - Description of the internal state");
+    log.writelnString("Ref Coa 1 Cont 1 Cont 2 Cont 3 Cont 4 Cont 5 Coa 2 Cont 1 Cont 2 Cont 3 Cont 4 Cont 5 Trial");
+    log.writelnString("Sta  Stat Sta SG Sta SG Sta SG Sta SG Sta SG  Stat Sta SG Sta SG Sta SG Sta SG Sta SG 3 2 1 . 1 2 3 NB PS");
     if (!log.close()) {
       GenericIO.writelnString("The operation of closing the file " + logFileName + " failed!");
       System.exit(1);
