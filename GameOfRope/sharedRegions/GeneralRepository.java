@@ -1,8 +1,8 @@
-package GameOfRope.sharedRegions;
+package sharedRegions;
 
-import GameOfRope.commonInfra.*;
-import GameOfRope.entities.*;
-import GameOfRope.main.*;
+import commonInfra.*;
+import entities.*;
+import main.*;
 
 import java.io.FileWriter;
 import java.io.IOException;

@@ -1,8 +1,8 @@
-package GameOfRope.sharedRegions;
+package sharedRegions;
 
 import java.util.LinkedList;
 
-import GameOfRope.entities.*;
+import entities.*;
 public class RefereeSite {
 
     /**

@@ -1,7 +1,7 @@
-package GameOfRope.main;
+package main;
 
-import GameOfRope.sharedRegions.*;
-import GameOfRope.entities.*;
+import sharedRegions.*;
+import entities.*;
 
 import java.util.Scanner;
 import java.io.File;

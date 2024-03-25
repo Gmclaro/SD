@@ -1,8 +1,8 @@
-package GameOfRope.entities;
+package entities;
 
-import GameOfRope.sharedRegions.ContestantBench;
-import GameOfRope.sharedRegions.Playground;
-import GameOfRope.sharedRegions.RefereeSite;
+import sharedRegions.ContestantBench;
+import sharedRegions.Playground;
+import sharedRegions.RefereeSite;
 
 /**
  * Custom Thread

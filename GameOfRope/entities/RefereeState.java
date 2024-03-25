@@ -1,4 +1,4 @@
-package GameOfRope.entities;
+package entities;
 
 public class RefereeState {
     public static final int START_OF_THE_MATCH = 0;
