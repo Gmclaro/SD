@@ -50,7 +50,5 @@ public class GameOfRope {
         sc.close();
 
         repo = new GeneralRepository(fileName);
-        repo.header();
-        System.out.println("General Repository created");
     }
 }

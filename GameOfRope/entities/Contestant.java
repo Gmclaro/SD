@@ -125,10 +125,10 @@ public class Contestant extends Thread {
          * contestantBench.seatDown(contestantID, teamID);
          * 
          * while(RefereeSite.referee.getState() != RefereeState.END_OF_THE_MATCH){
-         *  contestantBench.followCoachAdvice();
-         *  playground.getReady();
-         *  strength = pullTheRope();
-         *  playground.amDone(strength, teamID);
+         * contestantBench.followCoachAdvice();
+         * playground.getReady();
+         * strength = pullTheRope();
+         * playground.amDone(strength, teamID);
          * }
          * 
          */
@@ -143,7 +143,7 @@ public class Contestant extends Thread {
      * @return strength of the contestant
      */
     public int pullTheRope() {
-        // TODO: return a the strength and decrease by one
-        return 0;
+        // TODO: maybe missing the sleep time from the independent operations
+        return this.strength--;
     }
 }
