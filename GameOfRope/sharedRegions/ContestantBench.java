@@ -1,5 +1,9 @@
 package GameOfRope.sharedRegions;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
+import GameOfRope.commonInfra.MemException;
 import GameOfRope.commonInfra.MemFIFO;
 import GameOfRope.entities.*;
 
@@ -20,13 +24,18 @@ public class ContestantBench {
     }
 
 
-    public synchronized void callContestants(int[] selected,int team) {
+    public synchronized void callContestants(int[] selected,int team) throws MemException {
+
         // TODO: implement callContestants
-        // playgroundQueue[teamID].write(contestantID);
+        for(int contestantID:selected){
+            playgroundQueue[team].write(contestantID);
+        }
+        notifyAll();
     }
 
     public synchronized void followCoachAdvice() {
         // TODO: implement followCoachAdvice
+                
     }
 
     public synchronized void seatDown(int id, int team) {

@@ -19,7 +19,8 @@ public class GeneralRepository {
   private String logFileName;
 
   private int refereeState = RefereeState.START_OF_THE_MATCH;
-  private int[] coachState = {CoachState.WAIT_FOR_REFEREE_COMMAND, CoachState.WAIT_FOR_REFEREE_COMMAND};
+  private int[] coachState = {CoachState.WAIT_FOR_REFEREE_COMMAND};
+  // private int[][] contestantState = {ContestantState.SEAT_AT_THE_BENCH};
 
   public GeneralRepository(String logFileName) {
     if(logFileName == null) {
@@ -87,10 +88,13 @@ public class GeneralRepository {
 
       switch (this.refereeState) {
           case RefereeState.START_OF_THE_MATCH:
-              referreState = "STM";
+              referreState = "SOM";
               break;
           case RefereeState.START_OF_A_GAME:
               referreState = "SOG";
+              break;
+          case RefereeState.TEAMS_READY:
+              referreState = "TRY";
               break;
           case RefereeState.WAIT_FOR_TRIAL_CONCLUSION:
               referreState = "WTC";
@@ -104,5 +108,35 @@ public class GeneralRepository {
           default:
               break;
       }
+
+      for (int i = 0; i < 2; i++) {
+          String coachState = "";
+          switch (this.coachState[i]) {
+              case CoachState.WAIT_FOR_REFEREE_COMMAND:
+                  coachState = "WFRC";
+                  break;
+              case CoachState.ASSEMBLE_TEAM:
+                  coachState = "ASTM";
+                  break;
+              case CoachState.WATCH_TRIAL:
+                  coachState = "WATL";
+                  break;
+              default:
+                  break;
+          }
+      }
+      // i need to make it for the contestants
+
+      // switch(this.contestantState[0][0]){
+      //     case ContestantState.SEAT_AT_THE_BENCH:
+      //         contestantState = "SAB";
+      //         break;
+      //     case ContestantState.STAND_IN_POSITION:
+      //         contestantState = "SIP";
+      //         break;
+      //     case ContestantState.DO_YOUR_BEST:
+      //         contestantState = "DYB";
+      //         break;
+      // }
   }
 }

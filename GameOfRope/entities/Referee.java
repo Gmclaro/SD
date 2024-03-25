@@ -1,5 +1,4 @@
 package GameOfRope.entities;
-
 import GameOfRope.sharedRegions.*;
 
 public class Referee extends Thread {
