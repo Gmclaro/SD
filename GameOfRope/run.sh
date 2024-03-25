@@ -1,5 +1,5 @@
 #!/bin/bash
-export CLASSPATH=./commonInfra/genclass.jar
+export CLASSPATH=$CLASSPATH:$PWD/commonInfra/genclass.jar
 
 rm ./*/*.class
 
