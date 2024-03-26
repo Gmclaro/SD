@@ -64,4 +64,6 @@ public class Playground {
         return false;
     }
 
+    // TODO: function for coach getting the histOfTrials so it can give a decision based on it
+
 }

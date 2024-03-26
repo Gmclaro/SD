@@ -42,5 +42,6 @@ public class ContestantBench {
         // TODO: implement seatDown
     }
     
+    //TODO: function that returns the contestants in  the bench so coach can check its strength
 
 }
