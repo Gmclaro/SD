@@ -3,11 +3,11 @@ package commonInfra;
 import entities.Contestant;
 
 public class Strategy {
+
     @FunctionalInterface
-    private interface InnerStrategy {
+    public interface InnerStrategy {
         int[] selectTeam(Contestant[] contestants);
     }
-
 
     public enum StrategyType {
         STRONGEST,
@@ -15,50 +15,92 @@ public class Strategy {
         RANDOM,
     }
 
-    private Contestant[] contestants;
     private InnerStrategy strategy;
 
-    Strategy(Contestant[] contestants, StrategyType type) {
-        this.contestants = contestants;
-
+    public Strategy(StrategyType type) {
         switch (type) {
             case STRONGEST:
-                this.strategy = Strategy::strongestStrategy;
+                this.strategy = new StrongestStrategy();
                 break;
             case FIFO:
-
+                this.strategy = new FifoStrategy();
                 break;
             case RANDOM:
-
+                this.strategy = new RandomStrategy();
                 break;
 
             default:
+                this.strategy = new StrongestStrategy();
                 break;
         }
-
     }
 
-    public Contestant[] getContestants() {
-        return contestants;
+    public InnerStrategy getStrategy() {
+        return this.strategy;
     }
 
-    public void setContestants(Contestant[] contestants) {
-        this.contestants = contestants;
+    private class StrongestStrategy implements InnerStrategy {
+        @Override
+        public int[] selectTeam(Contestant[] contestants) {
+            Contestant[] sortedContestants = contestants.clone();
+
+            for (int i = 1; i < sortedContestants.length; ++i) {
+                Contestant key = sortedContestants[i];
+                int j = i - 1;
+
+                while (j >= 0 && sortedContestants[j].getStrength() > key.getStrength()) {
+                    sortedContestants[j + 1] = sortedContestants[j];
+                    j = j - 1;
+                }
+                sortedContestants[j + 1] = key;
+            }
+
+            return new int[] {
+                    sortedContestants[sortedContestants.length - 1].getID(),
+                    sortedContestants[sortedContestants.length - 2].getID(),
+                    sortedContestants[sortedContestants.length - 3].getID()
+            };
+        }
     }
 
-    //TODO: implement strongestStrategy
-    private static int[] strongestStrategy(Contestant[] contestants){
-        return null;
+    private class FifoStrategy implements InnerStrategy {
+        MemFIFO<Contestant> fifo;
+        @Override
+        public int[] selectTeam(Contestant[] contestants) {
+            int[] selected = new int[3];
+
+            if (fifo == null) {
+                try {
+                    fifo = new MemFIFO<Contestant>(contestants);
+                } catch (MemException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            for (int i = 0; i < 3; i++) {
+                try {
+                    Contestant c = fifo.read();
+                    selected[i] = c.getID();
+                    fifo.write(c);
+                } catch (MemException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return selected;
+        }
     }
 
-    //TODO: implement fifoStrategy
-    private static int[] fifoStrategy(Contestant[] contestants){
-        return null;
-    }
+    private class RandomStrategy implements InnerStrategy {
+        @Override
+        public int[] selectTeam(Contestant[] contestants) {
+            int[] selected = new int[3];
 
-    //TODO: implement randomStrategy
-    private static int[] randomStrategy(Contestant[] contestants){
-        return null;
+            for (int i = 0; i < 3; i++) {
+                selected[i] = (int) (Math.random() * contestants.length);
+            }
+        
+            return selected;
+        }
     }
-
 }
