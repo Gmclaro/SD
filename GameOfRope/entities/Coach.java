@@ -1,5 +1,6 @@
 package entities;
 
+import commonInfra.Strategy;
 import sharedRegions.*;
 
 public class Coach extends Thread {
@@ -34,9 +35,14 @@ public class Coach extends Thread {
     private RefereeSite refereeSite;
 
     /**
+     * Hist of Stratgies
+     *  //TODO: strat 
+     */
+    private Strategy coachStrategy;
+
+    /**
      * Set the coach state
      */
-
     public void setEntityState(int state) {
         this.state = state;
     }
@@ -70,13 +76,14 @@ public class Coach extends Thread {
      * @param coachID
      */
 
-    public Coach(int team, ContestantBench contestantBench, Playground playground, RefereeSite refereeSite) {
+    public Coach(int team, ContestantBench contestantBench, Playground playground, RefereeSite refereeSite,Strategy coachStrategy) {
         super("Coach_" + team);
         this.team = team;
         this.state = CoachState.WAIT_FOR_REFEREE_COMMAND;
         this.contestantBench = contestantBench;
         this.playground = playground;
         this.refereeSite = refereeSite;
+        this.coachStrategy = coachStrategy;
     }
 
     /**
@@ -102,10 +109,11 @@ public class Coach extends Thread {
     /**
      * Based on the information from the match defines which is the next strategy to
      * the team
+     * 
      */
     public int[] reviewNotes() {
-        // TODO : implement reviewNotes
-        return null;
+        Contestant[] contestants = contestantBench.getBench(this.team);
+        return coachStrategy.getStrategy().selectTeam(contestants);
     }
 
 }

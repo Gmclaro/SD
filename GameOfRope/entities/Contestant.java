@@ -116,6 +116,15 @@ public class Contestant extends Thread {
     }
 
     /**
+     * Get strength of the contestant
+     * 
+     * @return strength
+     */
+    public int getStrength() {
+        return this.strength;
+    }
+
+    /**
      * Life cycle of the contestant
      */
     @Override

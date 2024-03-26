@@ -55,5 +55,6 @@ public class ContestantBench {
         contestants[team][id].setEntityState(ContestantState.SEAT_AT_THE_BENCH);
         notifyAll();
     }
+    
 
 }
