@@ -130,8 +130,10 @@ public class Contestant extends Thread {
     @Override
     public void run() {
         // TODO: implement contestant life cycle
+
+        contestantBench.seatDown(this.id, this.team);
+
         /*
-         * contestantBench.seatDown(contestantID, teamID);
          * 
          * while(RefereeSite.referee.getState() != RefereeState.END_OF_THE_MATCH){
          * contestantBench.followCoachAdvice();
@@ -153,6 +155,14 @@ public class Contestant extends Thread {
      */
     public int pullTheRope() {
         // TODO: maybe missing the sleep time from the independent operations
+        System.out.println("pullTheRope: " + "Co" + id + "T" + team + " - " + strength);
+
+        // wait for a random time
+        try {
+            sleep((long) (Math.random()));
+        } catch (InterruptedException e) {
+        }
+
         return this.strength--;
     }
 }

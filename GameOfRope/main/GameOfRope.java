@@ -50,5 +50,7 @@ public class GameOfRope {
         sc.close();
 
         repo = new GeneralRepository(fileName);
+        
+        repo.legend();
     }
 }
