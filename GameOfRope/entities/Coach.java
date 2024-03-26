@@ -34,9 +34,14 @@ public class Coach extends Thread {
     private RefereeSite refereeSite;
 
     /**
+     * Hist of Stratgies
+     *  //TODO: strat 
+     */
+    //private Strategy strategy;
+
+    /**
      * Set the coach state
      */
-
     public void setEntityState(int state) {
         this.state = state;
     }
@@ -102,9 +107,17 @@ public class Coach extends Thread {
     /**
      * Based on the information from the match defines which is the next strategy to
      * the team
+     * 
      */
     public int[] reviewNotes() {
         // TODO : implement reviewNotes
+        Contestant[] contestants = contestantBench.getBench(this.team);
+
+
+        
+
+
+
         return null;
     }
 

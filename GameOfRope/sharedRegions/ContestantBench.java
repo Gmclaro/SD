@@ -42,6 +42,12 @@ public class ContestantBench {
         // TODO: implement seatDown
     }
     
-    //TODO: function that returns the contestants in  the bench so coach can check its strength
+    /**
+     * Get the contestants in the bench
+     * @return Contestant[][]
+     */
+    public synchronized Contestant[] getBench(int team){
+        return contestants[team];
+    }
 
 }

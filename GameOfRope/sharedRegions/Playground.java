@@ -1,6 +1,5 @@
 package sharedRegions;
 
-import commonInfra.MemFIFO;
 import entities.*;
 import java.util.LinkedList;
 
@@ -23,6 +22,7 @@ public class Playground {
 
     private final int[] strengthPerTeam;
 
+    // TODO: nao sei se e necessiario
     private final LinkedList<Integer> histOfTrials = new LinkedList<Integer>();
 
     // TODO: Constructor -> check if it's missing something
@@ -63,7 +63,5 @@ public class Playground {
         // TODO: missing assertTrialDecision
         return false;
     }
-
-    // TODO: function for coach getting the histOfTrials so it can give a decision based on it
 
 }
