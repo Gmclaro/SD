@@ -11,7 +11,7 @@ public class Playground {
 
     private final Contestant[][] contestants;
     
-    private final int arrivedContestants;
+    private final int[] arrivedContestants;
 
     private final Coach[] coaches;
 
@@ -34,7 +34,7 @@ public class Playground {
         playedTrials = 0;
         
         // during the game
-        arrivedContestants = 0;
+        arrivedContestants = new int[]{0,0};
         nOfAmDone = 0;
         strengthPerTeam = new int[2];
     }
@@ -63,10 +63,16 @@ public class Playground {
         // TODO: missing assertTrialDecision
         return false;
     }
-    public synchronized void addContestant(int id, int team) {
+    public synchronized void addContestant(int team) {
         ((Contestant) Thread.currentThread()).setEntityState(ContestantState.STAND_IN_POSITION);
-        contestants[team][id] = (Contestant) Thread.currentThread();
-        
+        contestants[team][arrivedContestants[team]] = (Contestant) Thread.currentThread();
+        arrivedContestants[team]++;
+        notifyAll();
+    }
+
+    public synchronized void removeContestant(int team) {
+        arrivedContestants[team]--;
+        notifyAll();
     }
 
 }

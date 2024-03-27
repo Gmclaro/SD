@@ -27,7 +27,7 @@ public class ContestantBench {
         int id = ((Contestant) Thread.currentThread()).getID();
         for(int i : playgroundQueue[team]){
             if(i == id){
-                playground.addContestant(team, id);
+                playground.addContestant(team);
                 break;
             }
             try {
@@ -45,6 +45,7 @@ public class ContestantBench {
         int team = ((Contestant) Thread.currentThread()).getTeam();
         int id = ((Contestant) Thread.currentThread()).getID();
         contestants[team][id] = (Contestant) Thread.currentThread();
+        playground.removeContestant(team);
         notifyAll();
 
     }
