@@ -63,5 +63,10 @@ public class Playground {
         // TODO: missing assertTrialDecision
         return false;
     }
+    public synchronized void addContestant(int id, int team) {
+        ((Contestant) Thread.currentThread()).setEntityState(ContestantState.STAND_IN_POSITION);
+        contestants[team][id] = (Contestant) Thread.currentThread();
+        
+    }
 
 }

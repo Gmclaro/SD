@@ -21,7 +21,7 @@ public class ContestantBench {
     }
 
     public synchronized void callContestants(int[] selected, int team) throws MemException {
-        // TODO: implement callContestants
+
         for (int contestantID : selected) {
             playgroundQueue[team].write(contestantID);
         }
@@ -29,19 +29,26 @@ public class ContestantBench {
     }
 
     public synchronized void followCoachAdvice() {
-        
         int team = ((Contestant) Thread.currentThread()).getTeam();
         int id = ((Contestant) Thread.currentThread()).getID();
         contestants[team][id] = null;
+        
+
         notifyAll();
     }
 
     public synchronized void seatDown(int id, int team) {
         ((Contestant) Thread.currentThread()).setEntityState(ContestantState.SEAT_AT_THE_BENCH);
-        // add contestat to bench
-        
-        
+        contestants[team][id] = (Contestant) Thread.currentThread();
+        while (contestants[team][id] != (Contestant) Thread.currentThread()) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         notifyAll();
+
     }
 
     /**
