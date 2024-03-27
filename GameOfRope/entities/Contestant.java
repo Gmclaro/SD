@@ -131,7 +131,7 @@ public class Contestant extends Thread {
     public void run() {
         // TODO: implement contestant life cycle
 
-        contestantBench.seatDown(this.id, this.team);
+        contestantBench.seatDown();
 
         /*
          * 
