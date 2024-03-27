@@ -93,6 +93,9 @@ public class Coach extends Thread {
     public void run() {
         // TODO create a function to instantiate the teams and wait for next trial
 
+        reviewNotes();
+
+
         /**
          * selected = {1,2,3}
          * while(RefereeSite.referee.getState() != RefereeState.END_OF_THE_MATCH) {
@@ -112,6 +115,7 @@ public class Coach extends Thread {
      * 
      */
     public int[] reviewNotes() {
+        System.out.println("reviewNotes: " + this.team);
         Contestant[] contestants = contestantBench.getBench(this.team);
         return coachStrategy.getStrategy().selectTeam(contestants);
     }

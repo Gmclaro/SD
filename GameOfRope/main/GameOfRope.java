@@ -10,11 +10,17 @@ public class GameOfRope {
     Referee referee;
 
     public static void main(String[] args) {
+        GeneralRepository repo;
+
+        Playground playground;
+        RefereeSite refereeSite;
+        ContestantBench contestantBench;
+
+
         Referee referee;
         Coach[] coach;
         Contestant[][] contestants;
 
-        GeneralRepository repo;
         String fileName;
         char option;
         boolean success = false;
