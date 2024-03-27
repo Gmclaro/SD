@@ -29,34 +29,21 @@ public class ContestantBench {
     }
 
     public synchronized void followCoachAdvice() {
-        // try {
-        //     // Wait until there are contestants in the playground queue
-        //     while (playgroundQueue[Coach.team].isEmpty()) {
-        //         wait();
-        //     }
-
-        //     // Remove a contestant from the playground queue
-        //     int contestantID = playgroundQueue[Coach.team].read();
-
-        //     // Perform actions based on coach's advice (if needed)
-        //     // For example, update contestant's state or perform specific actions
-
-        //     // Notify waiting threads (if any)
-        //     notifyAll();
-        // } catch (InterruptedException e) {
-        //     // Handle InterruptedException if needed
-        //     e.printStackTrace();
-        // }
-    }
-
-    public synchronized void seatDown(int id, int team) {
-
-        contestants[team][id] = (Contestant) Thread.currentThread();
-        contestants[team][id].setEntityState(ContestantState.SEAT_AT_THE_BENCH);
+        
+        int team = ((Contestant) Thread.currentThread()).getTeam();
+        int id = ((Contestant) Thread.currentThread()).getID();
+        contestants[team][id] = null;
         notifyAll();
     }
 
-    //TODO: function that returns the contestants in  the bench so coach can check its strength
+    public synchronized void seatDown(int id, int team) {
+        ((Contestant) Thread.currentThread()).setEntityState(ContestantState.SEAT_AT_THE_BENCH);
+        // add contestat to bench
+        
+        
+        notifyAll();
+    }
+
     /**
      * Get the contestants in the bench
      * @return Contestant[][]
@@ -64,6 +51,5 @@ public class ContestantBench {
     public synchronized Contestant[] getBench(int team){
         return contestants[team];
     }
-    
 
 }
