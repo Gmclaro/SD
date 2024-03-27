@@ -5,7 +5,7 @@ read -p "rm .class? (y/n)" answer
 
 if [ "$answer" = "y" ] || [ -z "$answer" ]; then
     rm -f ./*/*.class
-    rm out
+    rm log
 fi
 
 read -p "compile? (y/n)" answer
@@ -16,3 +16,9 @@ fi
 javac ./*/*.java
 
 echo "java main.GameOfRope"
+
+java main.GameOfRope
+
+sleep 0.1
+
+bat log

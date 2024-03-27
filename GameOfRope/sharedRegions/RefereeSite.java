@@ -68,4 +68,8 @@ public class RefereeSite {
 
     }
 
+    public synchronized Referee getReferee() {
+        return referee;
+    }
+
 }
