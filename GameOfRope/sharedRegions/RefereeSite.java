@@ -10,10 +10,7 @@ public class RefereeSite {
      */
     private final GeneralRepository repo;
 
-    private final Referee referee;
-
-    private final Coach[] coaches;
-
+    // TODO: number of coaches ready
     private final int teamsReady;
 
     /**
@@ -25,10 +22,8 @@ public class RefereeSite {
     private final LinkedList<Integer> histOfGames = new LinkedList<Integer>();
 
 
-    public RefereeSite(GeneralRepository repo, Referee referee,Coach[] coaches) {
+    public RefereeSite(GeneralRepository repo) {
         this.repo = repo;
-        this.referee = referee;
-        this.coaches = coaches;
         gamesPlayed = 0;
         teamsReady = 0;
     }
@@ -47,7 +42,7 @@ public class RefereeSite {
     }
 
     public synchronized void waitForInformReferee() {
-        // TODO : implement waitForInformReferee
+        // TODO : implement waitForInformReferee -> wait() -> usar o teams ready
     }
     
 
@@ -59,17 +54,8 @@ public class RefereeSite {
         // TODO : implement declareGameWinner
     }
 
-    /**
-     * The referee declares the match winner
-     */
 
-    public synchronized void declareMatchWinner() {
-        // TODO : implement declareMatchWinner
 
-    }
 
-    public synchronized Referee getReferee() {
-        return referee;
-    }
 
 }

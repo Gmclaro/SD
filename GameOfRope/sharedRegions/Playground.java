@@ -13,6 +13,8 @@ public class Playground {
     
     private final int[] arrivedContestants;
 
+    private final int[] arrivedCoaches;
+
     private final Coach[] coaches;
 
     private final Referee referee;
@@ -35,6 +37,7 @@ public class Playground {
         
         // during the game
         arrivedContestants = new int[]{0,0};
+        arrivedCoaches = new int[]{0,0};
         nOfAmDone = 0;
         strengthPerTeam = new int[2];
     }

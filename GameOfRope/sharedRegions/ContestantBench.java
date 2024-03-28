@@ -6,6 +6,7 @@ public class ContestantBench {
     private final GeneralRepository repo;
     private final Playground playground;
 
+    // TODO: Instead of using Contestant reference, use the content of each one, and only change it not the "person" itself
     private final Contestant[][] contestants;
     private final int[][] playgroundQueue;
 
@@ -21,12 +22,18 @@ public class ContestantBench {
         notifyAll();
     }
 
+    // private boolean hasId(int id){
+        
+    // }
+
 
     public synchronized void followCoachAdvice() {
         int team = ((Contestant) Thread.currentThread()).getTeam();
         int id = ((Contestant) Thread.currentThread()).getID();
+
         for(int i : playgroundQueue[team]){
             if(i == id){
+                ((Contestant) Thread.currentThread()).setEntityState(ContestantState.STAND_IN_POSITION);
                 playground.addContestant(team);
                 break;
             }
@@ -36,7 +43,7 @@ public class ContestantBench {
                 e.printStackTrace();
             }
         }
-        ((Contestant) Thread.currentThread()).setEntityState(ContestantState.STAND_IN_POSITION);
+        
         notifyAll();
     }
 
@@ -55,7 +62,15 @@ public class ContestantBench {
      * @return Contestant[][]
      */
     public synchronized Contestant[] getBench(int team){
-        return contestants[team];
+        return contestants[team].clone();
+    }
+
+        /**
+     * The referee declares the match winner
+     */
+    public synchronized void declareMatchWinner() {
+        // TODO : implement declareMatchWinner -> informar ao contestants que ja acabou
+
     }
 
 }

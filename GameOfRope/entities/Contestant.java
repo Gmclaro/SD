@@ -55,6 +55,7 @@ public class Contestant extends Thread {
         this.id = id;
         this.team = team;
         this.state = ContestantState.SEAT_AT_THE_BENCH;
+        // TODO: strength must be set in GameOfRope        
         this.strength = (int) (Math.random() * 4 + 6);
         this.playground = playground;
         this.refereeSite = refereeSite;
@@ -136,6 +137,7 @@ public class Contestant extends Thread {
         /*
          * 
          * while(RefereeSite.referee.getState() != RefereeState.END_OF_THE_MATCH){
+         * // TODO: Referee vai ao contestantBench e chama os concorrentes, tem uma flag ou varias de outra flag
          * contestantBench.followCoachAdvice();
          * playground.getReady();
          * strength = pullTheRope();
