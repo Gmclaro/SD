@@ -1,6 +1,8 @@
 package sharedRegions;
 
+import commonInfra.View;
 import entities.*;
+import main.SimulParse;
 
 public class ContestantBench {
 
@@ -9,14 +11,20 @@ public class ContestantBench {
 
     // TODO: Instead of using Contestant reference, use the content of each one, and
     // only change it not the "person" itself
-    private final Contestant[][] contestants;
+    private final View[][] contestants;
     private final int[][] playgroundQueue;
+    private final int[] inBench;
+
+    private final boolean matchOver;
 
     public ContestantBench(GeneralRepository repo) {
         this.repo = repo;
-        // this.playground = playground;
-        this.contestants = new Contestant[2][5];
-        playgroundQueue = new int[2][3];
+
+        this.contestants = new View[2][SimulParse.CONTESTANT_PER_TEAM];
+        this.playgroundQueue = new int[2][SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM];
+
+        this.inBench = new int[] { 0, 0 };
+        this.matchOver = false;
     }
 
     public synchronized void callContestants(int[] selected, int team) {
@@ -24,47 +32,90 @@ public class ContestantBench {
         notifyAll();
     }
 
-    // private boolean hasId(int id){
+    /**
+     * Place Contestant in the bench, and wait to be called
+     * 
+     * @param team
+     * @param id
+     * @return
+     */
 
-    // }
+    public int waitForCallContestant(int team, int id) {
+        System.out.println("Contestant(T" + team + "," + id + ") -> waitForCallContestant()");
 
-    public synchronized void followCoachAdvice() {
-        int team = ((Contestant) Thread.currentThread()).getTeam();
-        int id = ((Contestant) Thread.currentThread()).getID();
+        /**
+         * Updates Contestant current state and placed the Contestant in Bench
+         */
+        Contestant contestant;
+        synchronized (this) {
+            contestant = (Contestant) Thread.currentThread();
+            contestant.setEntityState(ContestantState.SEAT_AT_THE_BENCH);
 
-        for (int i : playgroundQueue[team]) {
-            if (i == id) {
-                ((Contestant) Thread.currentThread()).setEntityState(ContestantState.STAND_IN_POSITION);
-                //playground.addContestant(team);
-                break;
-            }
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            repo.setContestantState(team, id, ContestantState.SEAT_AT_THE_BENCH);
+
+            contestants[team][id].setValue(contestant.getStrength());
+
+            inBench[team]++;
+            notifyAll();
         }
 
-        notifyAll();
-    }
+        /**
+         * Contestants are seaten in the bench and wait to be called
+         * 
+         * order == 0 -> Contestant was not selected yet
+         * order == 1 -> Contestant was selected to play
+         */
+        synchronized (this) {
+            while (!matchOver && playgroundQueue[team][id] == 0) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
 
-    public synchronized void seatDown() {
-        ((Contestant) Thread.currentThread()).setEntityState(ContestantState.SEAT_AT_THE_BENCH);
-        int team = ((Contestant) Thread.currentThread()).getTeam();
-        int id = ((Contestant) Thread.currentThread()).getID();
-        contestants[team][id] = (Contestant) Thread.currentThread();
-        //playground.removeContestant(team);
-        notifyAll();
+            /**
+             * Since match is over, Contestant Thread will be ended.
+             */
+            if (matchOver) {
+                return 0;
+            }
+
+            /**
+             * Contestant was selected to play
+             */
+            inBench[team]--;
+            int order = playgroundQueue[team][id];
+            if (order == 1) {
+                contestant.rest();
+                repo.setContestantStrength(team, id, contestant.getStrength());
+            }
+
+            /**
+             * Restart the life cycle of the Contestant
+             */
+            playgroundQueue[team][id] = 0;
+            return order;
+        }
 
     }
 
     /**
-     * Get the contestants in the bench
+     * Contestant is placed in the bench
      * 
-     * @return Contestant[][]
+     * @param team
+     * @param id
      */
-    public synchronized Contestant[] getBench(int team) {
-        return contestants[team].clone();
+    public synchronized void seatDown(int team, int id) {
+        Contestant contestant = (Contestant) Thread.currentThread();
+        contestant.setEntityState(ContestantState.SEAT_AT_THE_BENCH);
+
+        repo.setContestantState(team, id, ContestantState.SEAT_AT_THE_BENCH);
+
+        contestants[team][id].setValue(contestant.getStrength());
+
+        inBench[team]++;
+        notifyAll();
     }
 
     /**
@@ -73,6 +124,10 @@ public class ContestantBench {
     public synchronized void declareMatchWinner() {
         // TODO : implement declareMatchWinner -> informar ao contestants que ja acabou
 
+    }
+
+    public View[] getBench(int team) {
+        return contestants[team];
     }
 
 }

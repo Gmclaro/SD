@@ -4,7 +4,9 @@ public class SimulParse {
     /**
      * Number of contestants
      */
-    public static final int CONT = 10;
+    public static final int CONTESTANT_PER_TEAM = 5;
+
+    public static final int CONTESTANT_IN_PLAYGROUND_PER_TEAM = 3;
 
     /**
      * Number of coaches

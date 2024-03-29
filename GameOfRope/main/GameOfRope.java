@@ -5,7 +5,7 @@ import entities.*;
 
 import java.util.Scanner;
 
-import commonInfra.Strategy;
+//import commonInfra.Strategy;
 
 import java.io.File;
 
@@ -27,12 +27,12 @@ public class GameOfRope {
          */
         Referee referee;
         Coach[] coach = new Coach[2];
-        Contestant[][] contestants = new Contestant[2][SimulParse.CONT];
+        Contestant[][] contestants = new Contestant[2][SimulParse.CONTESTANT_PER_TEAM];
 
         /**
          * Strength that is randomly generated for each contestant
          */
-        int[][] contestantStrength = new int[2][SimulParse.CONT];
+        int[][] contestantStrength = new int[2][SimulParse.CONTESTANT_PER_TEAM];
 
         /**
          * Choosing which file to print the output
@@ -75,7 +75,7 @@ public class GameOfRope {
          * Generates the strength of each Contestant
          */
         for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < SimulParse.CONT; j++) {
+            for (int j = 0; j < SimulParse.CONTESTANT_PER_TEAM; j++) {
                 contestantStrength[i][j] = (int) (4 * Math.random() + 6);
             }
         }
@@ -94,11 +94,11 @@ public class GameOfRope {
         referee = new Referee(playground, refereeSite, contestantBench);
 
         for (int i = 0; i < 2; i++) {
-            coach[i] = new Coach(i, contestantBench, playground, refereeSite, Strategy.StrategyType.STRONGEST);
+            coach[i] = new Coach(i, contestantBench, playground, refereeSite); //, Strategy.StrategyType.STRONGEST);
         }
 
         for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < SimulParse.CONT; j++) {
+            for (int j = 0; j < SimulParse.CONTESTANT_PER_TEAM; j++) {
                 contestants[i][j] = new Contestant(i, j, contestantStrength[i][j], playground, refereeSite,
                         contestantBench);
             }
@@ -126,7 +126,7 @@ public class GameOfRope {
             referee.join();
         } catch (InterruptedException e) {
         }
-        System.out.println("Referee has ended");
+        System.out.println("Referee() has ended");
 
         for (int i = 0; i < 2; i++) {
             try {
@@ -140,7 +140,7 @@ public class GameOfRope {
         }
 
         for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < SimulParse.CONT; j++) {
+            for (int j = 0; j < SimulParse.CONTESTANT_PER_TEAM; j++) {
                 try {
                     contestants[i][j].join();
                     // TODO: O mesmo se aplica aqui o de cima, e no referee tambem

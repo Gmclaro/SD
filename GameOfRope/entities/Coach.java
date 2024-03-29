@@ -1,7 +1,7 @@
 package entities;
 
-import commonInfra.Strategy;
-import commonInfra.Strategy.StrategyType;
+//import commonInfra.Strategy.*;
+import commonInfra.View;
 import sharedRegions.*;
 
 public class Coach extends Thread {
@@ -39,7 +39,7 @@ public class Coach extends Thread {
      * Hist of Stratgies
      * //TODO: strat
      */
-    private Strategy coachStrategy;
+    //private Strategy coachStrategy;
 
     /**
      * Set the coach state
@@ -77,15 +77,14 @@ public class Coach extends Thread {
      * @param coachID
      */
 
-    public Coach(int team, ContestantBench contestantBench, Playground playground, RefereeSite refereeSite,
-            StrategyType coachStrategy) {
+    public Coach(int team, ContestantBench contestantBench, Playground playground, RefereeSite refereeSite){ //StrategyType coachStrategy) {
         super("Coach(" + team + ")");
         this.team = team;
         this.state = CoachState.WAIT_FOR_REFEREE_COMMAND;
         this.contestantBench = contestantBench;
         this.playground = playground;
         this.refereeSite = refereeSite;
-        this.coachStrategy = new Strategy(coachStrategy);
+        //this.coachStrategy = new Strategy(coachStrategy);
     }
 
     /**
@@ -96,7 +95,7 @@ public class Coach extends Thread {
         System.out.println("Coach(" + this.team + ") has started.");
         // TODO create a function to instantiate the teams and wait for next trial
 
-        reviewNotes();
+        //reviewNotes();
 
         /**
          * selected = {1,2,3}
@@ -116,10 +115,9 @@ public class Coach extends Thread {
      * the team
      * 
      */
-    public int[] reviewNotes() {
-        System.out.println("reviewNotes: " + this.team);
-        Contestant[] contestants = contestantBench.getBench(this.team);
-        return coachStrategy.getStrategy().selectTeam(contestants);
-    }
+    // public int[] reviewNotes() {
+    //     View[] contestants = contestantBench.getBench(this.team);
+    //     return coachStrategy.getStrategy().selectTeam(contestants);
+    // }
 
 }

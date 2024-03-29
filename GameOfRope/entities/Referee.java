@@ -31,7 +31,7 @@ public class Referee extends Thread {
      */
 
     public Referee(Playground playground, RefereeSite refereeSite,ContestantBench contestantBench) {
-        super("Referee");
+        super("Referee()");
         this.playground = playground;
         this.refereeSite = refereeSite;
         this.contestantBench = contestantBench;
@@ -57,7 +57,7 @@ public class Referee extends Thread {
      */
     @Override
     public void run() {
-        System.out.println("Referee has started.");
+        System.out.println("Referee() has started.");
         // TODO: implement referee life cycle
         /**
          * refereeSite.announceNewGame();

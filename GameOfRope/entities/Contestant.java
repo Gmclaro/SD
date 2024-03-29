@@ -63,6 +63,10 @@ public class Contestant extends Thread {
         this.contestantBench = contestantBench;
     }
 
+    public String whoAmI() {
+        return "Contestant(T" + team + "," + id + ")";
+    }
+
     /**
      * Set contestant id
      * 
@@ -131,10 +135,26 @@ public class Contestant extends Thread {
      */
     @Override
     public void run() {
-        System.out.println("Contestant(T" + team + "," + id + ") has started.");
-        // TODO: implement contestant life cycle
+        System.out.println(this.whoAmI() +" has started.");
 
-        contestantBench.seatDown();
+        // TODO: implement contestant life cycle
+        int orders;
+        while (true) {
+            orders = contestantBench.waitForCallContestant(team, id);
+
+            switch (orders) {
+                case 0:return;      // match is over and contestant thread is done
+                case 1:continue;    // contestant was not selected, rest
+                case 2:break;       // contestant was selected, go to playground and continue the lifecycle
+            }
+
+            playground.followCoachAdvice(this.team);
+            playground.waitForStartTrial(this.team, this.id);
+            playground.getReady(this.team, this.id);
+            playground.waitForAssertTrialDecision(this.team, this.id);
+            contestantBench.seatDown(this.team,this.id);
+
+        }
 
         /*
          * 
@@ -169,5 +189,14 @@ public class Contestant extends Thread {
         }
 
         return this.strength--;
+    }
+
+    /**
+     * Rest increases the strength of the Contestant
+     * 
+     */
+
+    public void rest() {
+        this.strength++;
     }
 }

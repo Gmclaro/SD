@@ -166,4 +166,15 @@ public class GeneralRepository {
     this.coachState[coachID] = coachState;
   }
 
+public void setContestantState(int team, int id, int state) {
+    contestantState[team][id] = state;
+}
+
+public void setContestantStrength(int team, int id, int strength) {
+    contestantStrength[team][id] = strength;
+}
+
+public void setActiveContestant(int team, int id) {
+}
+
 }
