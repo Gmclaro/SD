@@ -24,7 +24,7 @@ public class GeneralRepository {
 
   private int[][] activeContestants;
 
-  private int[] strength;
+  private int[][] contestantStrength;
   private int positionOfRope;
 
   private int teamWinner;
@@ -42,13 +42,14 @@ public class GeneralRepository {
    * It is a shared region.
    */
 
-  public GeneralRepository(String logFileName) {
+  public GeneralRepository(String logFileName, int[][] contestantStrength) {
     if (logFileName == null) {
       this.logFileName = "logger";
     } else {
       this.logFileName = logFileName;
     }
     this.header();
+    this.contestantStrength = contestantStrength;
   }
 
   public synchronized void header() {
@@ -165,5 +166,4 @@ public class GeneralRepository {
     this.coachState[coachID] = coachState;
   }
 
-  
 }

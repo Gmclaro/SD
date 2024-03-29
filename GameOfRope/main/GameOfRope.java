@@ -4,23 +4,39 @@ import sharedRegions.*;
 import entities.*;
 
 import java.util.Scanner;
+
+import commonInfra.Strategy;
+
 import java.io.File;
 
 public class GameOfRope {
     Referee referee;
 
     public static void main(String[] args) {
-        GeneralRepository repo;
 
+        /**
+         * Declaring Shared Regions
+         */
+        GeneralRepository repo;
         Playground playground;
         RefereeSite refereeSite;
         ContestantBench contestantBench;
 
-
+        /**
+         * Declaring Threads
+         */
         Referee referee;
-        Coach[] coach;
-        Contestant[][] contestants;
+        Coach[] coach = new Coach[2];
+        Contestant[][] contestants = new Contestant[2][SimulParse.CONT];
 
+        /**
+         * Strength that is randomly generated for each contestant
+         */
+        int[][] contestantStrength = new int[2][SimulParse.CONT];
+
+        /**
+         * Choosing which file to print the output
+         */
         String fileName;
         char option;
         boolean success = false;
@@ -55,8 +71,85 @@ public class GameOfRope {
 
         sc.close();
 
-        repo = new GeneralRepository(fileName);
-        
+        /**
+         * Generates the strength of each Contestant
+         */
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < SimulParse.CONT; j++) {
+                contestantStrength[i][j] = (int) (4 * Math.random() + 6);
+            }
+        }
+
+        /**
+         * Instanciate each shared region
+         */
+        repo = new GeneralRepository(fileName, contestantStrength);
+        refereeSite = new RefereeSite(repo);
+        playground = new Playground(repo);
+        contestantBench = new ContestantBench(repo);
+
+        /**
+         * Instanciate each thread
+         */
+        referee = new Referee(playground, refereeSite, contestantBench);
+
+        for (int i = 0; i < 2; i++) {
+            coach[i] = new Coach(i, contestantBench, playground, refereeSite, Strategy.StrategyType.STRONGEST);
+        }
+
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < SimulParse.CONT; j++) {
+                contestants[i][j] = new Contestant(i, j, contestantStrength[i][j], playground, refereeSite,
+                        contestantBench);
+            }
+        }
+
+        /**
+         * Starting the lifecycle of each Thread/Entity
+         */
+        referee.start();
+
+        for (Coach c : coach) {
+            c.start();
+        }
+
+        for (int i = 0; i < 2; i++) {
+            for (Contestant c : contestants[i]) {
+                c.start();
+            }
+        }
+
+        /**
+         * Joining/Ending the lifecycle of each Thread/Entity
+         */
+        try {
+            referee.join();
+        } catch (InterruptedException e) {
+        }
+        System.out.println("Referee has ended");
+
+        for (int i = 0; i < 2; i++) {
+            try {
+                coach[i].join();
+
+                // TODO: talvez fazer overide ao join(), e por o print lá dentro, depois de ter
+                // o projeto a funcionar
+            } catch (InterruptedException e) {
+            }
+            System.out.println("Coach(" + i + ") has ended.");
+        }
+
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < SimulParse.CONT; j++) {
+                try {
+                    contestants[i][j].join();
+                    // TODO: O mesmo se aplica aqui o de cima, e no referee tambem
+                } catch (InterruptedException e) {
+                }
+                System.out.println("Cont(T" + i + "," + j + ") has ended.");
+            }
+        }
+
         repo.legend();
     }
 }

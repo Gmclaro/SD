@@ -14,6 +14,11 @@ public class Referee extends Thread {
     private Playground playground;
 
     /**
+     * Reference to the Contestant Bench
+     */
+    private ContestantBench contestantBench;
+
+    /**
      * Reference to the Referee Site
      */
     private RefereeSite refereeSite;
@@ -25,9 +30,11 @@ public class Referee extends Thread {
      * @param refereeSite Reference to the Referee Site
      */
 
-    public Referee(Playground playground, RefereeSite refereeSite) {
+    public Referee(Playground playground, RefereeSite refereeSite,ContestantBench contestantBench) {
+        super("Referee");
         this.playground = playground;
         this.refereeSite = refereeSite;
+        this.contestantBench = contestantBench;
         this.state = RefereeState.START_OF_THE_MATCH;
     }
 
@@ -50,6 +57,7 @@ public class Referee extends Thread {
      */
     @Override
     public void run() {
+        System.out.println("Referee has started.");
         // TODO: implement referee life cycle
         /**
          * refereeSite.announceNewGame();

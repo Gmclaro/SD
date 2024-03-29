@@ -49,14 +49,15 @@ public class Contestant extends Thread {
      * @param refereeSite  reference to refereeSite
      * @param bench        reference to contestantBench
      */
-    public Contestant(int id, int team, Playground playground, RefereeSite refereeSite,
+    public Contestant(int team, int id, int contestantStrength, Playground playground, RefereeSite refereeSite,
             ContestantBench contestantBench) {
-        super("Co" + id + "T" + team);
+        super("Cont(T" + team + "," + id + ")");
         this.id = id;
         this.team = team;
+        this.strength = contestantStrength;
         this.state = ContestantState.SEAT_AT_THE_BENCH;
-        // TODO: strength must be set in GameOfRope        
-        this.strength = (int) (Math.random() * 4 + 6);
+
+        // shared regions
         this.playground = playground;
         this.refereeSite = refereeSite;
         this.contestantBench = contestantBench;
@@ -130,6 +131,7 @@ public class Contestant extends Thread {
      */
     @Override
     public void run() {
+        System.out.println("Cont(T" + team + "," + id + ") has started.");
         // TODO: implement contestant life cycle
 
         contestantBench.seatDown();
@@ -137,7 +139,8 @@ public class Contestant extends Thread {
         /*
          * 
          * while(RefereeSite.referee.getState() != RefereeState.END_OF_THE_MATCH){
-         * // TODO: Referee vai ao contestantBench e chama os concorrentes, tem uma flag ou varias de outra flag
+         * // TODO: Referee vai ao contestantBench e chama os concorrentes, tem uma flag
+         * ou varias de outra flag
          * contestantBench.followCoachAdvice();
          * playground.getReady();
          * strength = pullTheRope();

@@ -15,9 +15,9 @@ public class Playground {
 
     private final int[] arrivedCoaches;
 
-    private final Coach[] coaches;
+    //private final Coach[] coaches;
 
-    private final Referee referee;
+    //private final Referee referee;
 
     // TODO: change name of this var
     private final int nOfAmDone;
@@ -28,10 +28,8 @@ public class Playground {
     private final LinkedList<Integer> histOfTrials = new LinkedList<Integer>();
 
     // TODO: Constructor -> check if it's missing something
-    public Playground(GeneralRepository repo, Coach[] coaches, Referee referee) {
+    public Playground(GeneralRepository repo) {
         this.repo = repo;
-        this.coaches = coaches;
-        this.referee = referee;
         contestants = new Contestant[2][3];
         playedTrials = 0;
         
