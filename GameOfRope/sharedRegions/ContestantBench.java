@@ -16,16 +16,30 @@ public class ContestantBench {
     private final int[] inBench;
 
     private final boolean matchOver;
+    private int callTrial;
 
     public ContestantBench(GeneralRepository repo) {
         this.repo = repo;
 
         this.contestants = new View[2][SimulParse.CONTESTANT_PER_TEAM];
-        this.playgroundQueue = new int[2][SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM];
+        this.playgroundQueue = new int[2][SimulParse.CONTESTANT_PER_TEAM];
 
         this.inBench = new int[] { 0, 0 };
         this.matchOver = false;
     }
+
+    /**
+     * Referee is announce a new trial
+     */
+    public synchronized void callTrial() {
+        // TODO: nao me lembro o que faz isto
+        this.callTrial = 2;
+        notifyAll();
+
+        ((Referee) Thread.currentThread()).setEntityState(RefereeState.TEAMS_READY);
+        repo.setRefereeState(RefereeState.TEAMS_READY);
+    }
+
 
     public synchronized void callContestants(int[] selected, int team) {
         playgroundQueue[team] = selected;
@@ -41,8 +55,6 @@ public class ContestantBench {
      */
 
     public int waitForCallContestant(int team, int id) {
-        System.out.println("Contestant(T" + team + "," + id + ") -> waitForCallContestant()");
-
         /**
          * Updates Contestant current state and placed the Contestant in Bench
          */

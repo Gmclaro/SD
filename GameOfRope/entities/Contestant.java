@@ -141,34 +141,29 @@ public class Contestant extends Thread {
         int orders;
         while (true) {
             orders = contestantBench.waitForCallContestant(team, id);
+            System.out.println("Contestant(T" + team + "," + id + ") -> waitForCallContestant()");
 
             switch (orders) {
                 case 0:return;      // match is over and contestant thread is done
                 case 1:continue;    // contestant was not selected, rest
                 case 2:break;       // contestant was selected, go to playground and continue the lifecycle
             }
-
+            
             playground.followCoachAdvice(this.team);
+            System.out.println("Contestant(T" + team + "," + id + ") -> followCoachAdvice()");
+            
             playground.waitForStartTrial(this.team, this.id);
+            System.out.println("Contestant(T" + team + "," + id + ") -> waitForStartTrial()");
+
             playground.getReady(this.team, this.id);
+            System.out.println("Contestant(T" + team + "," + id + ") -> getReady()");
+            
             playground.waitForAssertTrialDecision(this.team, this.id);
+            System.out.println("Contestant(T" + team + "," + id + ") -> waitForAssertTrialDecision()");
+
             contestantBench.seatDown(this.team,this.id);
-
+            System.out.println("Contestant(T" + team + "," + id + ") -> waitForAssertTrialDecision()");
         }
-
-        /*
-         * 
-         * while(RefereeSite.referee.getState() != RefereeState.END_OF_THE_MATCH){
-         * // TODO: Referee vai ao contestantBench e chama os concorrentes, tem uma flag
-         * ou varias de outra flag
-         * contestantBench.followCoachAdvice();
-         * playground.getReady();
-         * strength = pullTheRope();
-         * playground.amDone(strength, teamID);
-         * }
-         * 
-         */
-
     }
 
     /**
@@ -178,16 +173,7 @@ public class Contestant extends Thread {
      * 
      * @return strength of the contestant
      */
-    public int pullTheRope() {
-        // TODO: maybe missing the sleep time from the independent operations
-        System.out.println("pullTheRope: " + "Co" + id + "T" + team + " - " + strength);
-
-        // wait for a random time
-        try {
-            sleep((long) (Math.random()));
-        } catch (InterruptedException e) {
-        }
-
+    public synchronized int pullTheRope() {
         return this.strength--;
     }
 

@@ -18,19 +18,18 @@ import genclass.TextFile;
 public class GeneralRepository {
   private String logFileName;
 
+  private int currentGame;
+  private int currentTrial;
+  private int positionOfRope;
+
   private int refereeState;
   private int[] coachState;
   private int[][] contestantState;
 
+  private int[][] contestantStrength;
   private int[][] activeContestants;
 
-  private int[][] contestantStrength;
-  private int positionOfRope;
-
   private int teamWinner;
-
-  private int currentTrial;
-  private int currentGame;
 
   private Boolean endOfGame = false;
 
@@ -157,6 +156,11 @@ public class GeneralRepository {
    * }
    */
 
+  public void newGameStarted() {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'newGameStarted'");
+  }
+
   // TODO: missing a lot of methods
   public synchronized void setRefereeState(int refereeState) {
     this.refereeState = refereeState;
@@ -166,15 +170,16 @@ public class GeneralRepository {
     this.coachState[coachID] = coachState;
   }
 
-public void setContestantState(int team, int id, int state) {
+  public void setContestantState(int team, int id, int state) {
     contestantState[team][id] = state;
-}
+  }
 
-public void setContestantStrength(int team, int id, int strength) {
+  public void setContestantStrength(int team, int id, int strength) {
     contestantStrength[team][id] = strength;
-}
+  }
 
-public void setActiveContestant(int team, int id) {
-}
+  public void setActiveContestant(int team, int id) {
+    activeContestants[team][id] = 1;
+  }
 
 }

@@ -25,4 +25,9 @@ public class SimulParse {
 
     public static final int TRIALS = 6;
 
+    /**
+     * Maximum difference to win by knockout
+     */
+    public static final int KNOCKOUT = 4;
+
 }

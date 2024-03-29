@@ -3,6 +3,7 @@ package sharedRegions;
 import java.util.LinkedList;
 
 import entities.*;
+
 public class RefereeSite {
 
     /**
@@ -10,8 +11,7 @@ public class RefereeSite {
      */
     private final GeneralRepository repo;
 
-    // TODO: number of coaches ready
-    private final int teamsReady;
+    private int teamsReady;
 
     /**
      * Number of games played
@@ -20,7 +20,6 @@ public class RefereeSite {
     private final int gamesPlayed;
 
     private final LinkedList<Integer> histOfGames = new LinkedList<Integer>();
-
 
     public RefereeSite(GeneralRepository repo) {
         this.repo = repo;
@@ -31,20 +30,34 @@ public class RefereeSite {
     /**
      * The referee announces a new game
      */
-
     public synchronized void announceNewGame() {
-        // TODO : implement announceNewGame
-    }
+        repo.newGameStarted();
 
+        ((Referee) Thread.currentThread()).setEntityState(RefereeState.START_OF_A_GAME);
+        repo.setRefereeState(RefereeState.START_OF_A_GAME);
+    }
 
     public synchronized void informReferee() {
         // TODO : implement informReferee
     }
 
+    /**
+     * The referee waits for the coaches to inform the teams are ready
+     */
     public synchronized void waitForInformReferee() {
-        // TODO : implement waitForInformReferee -> wait() -> usar o teams ready
+        while (teamsReady < 2) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        /**
+         * Reset the number of teams ready
+         */
+        teamsReady = 0;
     }
-    
 
     /**
      * The referee declares the game winner
@@ -53,9 +66,5 @@ public class RefereeSite {
     public synchronized void declareGameWinner(LinkedList<Integer> histOfTrials) {
         // TODO : implement declareGameWinner
     }
-
-
-
-
 
 }

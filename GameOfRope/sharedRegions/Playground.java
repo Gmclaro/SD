@@ -1,7 +1,11 @@
 package sharedRegions;
 
 import entities.*;
+import main.SimulParse;
+
 import java.util.LinkedList;
+
+import commonInfra.View;
 
 public class Playground {
 
@@ -9,15 +13,11 @@ public class Playground {
 
     private final int playedTrials;
 
-    private final Contestant[][] contestants;
+    private final View[][] contestants;
 
     private final int[] arrivedContestants;
 
     private final int[] arrivedCoaches;
-
-    // private final Coach[] coaches;
-
-    // private final Referee referee;
 
     // TODO: change name of this var
     private int nOfAmDone;
@@ -32,13 +32,13 @@ public class Playground {
      * 
      * It is used to control the flow of the game
      */
-    private final boolean startOfTrial;
-    private final boolean endOfTrial;
+    private boolean startOfTrial;
+    private boolean endOfTrial;
 
     // TODO: Constructor -> check if it's missing something
     public Playground(GeneralRepository repo) {
         this.repo = repo;
-        contestants = new Contestant[2][3];
+        contestants = new View[2][SimulParse.CONTESTANT_PER_TEAM];
         playedTrials = 0;
 
         // during the game
@@ -50,10 +50,6 @@ public class Playground {
         // Flags
         startOfTrial = false;
         endOfTrial = false;
-    }
-
-    public synchronized void callTrial() {
-        // TODO: missing callTrial,
     }
 
     public synchronized void waitForCallTrial() {
@@ -70,8 +66,12 @@ public class Playground {
         notifyAll();
     }
 
+    /**
+     * 
+     */
     public synchronized void startTrial() {
-        // TODO: missing startTrial, reset variables
+        startOfTrial = true;
+        notifyAll();
     }
 
     /**
@@ -107,9 +107,32 @@ public class Playground {
         notifyAll();
     }
 
+
+    public void waitForAmDone() {
+        while (nOfAmDone < 2 * SimulParse.CONTESTANT_PER_TEAM) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        nOfAmDone = 0;
+    }
+
+    /**
+     * Referee will compare the strength of the teams and decide if the trial has ended
+     * 
+     * @return boolean
+     */
+
     public synchronized boolean assertTrialDecision() {
-        // TODO: missing assertTrialDecision
-        return false;
+        endOfTrial = true;
+        
+        if (Math.abs(strengthPerTeam[0] - strengthPerTeam[1]) >= SimulParse.KNOCKOUT) {
+            return false;
+        }
+        //TODO: missing this
     }
 
     /**
@@ -161,16 +184,5 @@ public class Playground {
 
     }
 
-    public synchronized void addContestant(int team) {
-        ((Contestant) Thread.currentThread()).setEntityState(ContestantState.STAND_IN_POSITION);
-        contestants[team][arrivedContestants[team]] = (Contestant) Thread.currentThread();
-        arrivedContestants[team]++;
-        notifyAll();
-    }
-
-    public synchronized void removeContestant(int team) {
-        arrivedContestants[team]--;
-        notifyAll();
-    }
 
 }
