@@ -51,7 +51,7 @@ public class Contestant extends Thread {
      */
     public Contestant(int team, int id, int contestantStrength, Playground playground, RefereeSite refereeSite,
             ContestantBench contestantBench) {
-        super("Cont(T" + team + "," + id + ")");
+        super("Contestant(T" + team + "," + id + ")");
         this.id = id;
         this.team = team;
         this.strength = contestantStrength;
@@ -131,7 +131,7 @@ public class Contestant extends Thread {
      */
     @Override
     public void run() {
-        System.out.println("Cont(T" + team + "," + id + ") has started.");
+        System.out.println("Contestant(T" + team + "," + id + ") has started.");
         // TODO: implement contestant life cycle
 
         contestantBench.seatDown();

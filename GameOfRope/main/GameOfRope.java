@@ -146,7 +146,7 @@ public class GameOfRope {
                     // TODO: O mesmo se aplica aqui o de cima, e no referee tambem
                 } catch (InterruptedException e) {
                 }
-                System.out.println("Cont(T" + i + "," + j + ") has ended.");
+                System.out.println("Contestant(T" + i + "," + j + ") has ended.");
             }
         }
 
