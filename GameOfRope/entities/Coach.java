@@ -114,8 +114,7 @@ public class Coach extends Thread {
          */
         int orders;
 
-        // int[] selected = reviewNotes(); // TODO: fix reviewNotes doesn't do anything
-        int[] selected = new int[] { 1, 2, 3 };
+        int[] selected = reviewNotes();
         System.out.println(this.whoAmI() + " -> reviewNotes()");
 
         while (true) {
@@ -150,6 +149,8 @@ public class Coach extends Thread {
      */
     public int[] reviewNotes() {
         View[] contestants = contestantBench.getBench(this.team);
+        
+        // TODO: contestants view is missing the value
         return coachStrategy.getStrategy().selectTeam(contestants);
     }
 

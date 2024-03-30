@@ -1,6 +1,7 @@
 package commonInfra;
 
 import main.SimulParse;
+import java.util.HashSet;
 
 public class Strategy {
 
@@ -64,6 +65,7 @@ public class Strategy {
 
     private class FifoStrategy implements InnerStrategy {
         private MemFIFO<View> fifo;
+
         @Override
         public int[] selectTeam(View[] contestants) {
             int[] selected = new int[3];
@@ -71,12 +73,15 @@ public class Strategy {
             if (fifo == null) {
                 try {
                     fifo = new MemFIFO<View>(contestants);
+                    for (View c : contestants) {
+                        fifo.write(c);
+                    }
                 } catch (MemException e) {
                     e.printStackTrace();
                 }
             }
 
-            for (int i = 0; i < 3; i++) {
+            for (int i = 0; i < SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM; i++) {
                 try {
                     View c = fifo.read();
                     selected[i] = c.getKey();
@@ -93,13 +98,14 @@ public class Strategy {
     private class RandomStrategy implements InnerStrategy {
         @Override
         public int[] selectTeam(View[] contestants) {
-            int[] selected = new int[3];
+            HashSet<Integer> setSelected = new HashSet<Integer>();
 
-            for (int i = 0; i < SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM; i++) {
-                selected[i] = (int) (Math.random() * contestants.length);
-            }
-        
-            return selected;
+            do {
+                int index = (int) (Math.random() * contestants.length);
+                setSelected.add(contestants[index].getKey());
+            } while (setSelected.size() < SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM);
+
+            return setSelected.stream().mapToInt(Integer::intValue).toArray();
         }
     }
 }
