@@ -46,6 +46,16 @@ public class Referee extends Thread {
     }
 
     /**
+     * Name of the Thread
+     * 
+     * @return String
+     */
+
+    public String whoAmI() {
+        return "Referee()";
+    }
+
+    /**
      * Set the referee state
      */
     public void setEntityState(int state) {
@@ -71,19 +81,40 @@ public class Referee extends Thread {
      */
     @Override
     public void run() {
-        System.out.println("Referee() has started.");
+        System.out.println(this.whoAmI() + " has started.");
+
+        /**
+         * Start of Referee life cycle
+         */
         int currentGame;
         int ropePosition;
 
         for (currentGame = 1; currentGame <= SimulParse.GAMES; currentGame++) {
             refereeSite.announceNewGame();
+            System.out.println(this.whoAmI() + " -> announceNewGame()");
+
+            boolean decision;
             do {
+                
                 contestantBench.callTrial();
+                System.out.println(this.whoAmI() + " -> callTrial()");
+
                 refereeSite.waitForInformReferee();
+                System.out.println(this.whoAmI() + " -> waitForInformReferee()");
+
                 playground.startTrial();
+                System.out.println(this.whoAmI() + " -> startTrial()");
+
                 playground.waitForAmDone();
-            } while (playground.assertTrialDecision() == true);
+                System.out.println(this.whoAmI() + " -> waitForAmDone()");
+
+                decision = playground.assertTrialDecision();
+                System.out.println(this.whoAmI() + " -> assertTrialDecision()");
+                // TODO: remove decision and put assertTrialDecision inside while
+            } while (decision);
+
             ropePosition = playground.declareGameWinner();
+            System.out.println(this.whoAmI() + " -> declareGameWinner()");
 
             if (ropePosition < 0)
                 scores[0]++;
@@ -94,5 +125,6 @@ public class Referee extends Thread {
         }
 
         contestantBench.declareMatchWinner(scores);
+        System.out.println(this.whoAmI() + " -> declareMatchWinner()");
     }
 }

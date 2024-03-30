@@ -2,6 +2,7 @@ package main;
 
 import sharedRegions.*;
 import entities.*;
+import commonInfra.Strategy;
 
 import java.util.Scanner;
 
@@ -94,7 +95,7 @@ public class GameOfRope {
         referee = new Referee(playground, refereeSite, contestantBench);
 
         for (int i = 0; i < 2; i++) {
-            coach[i] = new Coach(i, contestantBench, playground, refereeSite); //, Strategy.StrategyType.STRONGEST);
+            coach[i] = new Coach(i, contestantBench, playground, refereeSite, Strategy.StrategyType.STRONGEST);
         }
 
         for (int i = 0; i < 2; i++) {

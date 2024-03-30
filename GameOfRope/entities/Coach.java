@@ -44,6 +44,16 @@ public class Coach extends Thread {
     private Strategy coachStrategy;
 
     /**
+     * Name of the Thread
+     * 
+     * @return String
+     */
+
+    public String whoAmI() {
+        return "Coach(" + team + ")";
+    }
+
+    /**
      * Set the coach state
      */
     public void setEntityState(int state) {
@@ -97,24 +107,39 @@ public class Coach extends Thread {
      */
     @Override
     public void run() {
-        System.out.println("Coach(" + this.team + ") has started.");
+        System.out.println(this.whoAmI() + " has started.");
 
+        /**
+         * Start of Coach life cycle
+         */
         int orders;
 
-        int[] selected = reviewNotes();
+        // int[] selected = reviewNotes(); // TODO: fix reviewNotes doesn't do anything
+        int[] selected = new int[] { 1, 2, 3 };
+        System.out.println(this.whoAmI() + " -> reviewNotes()");
 
         while (true) {
             orders = contestantBench.waitForCallTrial(team);
+            System.out.println(this.whoAmI() + " -> waitForCallTrial()");
 
             if (orders == 0) {
                 return;
             }
 
-            contestantBench.callContestants(team,selected);
+            contestantBench.callContestants(team, selected);
+            System.out.println(this.whoAmI() + " -> callContestants()");
+
             playground.waitForFollowCoachAdvice(team);
+            System.out.println(this.whoAmI() + " -> waitForFollowCoachAdvice()");
+
             refereeSite.informReferee();
+            System.out.println(this.whoAmI() + " -> informReferee()");
+
             playground.waitForAssertTrialDecision(team);
-            selected = reviewNotes();            
+            System.out.println(this.whoAmI() + " -> waitForAssertTrialDecision()");
+
+            selected = reviewNotes();
+            System.out.println(this.whoAmI() + " -> reviewNotes()");
         }
 
         // reviewNotes();

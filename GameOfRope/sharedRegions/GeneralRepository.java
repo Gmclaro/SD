@@ -157,8 +157,10 @@ public class GeneralRepository {
    */
 
   public void newGameStarted() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'newGameStarted'");
+    currentGame++;
+    currentTrial = 0;
+    positionOfRope = 0;
+    endOfGame = false;
   }
 
   public synchronized void setRefereeState(int refereeState) {

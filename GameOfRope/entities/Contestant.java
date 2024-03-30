@@ -63,6 +63,12 @@ public class Contestant extends Thread {
         this.contestantBench = contestantBench;
     }
 
+    /**
+     * Name of the Thread
+     * 
+     * @return String
+     */
+
     public String whoAmI() {
         return "Contestant(T" + team + "," + id + ")";
     }
@@ -135,33 +141,38 @@ public class Contestant extends Thread {
      */
     @Override
     public void run() {
-        System.out.println(this.whoAmI() +" has started.");
+        System.out.println(this.whoAmI() + " has started.");
 
-        // TODO: test lifecycle
+        /**
+         * Contestant life cycle
+         */
         int orders;
         while (true) {
             orders = contestantBench.waitForCallContestant(team, id);
             System.out.println("Contestant(T" + team + "," + id + ") -> waitForCallContestant()");
 
             switch (orders) {
-                case 0:return;      // match is over and contestant thread is done
-                case 1:continue;    // contestant was not selected, rest
-                case 2:break;       // contestant was selected, go to playground and continue the lifecycle
+                case 0:
+                    return; // match is over and contestant thread is done
+                case 1:
+                    continue; // contestant was not selected, rest
+                case 2:
+                    break; // contestant was selected, go to playground and continue the lifecycle
             }
-            
+
             playground.followCoachAdvice(this.team);
             System.out.println("Contestant(T" + team + "," + id + ") -> followCoachAdvice()");
-            
+
             playground.waitForStartTrial(this.team, this.id);
             System.out.println("Contestant(T" + team + "," + id + ") -> waitForStartTrial()");
 
             playground.getReady(this.team, this.id);
             System.out.println("Contestant(T" + team + "," + id + ") -> getReady()");
-            
+
             playground.waitForAssertTrialDecision(this.team, this.id);
             System.out.println("Contestant(T" + team + "," + id + ") -> waitForAssertTrialDecision()");
 
-            contestantBench.seatDown(this.team,this.id);
+            contestantBench.seatDown(this.team, this.id);
             System.out.println("Contestant(T" + team + "," + id + ") -> waitForAssertTrialDecision()");
         }
     }
