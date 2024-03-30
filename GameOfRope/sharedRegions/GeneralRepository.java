@@ -29,7 +29,7 @@ public class GeneralRepository {
   private int[][] contestantStrength;
   private int[][] activeContestants;
 
-  private int teamWinner;
+  private int matchWinner;
 
   private Boolean endOfGame = false;
 
@@ -47,8 +47,40 @@ public class GeneralRepository {
     } else {
       this.logFileName = logFileName;
     }
+
+    /**
+     * Header of the log file
+     */
     this.header();
+
+    /**
+     * Inital Strength of the Contestants
+     */
     this.contestantStrength = contestantStrength;
+
+    /**
+     * Initial state of the game
+     */
+    this.currentGame = 0;
+    this.currentTrial = 0;
+    this.positionOfRope = 0;
+
+    this.refereeState = RefereeState.START_OF_THE_MATCH;
+
+    this.coachState = new int[SimulParse.COACH];
+    for (int i = 0; i < SimulParse.COACH; i++) {
+      this.coachState[i] = CoachState.WAIT_FOR_REFEREE_COMMAND;
+    }
+
+    this.contestantState = new int[2][SimulParse.CONTESTANT_PER_TEAM];
+    for (int i = 0; i < 2; i++) {
+      for (int j = 0; j < SimulParse.CONTESTANT_PER_TEAM; j++) {
+        this.contestantState[i][j] = ContestantState.SEAT_AT_THE_BENCH;
+      }
+    }
+
+    this.activeContestants = new int[2][SimulParse.CONTESTANT_PER_TEAM];
+
   }
 
   public synchronized void header() {
@@ -183,9 +215,24 @@ public class GeneralRepository {
     activeContestants[team][id] = 1;
   }
 
-public void setMatchWinner(int[] scores) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'setMatchWinner'");
-}
+  /**
+   * Set the match winner.
+   * 
+   * matchWinner == 0 -> team 0 wins
+   * matchWinner == 1 -> team 1 wins
+   * matchWinner == 2 -> draw
+   * 
+   * @param scores
+   */
+
+  public void setMatchWinner(int[] scores) {
+    if (scores[0] > scores[1]) {
+      matchWinner = 0;
+    } else if (scores[0] < scores[1]) {
+      matchWinner = 1;
+    } else {
+      matchWinner = 2;
+    }
+  }
 
 }

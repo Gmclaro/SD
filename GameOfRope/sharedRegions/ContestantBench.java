@@ -46,7 +46,7 @@ public class ContestantBench {
      * @param team
      * @return
      */
-    public int waitForCallTrial(int team) {
+    public synchronized int waitForCallTrial(int team) {
         ((Coach) Thread.currentThread()).setEntityState(CoachState.WAIT_FOR_REFEREE_COMMAND);
         repo.setCoachState(team, CoachState.WAIT_FOR_REFEREE_COMMAND);
 
@@ -162,10 +162,30 @@ public class ContestantBench {
 
         repo.setContestantState(team, id, ContestantState.SEAT_AT_THE_BENCH);
 
+        if (contestants[team][id] == null)
+            contestants[team][id] = new View(id, 0);
+
         contestants[team][id].setValue(contestant.getStrength());
 
         inBench[team]++;
+        System.out.println("inBench[" + team + "]: " + inBench[team]);
         notifyAll();
+    }
+
+    /**
+     * Coach gets all information about the Contestants
+     * 
+     */
+    public synchronized View[] reviewNotes(int team) {
+        while (inBench[team] <= SimulParse.CONTESTANT_PER_TEAM) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return contestants[team];
     }
 
     /**

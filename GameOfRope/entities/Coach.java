@@ -114,8 +114,11 @@ public class Coach extends Thread {
          */
         int orders;
 
-        int[] selected = reviewNotes();
+        View[] aboutContestants = contestantBench.reviewNotes(team);
         System.out.println(this.whoAmI() + " -> reviewNotes()");
+
+        int[] selected = selectContestants(aboutContestants);
+        System.out.println(this.whoAmI() + " -> selectContestants()");
 
         while (true) {
             orders = contestantBench.waitForCallTrial(team);
@@ -137,21 +140,15 @@ public class Coach extends Thread {
             playground.waitForAssertTrialDecision(team);
             System.out.println(this.whoAmI() + " -> waitForAssertTrialDecision()");
 
-            selected = reviewNotes();
+            aboutContestants = contestantBench.reviewNotes(team);
             System.out.println(this.whoAmI() + " -> reviewNotes()");
+
+            selected = selectContestants(aboutContestants);
+            System.out.println(this.whoAmI() + " -> selectContestants()");
         }
     }
 
-    /**
-     * Based on the information from the match defines which is the next strategy to
-     * the team
-     * 
-     */
-    public int[] reviewNotes() {
-        View[] contestants = contestantBench.getBench(this.team);
-        
-        // TODO: contestants view is missing the value
-        return coachStrategy.getStrategy().selectTeam(contestants);
+    private int[] selectContestants(View[] selected) {
+        return coachStrategy.getStrategy().selectTeam(selected);
     }
-
 }

@@ -40,9 +40,18 @@ public class Strategy {
         return this.strategy;
     }
 
+    // TODO: remove this method
+    private void test(View[] contestants){
+        for (View c : contestants) {
+            System.out.println("EXISTE? " + !(c == null));
+            System.out.println("HEY: (" + c.getKey() + ", " + c.getValue() + ")");
+        }
+    }
+
     private class StrongestStrategy implements InnerStrategy {
         @Override
         public int[] selectTeam(View[] contestants) {
+            //test(contestants); // TODO: remove this line
 
             for (int i = 1; i < contestants.length; ++i) {
                 View key = contestants[i];
@@ -68,6 +77,7 @@ public class Strategy {
 
         @Override
         public int[] selectTeam(View[] contestants) {
+            //test(contestants); // TODO: remove this line
             int[] selected = new int[3];
 
             if (fifo == null) {
@@ -98,6 +108,7 @@ public class Strategy {
     private class RandomStrategy implements InnerStrategy {
         @Override
         public int[] selectTeam(View[] contestants) {
+            //test(contestants); // TODO: remove this line
             HashSet<Integer> setSelected = new HashSet<Integer>();
 
             do {

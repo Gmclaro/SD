@@ -38,46 +38,48 @@ public class GameOfRope {
         /**
          * Choosing which file to print the output
          */
-        String fileName;
+        String fileName = "log";
         char option;
         boolean success = false;
 
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Game of the Rope - Description of the internal state");
-        do {
-            System.out.println("Enter the name of the file to save the log: ");
-            fileName = sc.nextLine();
-            File file = new File(fileName);
-            if (file.exists()) {
-                do {
-                    System.out.println("File already exists. Do you want to overwrite it? (y/n)");
-                    String answer = sc.nextLine();
-                    try {
-                        option = answer.charAt(0);
-                    } catch (StringIndexOutOfBoundsException e) {
-                        option = 'y';
-                    }
-                } while (option != 'y' && option != 'n');
+        if (fileName.length() == 0) {
+            do {
+                System.out.println("Enter the name of the file to save the log: ");
+                fileName = sc.nextLine();
+                File file = new File(fileName);
+                if (file.exists()) {
+                    do {
+                        System.out.println("File already exists. Do you want to overwrite it? (y/n)");
+                        String answer = sc.nextLine();
+                        try {
+                            option = answer.charAt(0);
+                        } catch (StringIndexOutOfBoundsException e) {
+                            option = 'y';
+                        }
+                    } while (option != 'y' && option != 'n');
 
-                if (option == 'n') {
-                    success = false;
+                    if (option == 'n') {
+                        success = false;
+                    } else {
+                        success = true;
+                    }
                 } else {
                     success = true;
                 }
-            } else {
-                success = true;
-            }
-        } while (!success);
+            } while (!success);
 
-        sc.close();
+            sc.close();
+        }
 
         /**
          * Generates the strength of each Contestant
          */
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < SimulParse.CONTESTANT_PER_TEAM; j++) {
-                contestantStrength[i][j] = (int) (4 * Math.random() + 6);
+                contestantStrength[i][j] = (int) (5 * Math.random() + 6);
             }
         }
 
@@ -95,7 +97,7 @@ public class GameOfRope {
         referee = new Referee(playground, refereeSite, contestantBench);
 
         for (int i = 0; i < 2; i++) {
-            coach[i] = new Coach(i, contestantBench, playground, refereeSite, Strategy.StrategyType.STRONGEST);
+            coach[i] = new Coach(i, contestantBench, playground, refereeSite, Strategy.StrategyType.FIFO);
         }
 
         for (int i = 0; i < 2; i++) {

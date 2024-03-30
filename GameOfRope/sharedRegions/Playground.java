@@ -35,7 +35,7 @@ public class Playground {
     // TODO: Constructor -> check if it's missing something
     public Playground(GeneralRepository repo) {
         this.repo = repo;
-        contestants = new View[2][SimulParse.CONTESTANT_PER_TEAM];
+        contestants = new View[2][SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM];
 
         // during the game
         arrivedContestants = new int[] { 0, 0 };
@@ -58,8 +58,8 @@ public class Playground {
         notifyAll();
     }
 
-    public void waitForFollowCoachAdvice(int team) {
-        while (arrivedContestants[team] < SimulParse.CONTESTANT_PER_TEAM) {
+    public synchronized void waitForFollowCoachAdvice(int team) {
+        while (arrivedContestants[team] < SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM) {
             try {
                 wait();
             } catch (InterruptedException e) {
@@ -75,6 +75,7 @@ public class Playground {
      */
     public synchronized void startTrial() {
         startOfTrial = true;
+        endOfTrial = false;
         playedTrial++;
         notifyAll();
     }
@@ -112,9 +113,10 @@ public class Playground {
         notifyAll();
     }
 
-    public void waitForAmDone() {
-        while (nOfAmDone < 2 * SimulParse.CONTESTANT_PER_TEAM) {
+    public synchronized void waitForAmDone() {
+        while (nOfAmDone <= 2 * SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM) {
             try {
+                System.out.println("amDone: " + nOfAmDone + " - " + 2 * SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM);
                 wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -139,8 +141,7 @@ public class Playground {
         /**
          * Referee will check if the trial was a knockout or if the trial limit was met
          */
-        if (playedTrial <= SimulParse.TRIALS
-                || (Math.abs(strengthPerTeam[0] - strengthPerTeam[1]) >= SimulParse.KNOCKOUT)) {
+        if (playedTrial >= SimulParse.TRIALS || (Math.abs(strengthPerTeam[0] - strengthPerTeam[1]) >= SimulParse.KNOCKOUT)) {
             playedTrial = 0;
             notifyAll();
             return false;

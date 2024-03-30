@@ -146,6 +146,9 @@ public class Contestant extends Thread {
         /**
          * Contestant life cycle
          */
+        contestantBench.seatDown(this.team, this.id);
+        System.out.println("Contestant(T" + team + "," + id + ") -> seatDown()");
+
         int orders;
         while (true) {
             orders = contestantBench.waitForCallContestant(team, id);
@@ -173,7 +176,7 @@ public class Contestant extends Thread {
             System.out.println("Contestant(T" + team + "," + id + ") -> waitForAssertTrialDecision()");
 
             contestantBench.seatDown(this.team, this.id);
-            System.out.println("Contestant(T" + team + "," + id + ") -> waitForAssertTrialDecision()");
+            System.out.println("Contestant(T" + team + "," + id + ") -> seatDown()");
         }
     }
 

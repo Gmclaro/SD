@@ -43,6 +43,8 @@ public class Referee extends Thread {
         this.refereeSite = refereeSite;
         this.contestantBench = contestantBench;
         this.state = RefereeState.START_OF_THE_MATCH;
+
+        this.scores = new int[]{0, 0};
     }
 
     /**
@@ -90,13 +92,17 @@ public class Referee extends Thread {
         int ropePosition;
 
         for (currentGame = 1; currentGame <= SimulParse.GAMES; currentGame++) {
+            System.out.println("Game: " + currentGame
+                    + " ----------------------------------------------------------");
+
             refereeSite.announceNewGame();
             System.out.println(this.whoAmI() + " -> announceNewGame()");
 
-            boolean decision;
+            boolean continueGame;
             do {
                 
                 contestantBench.callTrial();
+                System.out.println("Trial: ----------------------------------------------------------");
                 System.out.println(this.whoAmI() + " -> callTrial()");
 
                 refereeSite.waitForInformReferee();
@@ -108,10 +114,9 @@ public class Referee extends Thread {
                 playground.waitForAmDone();
                 System.out.println(this.whoAmI() + " -> waitForAmDone()");
 
-                decision = playground.assertTrialDecision();
+                continueGame = playground.assertTrialDecision();
                 System.out.println(this.whoAmI() + " -> assertTrialDecision()");
-                // TODO: remove decision and put assertTrialDecision inside while
-            } while (decision);
+            } while (continueGame);
 
             ropePosition = playground.declareGameWinner();
             System.out.println(this.whoAmI() + " -> declareGameWinner()");
