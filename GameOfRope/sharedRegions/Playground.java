@@ -48,10 +48,6 @@ public class Playground {
         endOfTrial = false;
     }
 
-    public synchronized void waitForCallTrial() {
-        // TODO: Since this is a synchronized method, it should be a wait() method
-    }
-
     /**
      * Contestants go to the playground and inform when they have arrived
      * 
@@ -60,6 +56,18 @@ public class Playground {
     public synchronized void followCoachAdvice(int team) {
         arrivedContestants[team]++;
         notifyAll();
+    }
+
+    public void waitForFollowCoachAdvice(int team) {
+        while (arrivedContestants[team] < SimulParse.CONTESTANT_PER_TEAM) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        arrivedContestants[team] = 0;
     }
 
     /**
@@ -191,14 +199,36 @@ public class Playground {
     }
 
     /**
+     * Coach will wait until the decision of the referee of the trial
+     * 
+     * @param team
+     */
+    public void waitForAssertTrialDecision(int team) {
+        // TODO: Missing implementation
+
+        synchronized (this) {
+            ((Coach) Thread.currentThread()).setEntityState(CoachState.WATCH_TRIAL);
+            repo.setCoachState(team, CoachState.WATCH_TRIAL);
+            
+            while (!endOfTrial) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    /**
      * The referee will declare the winner of the game
      * 
-     * @return int 
+     * @return int
      */
     public int declareGameWinner() {
         ((Referee) Thread.currentThread()).setEntityState(RefereeState.END_OF_A_GAME);
         repo.setRefereeState(RefereeState.END_OF_A_GAME);
-        
+
         return strengthPerTeam[0] - strengthPerTeam[1];
     }
 

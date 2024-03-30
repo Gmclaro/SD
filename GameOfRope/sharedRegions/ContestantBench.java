@@ -40,8 +40,46 @@ public class ContestantBench {
         repo.setRefereeState(RefereeState.TEAMS_READY);
     }
 
-    public synchronized void callContestants(int[] selected, int team) {
-        playgroundQueue[team] = selected;
+    /**
+     * Coach is waiting for the referee to call the trial
+     * 
+     * @param team
+     * @return
+     */
+    public int waitForCallTrial(int team) {
+        ((Coach) Thread.currentThread()).setEntityState(CoachState.WAIT_FOR_REFEREE_COMMAND);
+        repo.setCoachState(team, CoachState.WAIT_FOR_REFEREE_COMMAND);
+
+        // TODO: o que esta merda do callTrial faz
+        while (!matchOver && callTrial == 0) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (matchOver) {
+            return 0;
+        }
+
+        callTrial--;
+        return 1;
+    }
+
+    /**
+     * Coach calls the Contestants to play.
+     * By default all Contestants are seated in the bench, only after the Coach
+     * calls the chosen ones.
+     * 
+     * @param team
+     * @param selected
+     */
+    public synchronized void callContestants(int team, int[] selected) {
+        for (int i = 0; i < SimulParse.CONTESTANT_PER_TEAM; i++)
+            playgroundQueue[team][i] = 1;
+        for (int id : selected)
+            playgroundQueue[team][id] = 2;
         notifyAll();
     }
 
@@ -97,6 +135,7 @@ public class ContestantBench {
              */
             inBench[team]--;
             int order = playgroundQueue[team][id];
+            // TODO: O que e esta merda
             if (order == 1) {
                 contestant.rest();
                 repo.setContestantStrength(team, id, contestant.getStrength());

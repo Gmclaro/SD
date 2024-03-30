@@ -38,7 +38,8 @@ public class RefereeSite {
     }
 
     public synchronized void informReferee() {
-        // TODO : implement informReferee
+        teamsReady++;
+        notifyAll();
     }
 
     /**
