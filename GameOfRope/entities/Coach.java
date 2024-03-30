@@ -141,20 +141,6 @@ public class Coach extends Thread {
             selected = reviewNotes();
             System.out.println(this.whoAmI() + " -> reviewNotes()");
         }
-
-        // reviewNotes();
-
-        /**
-         * selected = {1,2,3}
-         * while(RefereeSite.referee.getState() != RefereeState.END_OF_THE_MATCH) {
-         * contestantBench.callContestants(selected,teamID);
-         * // TODO: waitForFollowCoachAdvice -> with while inside of it in the
-         * playground
-         * refereeSite.informReferee();
-         * selected = reviewNotes();
-         * }
-         */
-
     }
 
     /**
