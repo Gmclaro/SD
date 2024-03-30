@@ -137,7 +137,7 @@ public class Contestant extends Thread {
     public void run() {
         System.out.println(this.whoAmI() +" has started.");
 
-        // TODO: implement contestant life cycle
+        // TODO: test lifecycle
         int orders;
         while (true) {
             orders = contestantBench.waitForCallContestant(team, id);

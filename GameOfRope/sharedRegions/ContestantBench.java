@@ -15,7 +15,7 @@ public class ContestantBench {
     private final int[][] playgroundQueue;
     private final int[] inBench;
 
-    private final boolean matchOver;
+    private boolean matchOver;
     private int callTrial;
 
     public ContestantBench(GeneralRepository repo) {
@@ -39,7 +39,6 @@ public class ContestantBench {
         ((Referee) Thread.currentThread()).setEntityState(RefereeState.TEAMS_READY);
         repo.setRefereeState(RefereeState.TEAMS_READY);
     }
-
 
     public synchronized void callContestants(int[] selected, int team) {
         playgroundQueue[team] = selected;
@@ -132,10 +131,17 @@ public class ContestantBench {
 
     /**
      * The referee declares the match winner
+     * 
+     * Reset the matchOver flag and notify all the threads
+     * 
+     * @param scores
      */
-    public synchronized void declareMatchWinner() {
-        // TODO : implement declareMatchWinner -> informar ao contestants que ja acabou
-
+    public synchronized void declareMatchWinner(int[] scores) {
+        matchOver = true;
+        notifyAll();
+        repo.setMatchWinner(scores);
+        ((Referee) Thread.currentThread()).setEntityState(RefereeState.END_OF_THE_MATCH);
+        repo.setRefereeState(RefereeState.END_OF_THE_MATCH);
     }
 
     public View[] getBench(int team) {

@@ -26,6 +26,11 @@ public class Referee extends Thread {
     private RefereeSite refereeSite;
 
     /**
+     * Scores of the games
+     */
+    private int[] scores;
+
+    /**
      * Referee instantiation
      * 
      * @param playground  Reference to the Playground
@@ -59,39 +64,35 @@ public class Referee extends Thread {
      * 
      * assertTrialDecision() == true -> trial is not over
      * assertTrialDecision() == false -> trial is over
+     * 
+     * ropePosition < 0 -> team 0 wins
+     * ropePosition > 0 -> team 1 wins
+     * ropePosition == 0 -> draw
      */
     @Override
     public void run() {
         System.out.println("Referee() has started.");
         int currentGame;
-        int currentTrial = 0;
         int ropePosition;
 
         for (currentGame = 1; currentGame <= SimulParse.GAMES; currentGame++) {
             refereeSite.announceNewGame();
             do {
-                currentTrial++;
                 contestantBench.callTrial();
                 refereeSite.waitForInformReferee();
                 playground.startTrial();
                 playground.waitForAmDone();
-            } while (playground.assertTrialDecision() == true || currentTrial <= SimulParse.TRIALS);
+            } while (playground.assertTrialDecision() == true);
+            ropePosition = playground.declareGameWinner();
 
+            if (ropePosition < 0)
+                scores[0]++;
+            else if (ropePosition > 0)
+                scores[1]++;
+            else {
+            }
         }
 
-        // TODO: implement referee life cycle
-        /**
-         * refereeSite.announceNewGame();
-         * 
-         * for(int n = 0; n < nGames; n++) {
-         * do {
-         * playground.callTrial();
-         * playground.startTrial();
-         * } while(playground.assertTrialDecision() == True);
-         * refereeSite.declareGameWinner();
-         * }
-         * 
-         * refereeSite.declareMatchWinner();
-         */
+        contestantBench.declareMatchWinner(scores);
     }
 }

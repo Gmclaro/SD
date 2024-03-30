@@ -58,13 +58,4 @@ public class RefereeSite {
          */
         teamsReady = 0;
     }
-
-    /**
-     * The referee declares the game winner
-     */
-
-    public synchronized void declareGameWinner(LinkedList<Integer> histOfTrials) {
-        // TODO : implement declareGameWinner
-    }
-
 }

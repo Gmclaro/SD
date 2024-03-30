@@ -161,7 +161,6 @@ public class GeneralRepository {
     throw new UnsupportedOperationException("Unimplemented method 'newGameStarted'");
   }
 
-  // TODO: missing a lot of methods
   public synchronized void setRefereeState(int refereeState) {
     this.refereeState = refereeState;
   }
@@ -181,5 +180,10 @@ public class GeneralRepository {
   public void setActiveContestant(int team, int id) {
     activeContestants[team][id] = 1;
   }
+
+public void setMatchWinner(int[] scores) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'setMatchWinner'");
+}
 
 }

@@ -11,8 +11,6 @@ public class Playground {
 
     private final GeneralRepository repo;
 
-    private final int playedTrials;
-
     private final View[][] contestants;
 
     private final int[] arrivedContestants;
@@ -22,10 +20,9 @@ public class Playground {
     // TODO: change name of this var
     private int nOfAmDone;
 
-    private final int[] strengthPerTeam;
+    private int playedTrial;
 
-    // TODO: nao sei se e necessiario
-    private final LinkedList<Integer> histOfTrials = new LinkedList<Integer>();
+    private final int[] strengthPerTeam;
 
     /**
      * Flags
@@ -39,7 +36,6 @@ public class Playground {
     public Playground(GeneralRepository repo) {
         this.repo = repo;
         contestants = new View[2][SimulParse.CONTESTANT_PER_TEAM];
-        playedTrials = 0;
 
         // during the game
         arrivedContestants = new int[] { 0, 0 };
@@ -71,6 +67,7 @@ public class Playground {
      */
     public synchronized void startTrial() {
         startOfTrial = true;
+        playedTrial++;
         notifyAll();
     }
 
@@ -107,7 +104,6 @@ public class Playground {
         notifyAll();
     }
 
-
     public void waitForAmDone() {
         while (nOfAmDone < 2 * SimulParse.CONTESTANT_PER_TEAM) {
             try {
@@ -121,18 +117,28 @@ public class Playground {
     }
 
     /**
-     * Referee will compare the strength of the teams and decide if the trial has ended
+     * Referee will compare the strength of the teams and decide if the trial has
+     * ended.
+     * 
+     * false -> trial has ended
+     * true -> trial has not ended
      * 
      * @return boolean
      */
-
     public synchronized boolean assertTrialDecision() {
         endOfTrial = true;
-        
-        if (Math.abs(strengthPerTeam[0] - strengthPerTeam[1]) >= SimulParse.KNOCKOUT) {
+
+        /**
+         * Referee will check if the trial was a knockout or if the trial limit was met
+         */
+        if (playedTrial <= SimulParse.TRIALS
+                || (Math.abs(strengthPerTeam[0] - strengthPerTeam[1]) >= SimulParse.KNOCKOUT)) {
+            playedTrial = 0;
+            notifyAll();
             return false;
         }
-        //TODO: missing this
+
+        return true;
     }
 
     /**
@@ -184,5 +190,16 @@ public class Playground {
 
     }
 
+    /**
+     * The referee will declare the winner of the game
+     * 
+     * @return int 
+     */
+    public int declareGameWinner() {
+        ((Referee) Thread.currentThread()).setEntityState(RefereeState.END_OF_A_GAME);
+        repo.setRefereeState(RefereeState.END_OF_A_GAME);
+        
+        return strengthPerTeam[0] - strengthPerTeam[1];
+    }
 
 }
