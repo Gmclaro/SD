@@ -19,6 +19,7 @@ echo "java main.GameOfRope"
 
 java main.GameOfRope
 
-sleep 0.1
-
-bat log
+if [ $? -eq 0 ]; then
+    sleep 0.1
+    bat log
+fi

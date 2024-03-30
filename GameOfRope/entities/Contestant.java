@@ -147,7 +147,7 @@ public class Contestant extends Thread {
          * Contestant life cycle
          */
         contestantBench.seatDown(this.team, this.id);
-        System.out.println("Contestant(T" + team + "," + id + ") -> seatDown()");
+        // System.out.println("Contestant(T" + team + "," + id + ") -> seatDown()");
 
         int orders;
         while (true) {

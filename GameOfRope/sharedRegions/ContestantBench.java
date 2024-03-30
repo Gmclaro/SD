@@ -22,6 +22,12 @@ public class ContestantBench {
         this.repo = repo;
 
         this.contestants = new View[2][SimulParse.CONTESTANT_PER_TEAM];
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < SimulParse.CONTESTANT_PER_TEAM; j++) {
+                this.contestants[i][j] = new View(j, 0);
+            }
+        }
+
         this.playgroundQueue = new int[2][SimulParse.CONTESTANT_PER_TEAM];
 
         this.inBench = new int[] { 0, 0 };
@@ -104,7 +110,7 @@ public class ContestantBench {
 
             contestants[team][id].setValue(contestant.getStrength());
 
-            inBench[team]++;
+            // inBench[team]++;
             notifyAll();
         }
 
@@ -113,6 +119,7 @@ public class ContestantBench {
          * 
          * order == 0 -> Contestant was not selected yet
          * order == 1 -> Contestant was selected to play
+         * order == 2 -> Contestant was selected to play and is already in the bench
          */
         synchronized (this) {
             while (!matchOver && playgroundQueue[team][id] == 0) {
@@ -133,9 +140,12 @@ public class ContestantBench {
             /**
              * Contestant was selected to play
              */
-            inBench[team]--;
+
             int order = playgroundQueue[team][id];
-            // TODO: O que e esta merda
+            if (order == 2) {
+                inBench[team]--;
+            }
+
             if (order == 1) {
                 contestant.rest();
                 repo.setContestantStrength(team, id, contestant.getStrength());
@@ -162,13 +172,9 @@ public class ContestantBench {
 
         repo.setContestantState(team, id, ContestantState.SEAT_AT_THE_BENCH);
 
-        if (contestants[team][id] == null)
-            contestants[team][id] = new View(id, 0);
-
         contestants[team][id].setValue(contestant.getStrength());
 
         inBench[team]++;
-        System.out.println("inBench[" + team + "]: " + inBench[team]);
         notifyAll();
     }
 
@@ -177,7 +183,7 @@ public class ContestantBench {
      * 
      */
     public synchronized View[] reviewNotes(int team) {
-        while (inBench[team] <= SimulParse.CONTESTANT_PER_TEAM) {
+        while (inBench[team] < SimulParse.CONTESTANT_PER_TEAM) {
             try {
                 wait();
             } catch (InterruptedException e) {

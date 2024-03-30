@@ -114,9 +114,8 @@ public class Playground {
     }
 
     public synchronized void waitForAmDone() {
-        while (nOfAmDone <= 2 * SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM) {
+        while (nOfAmDone < 2 * SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM) {
             try {
-                System.out.println("amDone: " + nOfAmDone + " - " + 2 * SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM);
                 wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
