@@ -31,7 +31,8 @@ public class GeneralRepository {
   private int matchWinner;
   private int gameWinner;
 
-  private Boolean endOfGame = false;
+  private Boolean endOfGame;
+  private Boolean endOfMatch;
 
   /**
    * General Repository
@@ -51,7 +52,7 @@ public class GeneralRepository {
     /**
      * Header of the log file
      */
-    this.header();
+    // this.header();
 
     /**
      * Inital Strength of the Contestants
@@ -64,6 +65,8 @@ public class GeneralRepository {
     this.currentGame = 0;
     this.currentTrial = 0;
     this.positionOfRope = 0;
+    this.endOfGame = false;
+    this.endOfMatch = false;
 
     this.refereeState = RefereeState.START_OF_THE_MATCH;
 
@@ -81,8 +84,11 @@ public class GeneralRepository {
 
     this.activeContestants = new int[2][SimulParse.CONTESTANT_PER_TEAM];
 
-    updateInfoTemplate(true);
-
+    /**
+     * writing TEXT
+     */
+    this.header();
+    this.updateInfoTemplate(true);
   }
 
   public synchronized void header() {
@@ -93,19 +99,28 @@ public class GeneralRepository {
       System.exit(1);
     }
 
-    log.writelnString("                               Game of the Rope - Description of the internal state");
-    log.writelnString(
-        "Ref Coa 1 Cont 1 Cont 2 Cont 3 Cont 4 Cont 5 Coa 2 Cont 1 Cont 2 Cont 3 Cont 4 Cont 5     Trial");
-    log.writelnString(
-        "Sta Stat Sta SG Sta SG Sta SG Sta SG Sta SG Stat Sta SG Sta SG Sta SG Sta SG Sta SG 3 2 1 . 1 2 3 NB PS");
+    String str = "";
+    str += "                               Game of the Rope - Description of the internal state\n";
+    str += "Ref Coa 1 Cont 1 Cont 2 Cont 3 Cont 4 Cont 5 Coa 2 Cont 1 Cont 2 Cont 3 Cont 4 Cont 5       Trial\n";
+    str += "Sta  Stat Sta SG Sta SG Sta SG Sta SG Sta SG  Stat Sta SG Sta SG Sta SG Sta SG Sta SG 3 2 1 . 1 2 3 NB PS";
+
+    log.writelnString(str);
+
     if (!log.close()) {
       GenericIO.writelnString("The operation of closing the file " + logFileName + " failed!");
       System.exit(1);
     }
-
   }
 
-  public void gameResult() {
+  public synchronized void showGameResult(int difference) {
+    if (difference > 0) {
+      gameWinner = 0;
+    } else if (difference < 0) {
+      gameWinner = 1;
+    } else {
+      gameWinner = 2;
+    }
+
     TextFile log = new TextFile();
 
     // Open the file
@@ -115,17 +130,22 @@ public class GeneralRepository {
       System.exit(1);
     }
 
-    if (gameWinner == 0 && currentTrial < SimulParse.TRIALS) {
-      log.writelnString("Game " + currentGame + " was won by team 0 by knock out in " + currentTrial + " trials.");
-    } else if (gameWinner == 1 && currentTrial < SimulParse.TRIALS) {
-      log.writelnString("Game " + currentGame + " was won by team 1 by knock out in " + currentTrial + " trials.");
-    } else if (gameWinner == 0 && currentTrial == SimulParse.TRIALS) {
-      log.writelnString("Game " + currentGame + " was won by team 0 by points.");
-    } else if (gameWinner == 1 && currentTrial == SimulParse.TRIALS) {
-      log.writelnString("Game " + currentGame + " was won by team 1 by points.");
+    String str = "";
+    str += "Game " + currentGame;
+
+    if (gameWinner == 0 && (Math.abs(positionOfRope) >= SimulParse.KNOCKOUT)) {
+      str += " was won by team 0 by knock out in " + currentTrial + " trials.";
+    } else if (gameWinner == 1 && (Math.abs(positionOfRope) >= SimulParse.KNOCKOUT)) {
+      str += " was won by team 1 by knock out in " + currentTrial + " trials.";
+    } else if (gameWinner == 0 && currentTrial >= SimulParse.TRIALS) {
+      str += " was won by team 0 by points.";
+    } else if (gameWinner == 1 && currentTrial >= SimulParse.TRIALS) {
+      str += " was won by team 1 by points.";
     } else {
-      log.writelnString("Game " + currentGame + " was a draw.");
+      str += " was a draw.";
     }
+
+    log.writelnString(str);
 
     if (!log.close()) {
       GenericIO.writelnString("The operation of closing the file " + logFileName + " failed!");
@@ -140,17 +160,18 @@ public class GeneralRepository {
       System.exit(1);
     }
 
-    log.writelnString("\nLegend:");
-    log.writelnString("Ref Sta    – state of the referee");
-    log.writelnString("Coa # Stat - state of the coach of team # (# - 1 .. 2)");
-    log.writelnString(
-        "Cont # Sta – state of the contestant # (# - 1 .. 5) of team whose coach was listed to the immediate left");
-    log.writelnString(
-        "Cont # SG  – strength of the contestant # (# - 1 .. 5) of team whose coach was listed to the immediate left");
-    log.writelnString(
-        "TRIAL – ?  – contestant identification at the position ? at the end of the rope for present trial (? - 1 .. 3)");
-    log.writelnString("TRIAL – NB – trial number");
-    log.writelnString("TRIAL – PS – position of the centre of the rope at the beginning of the trial");
+    String str = "";
+    str += "\nLegend:\n";
+    str += "Ref Sta    – state of the referee\n";
+    str += "Coa # Stat - state of the coach of team # (# - 1 .. 2)\n";
+    str += "Cont # Sta – state of the contestant # (# - 1 .. 5) of team whose coach was listed to the immediate left\n";
+    str += "Cont # SG  – strength of the contestant # (# - 1 .. 5) of team whose coach was listed to the immediate left\n";
+    str += "TRIAL – ?  – contestant identification at the position ? at the end of the rope for present trial (? - 1 .. 3)\n";
+    str += "TRIAL – NB – trial number\n";
+    str += "TRIAL – PS – position of the centre of the rope at the beginning of the trial";
+
+    log.writelnString(str);
+
     if (!log.close()) {
       GenericIO.writelnString("The operation of closing the file " + logFileName + " failed!");
       System.exit(1);
@@ -159,7 +180,7 @@ public class GeneralRepository {
 
   public synchronized void updateInfoTemplate(boolean startOfMatch) {
     TextFile log = new TextFile();
-    if (!log.openForWriting(".", logFileName)) {
+    if (!log.openForAppending(".", logFileName)) {
       GenericIO.writelnString("The operation of creating the file " + logFileName + " failed!");
       System.exit(1);
     }
@@ -224,48 +245,84 @@ public class GeneralRepository {
       }
     }
 
-    // Write referee state, coach, states to log file
-    log.writelnString(refereeState + " " + coachState[0] + " " + contestantState[0][0] + " " + contestantStrength[0][0]
-        + " " + contestantState[0][1] + " " + contestantStrength[0][1] + " " + contestantState[0][2] + " "
-        + contestantStrength[0][2] + " " + contestantState[0][3] + " " + contestantStrength[0][3] + " "
-        + contestantState[0][4] + " " + contestantStrength[0][4] + " " + coachState[1] + " " + contestantState[1][0]
-        + " " + contestantStrength[1][0] + " " + contestantState[1][1] + " " + contestantStrength[1][1] + " "
-        + contestantState[1][2] + " " + contestantStrength[1][2] + " " + contestantState[1][3] + " "
-        + contestantStrength[1][3] + " " + contestantState[1][4] + " " + contestantStrength[1][4] + " " + currentTrial
-        + " " + positionOfRope);
+    String str = refereeState + "  ";
 
-    if (!startOfMatch) {
-      log.writelnString("0 0 0 0 0 0 0 0 0 0 0 0 0 0 0");
-    } else {
-      log.writelnString("- - - . - - - -- --");
+    for (int i = 0; i < SimulParse.COACH; i++) {
+      str += coachState[i] + " ";
+      for (int j = 0; j < SimulParse.CONTESTANT_PER_TEAM; j++) {
+        str += contestantState[i][j] + " " + String.format("%2d", contestantStrength[i][j]) + " ";
+      }
+      if (i == 0) {
+        str += " ";
+      }
     }
+
+    if (startOfMatch) {
+      str += "- - - . - - - -- --";
+
+    } else {
+      String aux[] = new String[] { "", "" };
+      for (int i = 0; i < SimulParse.COACH; i++) {
+        for (int j = 0; j < SimulParse.CONTESTANT_PER_TEAM; j++) {
+          if (activeContestants[i][j] == 1) {
+            aux[i] += String.format("%1d", j) + " ";
+          }
+        }
+      }
+      str += String.format("%6s. %6s", aux[0], aux[1]);
+
+      str += String.format("%2d %2d", currentTrial, positionOfRope);
+    }
+
+    if (!endOfMatch)
+      log.writelnString(str);
+
     if (!log.close()) {
       GenericIO.writelnString("The operation of closing the file " + logFileName + " failed!");
       System.exit(1);
     }
   }
 
-
   public synchronized void newGameStarted() {
     currentGame++;
     currentTrial = 0;
     positionOfRope = 0;
     endOfGame = false;
+
+    TextFile log = new TextFile();
+    if (!log.openForAppending(".", logFileName)) {
+      GenericIO.writelnString("The operation of opening the file " + logFileName + " failed!");
+      System.exit(1);
+    }
+
+    String str = "Game " + currentGame + "\n";
+    str += "Ref Coa 1 Cont 1 Cont 2 Cont 3 Cont 4 Cont 5 Coa 2 Cont 1 Cont 2 Cont 3 Cont 4 Cont 5       Trial\n";
+    str += "Sta  Stat Sta SG Sta SG Sta SG Sta SG Sta SG  Stat Sta SG Sta SG Sta SG Sta SG Sta SG 3 2 1 . 1 2 3 NB PS";
+
+    log.writelnString(str);
+
+    if (!log.close()) {
+      GenericIO.writelnString("The operation of closing the file " + logFileName + " failed!");
+      System.exit(1);
+    }
   }
 
   public synchronized void setRefereeState(int refereeState) {
     this.refereeState = refereeState;
+    this.updateInfoTemplate(false);
   }
 
   public synchronized void setCoachState(int coachID, int coachState) {
     this.coachState[coachID] = coachState;
+    this.updateInfoTemplate(false);
   }
 
   public synchronized void setContestantState(int team, int id, int state) {
     contestantState[team][id] = state;
+    this.updateInfoTemplate(false);
   }
 
-  public synchronized  void setContestantStrength(int team, int id, int strength) {
+  public synchronized void setContestantStrength(int team, int id, int strength) {
     contestantStrength[team][id] = strength;
   }
 
@@ -273,16 +330,17 @@ public class GeneralRepository {
     activeContestants[team][id] = 1;
   }
 
-  public void setGameWinner(int difference) {
-    if (difference > 0) {
-      gameWinner = 0;
-    } else if (difference < 0) {
-      gameWinner = 1;
-    } else {
-      gameWinner = 2;
-    }
+  public synchronized void setRemoveContestant(int team, int id) {
+    activeContestants[team][id] = 0;
   }
 
+  public synchronized void setRopePosition(int positionOfRope) {
+    this.positionOfRope = positionOfRope;
+  }
+
+  public synchronized void setNewTrial() {
+    currentTrial++;
+  }
 
   /**
    * Set the match winner.
@@ -302,9 +360,11 @@ public class GeneralRepository {
     } else {
       matchWinner = 2;
     }
+    endOfMatch = true;
   }
-  public synchronized void setEndOfGame(Boolean endOfGame) {
-    this.endOfGame = endOfGame;
+
+  public synchronized void setEndOfGame() {
+    this.endOfGame = true;
   }
 
 }

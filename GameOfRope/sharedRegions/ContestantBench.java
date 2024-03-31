@@ -44,6 +44,7 @@ public class ContestantBench {
 
         ((Referee) Thread.currentThread()).setEntityState(RefereeState.TEAMS_READY);
         repo.setRefereeState(RefereeState.TEAMS_READY);
+        repo.setNewTrial();
     }
 
     /**
@@ -176,6 +177,8 @@ public class ContestantBench {
         contestants[team][id].setValue(contestant.getStrength());
 
         inBench[team]++;
+
+        repo.setRemoveContestant(team, id);
         notifyAll();
     }
 

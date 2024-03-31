@@ -80,6 +80,7 @@ public class GameOfRope {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < SimulParse.CONTESTANT_PER_TEAM; j++) {
                 contestantStrength[i][j] = (int) (5 * Math.random() + 6);
+                System.out.println("\u001B[31m"+"C(" + i + "," + j + ") = " + contestantStrength[i][j]+"\u001B[0m"); // TODO: remove this line
             }
         }
 

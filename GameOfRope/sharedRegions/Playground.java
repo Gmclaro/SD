@@ -138,11 +138,15 @@ public class Playground {
     public synchronized boolean assertTrialDecision() {
         endOfTrial = true;
 
+        int result = Math.abs(strengthPerTeam[0] - strengthPerTeam[1]);
+
+        repo.setRopePosition(result);
+
         /**
          * Referee will check if the trial was a knockout or if the trial limit was met
          */
         if (playedTrial >= SimulParse.TRIALS
-                || (Math.abs(strengthPerTeam[0] - strengthPerTeam[1]) >= SimulParse.KNOCKOUT)) {
+                || ( result>= SimulParse.KNOCKOUT)) {
             playedTrial = 0;
             notifyAll();
             return false;
@@ -234,8 +238,9 @@ public class Playground {
 
         int difference = strengthPerTeam[0] - strengthPerTeam[1];
 
-        repo.setGameWinner(difference);
-        repo.gameResult();
+        repo.setEndOfGame();
+
+        repo.showGameResult(difference);
 
         for (int i = 0; i < SimulParse.COACH; i++) {
             strengthPerTeam[i] = 0;
