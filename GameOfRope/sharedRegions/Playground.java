@@ -54,6 +54,9 @@ public class Playground {
     }
 
     public synchronized void waitForFollowCoachAdvice(int team) {
+        ((Coach) Thread.currentThread()).setEntityState(CoachState.ASSEMBLE_TEAM);
+        repo.setCoachState(team,CoachState.ASSEMBLE_TEAM);
+        
         while (arrivedContestants[team] < SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM) {
             try {
                 wait();
@@ -69,6 +72,9 @@ public class Playground {
      * 
      */
     public synchronized void startTrial() {
+        ((Referee)Thread.currentThread()).setEntityState(RefereeState.WAIT_FOR_TRIAL_CONCLUSION);
+        repo.setRefereeState(RefereeState.WAIT_FOR_TRIAL_CONCLUSION);
+
         startOfTrial = true;
         endOfTrial = false;
         playedTrial++;
