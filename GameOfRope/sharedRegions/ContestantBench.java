@@ -213,8 +213,16 @@ public class ContestantBench {
         repo.setRefereeState(RefereeState.END_OF_THE_MATCH);
     }
 
-    public View[] getBench(int team) {
-        return contestants[team];
+    public synchronized void waitForSeatAtBench() {
+
+        while (inBench[0] < SimulParse.CONTESTANT_PER_TEAM || inBench[1] < SimulParse.CONTESTANT_PER_TEAM) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            
+        }
     }
 
 }
