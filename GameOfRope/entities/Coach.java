@@ -150,10 +150,6 @@ public class Coach extends Thread {
 
     private int[] selectContestants(View[] selected) {
         int[] sel = coachStrategy.getStrategy().selectTeam(selected);
-
-        for (int i = 0; i < sel.length; i++) {
-            System.out.println("\u001B[32m" + "Sel T" + team + ": " + sel[i] + "\u001B[0m");
-        }
         return sel;
 
     }
