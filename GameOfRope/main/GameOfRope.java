@@ -97,7 +97,19 @@ public class GameOfRope {
         referee = new Referee(playground, refereeSite, contestantBench);
 
         for (int i = 0; i < 2; i++) {
-            coach[i] = new Coach(i, contestantBench, playground, refereeSite, Strategy.StrategyType.STRONGEST);
+            int strat = (int) (Math.random() * 3);
+
+            if (strat == 0) {
+                System.out.println("Team "  + i + ": STRONGEST");
+                coach[i] = new Coach(i, contestantBench, playground, refereeSite, Strategy.StrategyType.STRONGEST);
+            } else if (strat == 1) {
+                System.out.println("Team " + i + ": FIFO");
+                coach[i] = new Coach(i, contestantBench, playground, refereeSite, Strategy.StrategyType.FIFO);
+            } else {
+                System.out.println("Team " + i + ": RANDOM");
+                coach[i] = new Coach(i, contestantBench, playground, refereeSite, Strategy.StrategyType.RANDOM);
+            }
+
         }
 
         for (int i = 0; i < 2; i++) {
