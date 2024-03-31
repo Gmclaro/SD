@@ -53,6 +53,7 @@ public class ContestantBench {
      * @return
      */
     public synchronized int waitForCallTrial(int team) {
+        System.out.println("\u001B[31m"+"HEY"+"\u001B[0m");
         ((Coach) Thread.currentThread()).setEntityState(CoachState.WAIT_FOR_REFEREE_COMMAND);
         repo.setCoachState(team, CoachState.WAIT_FOR_REFEREE_COMMAND);
 
@@ -148,6 +149,7 @@ public class ContestantBench {
 
             if (order == 1) {
                 contestant.rest();
+                contestants[team][id].setValue(contestant.getStrength());
                 repo.setContestantStrength(team, id, contestant.getStrength());
             }
 

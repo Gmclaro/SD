@@ -3,8 +3,6 @@ package sharedRegions;
 import entities.*;
 import main.SimulParse;
 
-import java.util.LinkedList;
-
 import commonInfra.View;
 
 public class Playground {
@@ -229,7 +227,7 @@ public class Playground {
 
         int difference = strengthPerTeam[0] - strengthPerTeam[1];
 
-        repo.setGameWinner(difference);
+        //repo.setGameWinner(difference);
 
         for (int i = 0; i < SimulParse.COACH; i++) {
             strengthPerTeam[i] = 0;
