@@ -13,7 +13,6 @@ public class Playground {
 
     private final int[] arrivedContestants;
 
-    // TODO: change name of this var
     private int nOfAmDone;
 
     private int playedTrial;
@@ -28,7 +27,6 @@ public class Playground {
     private boolean startOfTrial;
     private boolean endOfTrial;
 
-    // TODO: Constructor -> check if it's missing something
     public Playground(GeneralRepository repo) {
         this.repo = repo;
         contestants = new View[2][SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM];
@@ -211,8 +209,6 @@ public class Playground {
      * @param team
      */
     public void waitForAssertTrialDecision(int team) {
-        // TODO: Missing implementation
-
         synchronized (this) {
             ((Coach) Thread.currentThread()).setEntityState(CoachState.WATCH_TRIAL);
             repo.setCoachState(team, CoachState.WATCH_TRIAL);

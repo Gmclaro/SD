@@ -38,8 +38,8 @@ public class Coach extends Thread {
     private RefereeSite refereeSite;
 
     /**
-     * Hist of Stratgies
-     * //TODO: strat
+     * Stratgies
+     * 
      */
     private Strategy coachStrategy;
 

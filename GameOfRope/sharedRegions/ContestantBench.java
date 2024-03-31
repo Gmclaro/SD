@@ -7,10 +7,7 @@ import main.SimulParse;
 public class ContestantBench {
 
     private final GeneralRepository repo;
-    // private final Playground playground;
 
-    // TODO: Instead of using Contestant reference, use the content of each one, and
-    // only change it not the "person" itself
     private final View[][] contestants;
     private final int[][] playgroundQueue;
     private final int[] inBench;
@@ -38,7 +35,6 @@ public class ContestantBench {
      * Referee is announce a new trial
      */
     public synchronized void callTrial() {
-        // TODO: nao me lembro o que faz isto
         this.callTrial = 2;
         notifyAll();
 
@@ -57,7 +53,6 @@ public class ContestantBench {
         ((Coach) Thread.currentThread()).setEntityState(CoachState.WAIT_FOR_REFEREE_COMMAND);
         repo.setCoachState(team, CoachState.WAIT_FOR_REFEREE_COMMAND);
 
-        // TODO: o que esta merda do callTrial faz
         while (!matchOver && callTrial == 0) {
             try {
                 wait();

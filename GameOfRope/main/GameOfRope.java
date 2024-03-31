@@ -80,7 +80,6 @@ public class GameOfRope {
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < SimulParse.CONTESTANT_PER_TEAM; j++) {
                 contestantStrength[i][j] = (int) (5 * Math.random() + 6);
-                System.out.println("\u001B[31m"+"C(" + i + "," + j + ") = " + contestantStrength[i][j]+"\u001B[0m"); // TODO: remove this line
             }
         }
 
@@ -135,9 +134,6 @@ public class GameOfRope {
         for (int i = 0; i < 2; i++) {
             try {
                 coach[i].join();
-
-                // TODO: talvez fazer overide ao join(), e por o print lá dentro, depois de ter
-                // o projeto a funcionar
             } catch (InterruptedException e) {
             }
             System.out.println("Coach(" + i + ") has ended.");
@@ -147,7 +143,6 @@ public class GameOfRope {
             for (int j = 0; j < SimulParse.CONTESTANT_PER_TEAM; j++) {
                 try {
                     contestants[i][j].join();
-                    // TODO: O mesmo se aplica aqui o de cima, e no referee tambem
                 } catch (InterruptedException e) {
                 }
                 System.out.println("Contestant(T" + i + "," + j + ") has ended.");
