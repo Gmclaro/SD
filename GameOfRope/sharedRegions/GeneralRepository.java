@@ -361,6 +361,33 @@ public class GeneralRepository {
       matchWinner = 2;
     }
     endOfMatch = true;
+
+    TextFile log = new TextFile();
+
+    // Open the file
+    if (!log.openForAppending(".", logFileName)) {
+      GenericIO.writelnString("The operation of opening the file " + logFileName +
+          " failed!");
+      System.exit(1);
+    }
+
+    String str = "";
+    str += "Match";
+
+    if (matchWinner == 0) {
+      str += " was won by team 0 ("+scores[0] + "-" + scores[1] +")";
+    } else if (matchWinner == 1) {
+      str += " was won by team 1 ("+scores[0] + "-" + scores[1] +")";
+    } else {
+      str += " was a draw.";
+    }
+
+    log.writelnString(str);
+
+    if (!log.close()) {
+      GenericIO.writelnString("The operation of closing the file " + logFileName + " failed!");
+      System.exit(1);
+    }
   }
 
   public synchronized void setEndOfGame() {
