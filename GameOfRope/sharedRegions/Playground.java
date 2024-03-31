@@ -3,8 +3,6 @@ package sharedRegions;
 import entities.*;
 import main.SimulParse;
 
-import java.util.LinkedList;
-
 import commonInfra.View;
 
 public class Playground {
@@ -192,6 +190,7 @@ public class Playground {
                 }
 
             }
+            notifyAll();
         }
 
     }

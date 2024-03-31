@@ -124,7 +124,6 @@ public class Referee extends Thread {
             ropePosition = playground.declareGameWinner();
             System.out.println(this.whoAmI() + " -> declareGameWinner()");
 
-            System.out.println("\u001B[36m" + "RP: " + ropePosition + "\u001B[0m");
 
             if (ropePosition > 0)
                 scores[0]++;
@@ -136,7 +135,6 @@ public class Referee extends Thread {
 
         contestantBench.declareMatchWinner(scores);
         System.out.println(this.whoAmI() + " -> declareMatchWinner()");
-        System.out.println("\u001B[36m" + "score: " + scores[0] + "-" + scores[1] + "\u001B[0m");
 
     }
 }

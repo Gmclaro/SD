@@ -1,7 +1,5 @@
 package sharedRegions;
 
-import java.util.LinkedList;
-
 import entities.*;
 
 public class RefereeSite {
@@ -13,17 +11,8 @@ public class RefereeSite {
 
     private int teamsReady;
 
-    /**
-     * Number of games played
-     */
-
-    private final int gamesPlayed;
-
-    private final LinkedList<Integer> histOfGames = new LinkedList<Integer>();
-
     public RefereeSite(GeneralRepository repo) {
         this.repo = repo;
-        gamesPlayed = 0;
         teamsReady = 0;
     }
 

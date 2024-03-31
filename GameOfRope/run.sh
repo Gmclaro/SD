@@ -23,8 +23,8 @@ javac ./*/*.java
 
 echo "java main.GameOfRope"
 
-for ((i = 0; i < $NUMBER_OF_MATCH; i++)); do
-     echo -e "\033[34mNEW RUN\033[0m"
+for ((i = 1; i <= $NUMBER_OF_MATCH; i++)); do
+     echo -e "\033[34mNEW RUN $i\033[0m"
     java main.GameOfRope
     sleep 0.1
 done

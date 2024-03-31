@@ -1,8 +1,5 @@
 package sharedRegions;
 
-import java.util.Arrays;
-
-import commonInfra.*;
 import entities.*;
 import main.*;
 
@@ -248,7 +245,8 @@ public class GeneralRepository {
     }
   }
 
-  public void newGameStarted() {
+
+  public synchronized void newGameStarted() {
     currentGame++;
     currentTrial = 0;
     positionOfRope = 0;
@@ -263,15 +261,15 @@ public class GeneralRepository {
     this.coachState[coachID] = coachState;
   }
 
-  public void setContestantState(int team, int id, int state) {
+  public synchronized void setContestantState(int team, int id, int state) {
     contestantState[team][id] = state;
   }
 
-  public void setContestantStrength(int team, int id, int strength) {
+  public synchronized  void setContestantStrength(int team, int id, int strength) {
     contestantStrength[team][id] = strength;
   }
 
-  public void setActiveContestant(int team, int id) {
+  public synchronized void setActiveContestant(int team, int id) {
     activeContestants[team][id] = 1;
   }
 
@@ -285,6 +283,7 @@ public class GeneralRepository {
     }
   }
 
+
   /**
    * Set the match winner.
    * 
@@ -295,7 +294,7 @@ public class GeneralRepository {
    * @param scores
    */
 
-  public void setMatchWinner(int[] scores) {
+  public synchronized void setMatchWinner(int[] scores) {
     if (scores[0] > scores[1]) {
       matchWinner = 0;
     } else if (scores[0] < scores[1]) {
@@ -304,8 +303,7 @@ public class GeneralRepository {
       matchWinner = 2;
     }
   }
-
-  public void setEndOfGame(Boolean endOfGame) {
+  public synchronized void setEndOfGame(Boolean endOfGame) {
     this.endOfGame = endOfGame;
   }
 
