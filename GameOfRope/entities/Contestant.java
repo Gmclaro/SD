@@ -36,7 +36,6 @@ public class Contestant extends Thread {
      * Shared memory region declaration
      */
     private final Playground playground;
-    private final RefereeSite refereeSite;
     private final ContestantBench contestantBench;
 
     /**
@@ -49,7 +48,7 @@ public class Contestant extends Thread {
      * @param refereeSite  reference to refereeSite
      * @param bench        reference to contestantBench
      */
-    public Contestant(int team, int id, int contestantStrength, Playground playground, RefereeSite refereeSite,
+    public Contestant(int team, int id, int contestantStrength, Playground playground,
             ContestantBench contestantBench) {
         super("Contestant(T" + team + "," + id + ")");
         this.id = id;
@@ -59,7 +58,6 @@ public class Contestant extends Thread {
 
         // shared regions
         this.playground = playground;
-        this.refereeSite = refereeSite;
         this.contestantBench = contestantBench;
     }
 

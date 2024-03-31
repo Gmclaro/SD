@@ -6,8 +6,6 @@ import commonInfra.Strategy;
 
 import java.util.Scanner;
 
-//import commonInfra.Strategy;
-
 import java.io.File;
 
 public class GameOfRope {
@@ -100,7 +98,7 @@ public class GameOfRope {
             int strat = (int) (Math.random() * 3);
 
             if (strat == 0) {
-                System.out.println("Team "  + i + ": STRONGEST");
+                System.out.println("Team " + i + ": STRONGEST");
                 coach[i] = new Coach(i, contestantBench, playground, refereeSite, Strategy.StrategyType.STRONGEST);
             } else if (strat == 1) {
                 System.out.println("Team " + i + ": FIFO");
@@ -114,7 +112,7 @@ public class GameOfRope {
 
         for (int i = 0; i < 2; i++) {
             for (int j = 0; j < SimulParse.CONTESTANT_PER_TEAM; j++) {
-                contestants[i][j] = new Contestant(i, j, contestantStrength[i][j], playground, refereeSite,
+                contestants[i][j] = new Contestant(i, j, contestantStrength[i][j], playground,
                         contestantBench);
             }
         }
