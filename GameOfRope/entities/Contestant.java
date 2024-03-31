@@ -188,7 +188,11 @@ public class Contestant extends Thread {
      * @return strength of the contestant
      */
     public synchronized int pullTheRope() {
-        return this.strength--;
+        this.strength = this.strength--;
+
+        contestantBench.setStrength(this.team, this.id, this.strength);
+
+        return this.strength;
     }
 
     /**

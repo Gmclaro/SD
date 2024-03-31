@@ -220,4 +220,8 @@ public class ContestantBench {
         }
     }
 
+    public void setStrength(int team, int id, int strength) {
+        contestants[team][id].setValue(strength);
+    }
+
 }
