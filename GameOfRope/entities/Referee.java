@@ -44,7 +44,7 @@ public class Referee extends Thread {
         this.contestantBench = contestantBench;
         this.state = RefereeState.START_OF_THE_MATCH;
 
-        this.scores = new int[]{0, 0};
+        this.scores = new int[] { 0, 0 };
     }
 
     /**
@@ -99,10 +99,13 @@ public class Referee extends Thread {
             System.out.println(this.whoAmI() + " -> announceNewGame()");
 
             boolean continueGame;
+            int currentTrial = 0;
+
             do {
-                
+
                 contestantBench.callTrial();
-                System.out.println("Trial: ----------------------------------------------------------");
+                System.out.println(
+                        "Trial " + (++currentTrial) + ": ----------------------------------------------------------");
                 System.out.println(this.whoAmI() + " -> callTrial()");
 
                 refereeSite.waitForInformReferee();
@@ -121,9 +124,11 @@ public class Referee extends Thread {
             ropePosition = playground.declareGameWinner();
             System.out.println(this.whoAmI() + " -> declareGameWinner()");
 
-            if (ropePosition < 0)
+            System.out.println("\u001B[36m" + "RP: " + ropePosition + "\u001B[0m");
+
+            if (ropePosition > 0)
                 scores[0]++;
-            else if (ropePosition > 0)
+            else if (ropePosition < 0)
                 scores[1]++;
             else {
             }
@@ -131,5 +136,7 @@ public class Referee extends Thread {
 
         contestantBench.declareMatchWinner(scores);
         System.out.println(this.whoAmI() + " -> declareMatchWinner()");
+        System.out.println("\u001B[36m" + "score: " + scores[0] + "-" + scores[1] + "\u001B[0m");
+
     }
 }

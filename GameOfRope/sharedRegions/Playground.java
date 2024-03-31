@@ -15,8 +15,6 @@ public class Playground {
 
     private final int[] arrivedContestants;
 
-    private final int[] arrivedCoaches;
-
     // TODO: change name of this var
     private int nOfAmDone;
 
@@ -39,7 +37,6 @@ public class Playground {
 
         // during the game
         arrivedContestants = new int[] { 0, 0 };
-        arrivedCoaches = new int[] { 0, 0 };
         nOfAmDone = 0;
         strengthPerTeam = new int[2];
 
@@ -140,7 +137,8 @@ public class Playground {
         /**
          * Referee will check if the trial was a knockout or if the trial limit was met
          */
-        if (playedTrial >= SimulParse.TRIALS || (Math.abs(strengthPerTeam[0] - strengthPerTeam[1]) >= SimulParse.KNOCKOUT)) {
+        if (playedTrial >= SimulParse.TRIALS
+                || (Math.abs(strengthPerTeam[0] - strengthPerTeam[1]) >= SimulParse.KNOCKOUT)) {
             playedTrial = 0;
             notifyAll();
             return false;
@@ -209,7 +207,7 @@ public class Playground {
         synchronized (this) {
             ((Coach) Thread.currentThread()).setEntityState(CoachState.WATCH_TRIAL);
             repo.setCoachState(team, CoachState.WATCH_TRIAL);
-            
+
             while (!endOfTrial) {
                 try {
                     wait();
@@ -225,11 +223,19 @@ public class Playground {
      * 
      * @return int
      */
-    public int declareGameWinner() {
+    public synchronized int declareGameWinner() {
         ((Referee) Thread.currentThread()).setEntityState(RefereeState.END_OF_A_GAME);
         repo.setRefereeState(RefereeState.END_OF_A_GAME);
 
-        return strengthPerTeam[0] - strengthPerTeam[1];
+        int difference = strengthPerTeam[0] - strengthPerTeam[1];
+
+        repo.setGameWinner(difference);
+
+        for (int i = 0; i < SimulParse.COACH; i++) {
+            strengthPerTeam[i] = 0;
+        }
+
+        return difference;
     }
 
 }

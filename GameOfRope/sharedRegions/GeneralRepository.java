@@ -215,6 +215,11 @@ public class GeneralRepository {
     activeContestants[team][id] = 1;
   }
 
+  public void setGameWinner(int difference) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'setGameWinner'");
+  }
+
   /**
    * Set the match winner.
    * 

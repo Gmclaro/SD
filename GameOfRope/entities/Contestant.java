@@ -147,12 +147,12 @@ public class Contestant extends Thread {
          * Contestant life cycle
          */
         contestantBench.seatDown(this.team, this.id);
-        // System.out.println("Contestant(T" + team + "," + id + ") -> seatDown()");
+        System.out.println(this.whoAmI() + " -> seatDown()");
 
         int orders;
         while (true) {
             orders = contestantBench.waitForCallContestant(team, id);
-            System.out.println("Contestant(T" + team + "," + id + ") -> waitForCallContestant()");
+            System.out.println(this.whoAmI() + " -> waitForCallContestant()");
 
             switch (orders) {
                 case 0:
@@ -164,19 +164,19 @@ public class Contestant extends Thread {
             }
 
             playground.followCoachAdvice(this.team);
-            System.out.println("Contestant(T" + team + "," + id + ") -> followCoachAdvice()");
+            System.out.println(this.whoAmI() + " -> followCoachAdvice()");
 
             playground.waitForStartTrial(this.team, this.id);
-            System.out.println("Contestant(T" + team + "," + id + ") -> waitForStartTrial()");
+            System.out.println(this.whoAmI() + " -> waitForStartTrial()");
 
             playground.getReady(this.team, this.id);
-            System.out.println("Contestant(T" + team + "," + id + ") -> getReady()");
+            System.out.println(this.whoAmI() + " -> getReady()");
 
             playground.waitForAssertTrialDecision(this.team, this.id);
-            System.out.println("Contestant(T" + team + "," + id + ") -> waitForAssertTrialDecision()");
+            System.out.println(this.whoAmI() + " -> waitForAssertTrialDecision()");
 
             contestantBench.seatDown(this.team, this.id);
-            System.out.println("Contestant(T" + team + "," + id + ") -> seatDown()");
+            System.out.println(this.whoAmI() + " -> seatDown()");
         }
     }
 

@@ -151,6 +151,9 @@ public class ContestantBench {
                 repo.setContestantStrength(team, id, contestant.getStrength());
             }
 
+            System.out.println(
+                "\u001B[35m" + "Cont T" + team + " I" + id + " S" + contestant.getStrength() + "\u001B[0m");
+
             /**
              * Restart the life cycle of the Contestant
              */
