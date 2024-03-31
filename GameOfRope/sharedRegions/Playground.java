@@ -230,6 +230,7 @@ public class Playground {
         int difference = strengthPerTeam[0] - strengthPerTeam[1];
 
         repo.setGameWinner(difference);
+        repo.gameResult();
 
         for (int i = 0; i < SimulParse.COACH; i++) {
             strengthPerTeam[i] = 0;
