@@ -1,5 +1,7 @@
 package sharedRegions;
 
+import java.util.Arrays;
+
 import commonInfra.*;
 import entities.*;
 import main.*;
@@ -81,6 +83,8 @@ public class GeneralRepository {
 
     this.activeContestants = new int[2][SimulParse.CONTESTANT_PER_TEAM];
 
+    updateInfoTemplate(true);
+
   }
 
   public synchronized void header() {
@@ -102,6 +106,30 @@ public class GeneralRepository {
     }
 
   }
+
+  // public void gameResult(){
+  //   TextFile log = new TextFile();
+
+  //   // Open the file
+  //   if (!log.openForAppending(".", logFileName)) {
+  //     GenericIO.writelnString("The operation of opening the file " + logFileName + " failed!");
+  //     System.exit(1);
+  //   }
+
+  //   // Write the game result to the log file
+  //   //Game # was won by team # by knock out in # trials. / by points. / was a draw. (it changes according to the result)
+  //   if (matchWinner == 0 && currentTrial < SimulParse.TRIALS) {
+  //     log.writelnString("Game " + currentGame + " was won by team 0 by knock out in " + currentTrial + " trials.");
+  //   } else if (matchWinner == 1 && currentTrial < SimulParse.TRIALS) {
+  //     log.writelnString("Game " + currentGame + " was won by team 1 by knock out in " + currentTrial + " trials.");
+  //   } else if (matchWinner == 0 && currentTrial == SimulParse.TRIALS) {
+  //     log.writelnString("Game " + currentGame + " was won by team 0 by points.");
+  //   } else if (matchWinner == 1 && currentTrial == SimulParse.TRIALS) {
+  //     log.writelnString("Game " + currentGame + " was won by team 1 by points.");
+  //   } else {
+  //     log.writelnString("Game " + currentGame + " was a draw.");
+  //   }
+  // }
 
   public synchronized void legend() {
     TextFile log = new TextFile();
@@ -127,66 +155,92 @@ public class GeneralRepository {
     }
   }
 
-  /*
-   * public synchronized void updateInfoTemplate(TextFile log) {
-   * String refereeState = "";
-   * 
-   * switch (this.refereeState) {
-   * case RefereeState.START_OF_THE_MATCH:
-   * refereeState = "SOM";
-   * break;
-   * case RefereeState.START_OF_A_GAME:
-   * refereeState = "SOG";
-   * break;
-   * case RefereeState.TEAMS_READY:
-   * refereeState = "TRY";
-   * break;
-   * case RefereeState.WAIT_FOR_TRIAL_CONCLUSION:
-   * refereeState = "WTC";
-   * break;
-   * case RefereeState.END_OF_A_GAME:
-   * refereeState = "EOG";
-   * break;
-   * case RefereeState.END_OF_THE_MATCH:
-   * refereeState = "EOM";
-   * break;
-   * default:
-   * break;
-   * }
-   * 
-   * 
-   * String[] coachState = new String[2];
-   * for (int i = 0; i < 2; i++) {
-   * switch (this.coachState[i]) {
-   * case CoachState.WAIT_FOR_REFEREE_COMMAND:
-   * coachState = "WFRC";
-   * break;
-   * case CoachState.ASSEMBLE_TEAM:
-   * coachState = "ASTM";
-   * break;
-   * case CoachState.WATCH_TRIAL:
-   * coachState = "WATL";
-   * break;
-   * default:
-   * break;
-   * }
-   * }
-   * 
-   * // i need to make it for the contestants
-   * 
-   * // switch(this.contestantState[0][0]){
-   * // case ContestantState.SEAT_AT_THE_BENCH:
-   * // contestantState = "SAB";
-   * // break;
-   * // case ContestantState.STAND_IN_POSITION:
-   * // contestantState = "SIP";
-   * // break;
-   * // case ContestantState.DO_YOUR_BEST:
-   * // contestantState = "DYB";
-   * // break;
-   * // }
-   * }
-   */
+
+
+  public synchronized void updateInfoTemplate(boolean startOfMatch) {
+    TextFile log = new TextFile();
+    if (!log.openForWriting(".", logFileName)) {
+      GenericIO.writelnString("The operation of creating the file " + logFileName + " failed!");
+      System.exit(1);
+    }
+
+
+    String refereeState = "";
+
+    switch (this.refereeState) {
+        case RefereeState.START_OF_THE_MATCH:
+            refereeState = "SOM";
+            break;
+        case RefereeState.START_OF_A_GAME:
+            refereeState = "SOG";
+            break;
+        case RefereeState.TEAMS_READY:
+            refereeState = "TRY";
+            break;
+        case RefereeState.WAIT_FOR_TRIAL_CONCLUSION:
+            refereeState = "WTC";
+            break;
+        case RefereeState.END_OF_A_GAME:
+            refereeState = "EOG";
+            break;
+        case RefereeState.END_OF_THE_MATCH:
+            refereeState = "EOM";
+            break;
+        default:
+            break;
+    }
+    String[] coachState = new String[SimulParse.COACH];
+
+    for (int i = 0; i < SimulParse.COACH; i++) {
+        switch (this.coachState[i]) {
+            case CoachState.WAIT_FOR_REFEREE_COMMAND:
+                coachState[i] = "WFRC";
+                break;
+            case CoachState.ASSEMBLE_TEAM:
+                coachState[i] = "ASTM";
+                break;
+            case CoachState.WATCH_TRIAL:
+                coachState[i] = "WATL";
+                break;
+            default:
+                break;
+        }
+    }
+    String[][] contestantState = new String[SimulParse.COACH][SimulParse.CONTESTANT_PER_TEAM];
+    for(int i=0 ; i <SimulParse.COACH; i++){
+        for(int j= 0; j <SimulParse.CONTESTANT_PER_TEAM;j++){
+            switch (this.contestantState[i][j]) {
+                case ContestantState.SEAT_AT_THE_BENCH:
+                    contestantState[i][j] = "STB";
+                    break;
+                case ContestantState.STAND_IN_POSITION:
+                    contestantState[i][j] = "SIP";
+                    break;
+                case ContestantState.DO_YOUR_BEST:
+                    contestantState[i][j] = "DYB";
+                    break;
+                default:
+                    break;
+            }
+        }
+      }
+
+
+    // Write referee state, coach,  states to log file
+    log.writelnString(refereeState + " " + coachState[0] + " " + contestantState[0][0] + " " + contestantStrength[0][0] + " " + contestantState[0][1] + " " + contestantStrength[0][1] + " " + contestantState[0][2] + " " + contestantStrength[0][2] + " " + contestantState[0][3] + " " + contestantStrength[0][3] + " " + contestantState[0][4] + " " + contestantStrength[0][4] + " " + coachState[1] + " " + contestantState[1][0] + " " + contestantStrength[1][0] + " " + contestantState[1][1] + " " + contestantStrength[1][1] + " " + contestantState[1][2] + " " + contestantStrength[1][2] + " " + contestantState[1][3] + " " + contestantStrength[1][3] + " " + contestantState[1][4] + " " + contestantStrength[1][4] + " " + currentTrial + " " + positionOfRope);
+
+
+    if(!startOfMatch){
+        log.writelnString("0 0 0 0 0 0 0 0 0 0 0 0 0 0 0");
+    }else{
+        log.writelnString("- - - . - - - -- --");
+    }
+    if (!log.close()) {
+      GenericIO.writelnString("The operation of closing the file " + logFileName + " failed!");
+      System.exit(1);
+    }
+  }
+
 
   public void newGameStarted() {
     currentGame++;
@@ -224,6 +278,7 @@ public class GeneralRepository {
    * 
    * @param scores
    */
+  
 
   public void setMatchWinner(int[] scores) {
     if (scores[0] > scores[1]) {
@@ -234,5 +289,14 @@ public class GeneralRepository {
       matchWinner = 2;
     }
   }
+  
+  public void setEndOfGame(Boolean endOfGame) {
+    this.endOfGame = endOfGame;
+  }
+
+  // function to print the trial result
+  
+
+  
 
 }
