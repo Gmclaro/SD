@@ -44,13 +44,11 @@ public class Contestant extends Thread {
     /**
      * Contestant Constructor
      * 
-     * @param name        thread name
-     * @param team        team
-     * @param id          Contestant id
-     * @param strength    Contestant strength
-     * @param playground  reference to playground
-     * @param refereeSite reference to refereeSite
-     * @param bench       reference to contestantBench
+     * @param team               team
+     * @param id                 Contestant id
+     * @param contestantStrength Contestant strength
+     * @param playground         reference to playground
+     * @param contestantBench    reference to contestantBench
      */
     public Contestant(int team, int id, int contestantStrength, Playground playground,
             ContestantBench contestantBench) {

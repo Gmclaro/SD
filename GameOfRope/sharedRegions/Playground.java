@@ -215,7 +215,6 @@ public class Playground {
      * 
      * @param team     The coach team
      * @param id       The id of the contestants
-     * @param strength The strength of the contestants
      */
 
     public void waitForAssertTrialDecision(int team, int id) {

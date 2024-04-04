@@ -61,7 +61,7 @@ public class Referee extends Thread {
     /**
      * Set the referee state
      * 
-     * @param int state referee state
+     * @param state referee state
      */
     public void setEntityState(int state) {
         this.state = state;
@@ -70,7 +70,7 @@ public class Referee extends Thread {
     /**
      * Get the referee state
      * 
-     * @return state referee state
+     * @return int referee state
      */
     public int getEntityState() {
         return this.state;

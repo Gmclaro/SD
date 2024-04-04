@@ -10,11 +10,18 @@ public class Strategy {
 
     /**
      * Functional interface to define the strategy to select the team.
-     * 
-     * @param contestants The list of contestants to select the team from.
      */
     @FunctionalInterface
+    /**
+     * InnerStrategy Interface to define the structure of the method.
+     */
     public interface InnerStrategy {
+        /**
+         * Select the team based on the strategy.
+         * 
+         * @param contestants The list of contestants to select the team from.
+         * @return int[] The selected team.
+         */
         int[] selectTeam(View[] contestants);
     }
 

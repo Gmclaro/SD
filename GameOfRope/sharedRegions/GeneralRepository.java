@@ -160,6 +160,8 @@ public class GeneralRepository {
 
   /**
    * Write the result of each game in the log file
+   * 
+   * @param difference Difference of the scores of the teams
    */
   public synchronized void showGameResult(int difference) {
     if (difference > 0) {
@@ -462,9 +464,9 @@ public class GeneralRepository {
   /**
    * Set the match winner.
    * 
-   * matchWinner == 0 -> team 0 wins.
-   * matchWinner == 1 -> team 1 wins.
-   * matchWinner == 2 -> draw.
+   * matchWinner == 0 : team 0 wins.
+   * matchWinner == 1 : team 1 wins.
+   * matchWinner == 2 : draw.
    * 
    * @param scores Scores of the match
    */
