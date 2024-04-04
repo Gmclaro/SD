@@ -263,11 +263,19 @@ public class GeneralRepository {
     } else {
       String aux[] = new String[] { "", "" };
       for (int i = 0; i < SimulParse.COACH; i++) {
+        int active = 0;
         for (int j = 0; j < SimulParse.CONTESTANT_PER_TEAM; j++) {
           if (activeContestants[i][j] == 1) {
             aux[i] += String.format("%1d", j) + " ";
+            active++;
           }
         }
+        if (active != SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM) {
+          for (int j = 0; j < (SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM - active); j++) {
+            aux[i] += "- ";
+          }
+        }
+
       }
       str += String.format("%6s. %6s", aux[0], aux[1]);
 
@@ -375,9 +383,9 @@ public class GeneralRepository {
     str += "Match";
 
     if (matchWinner == 0) {
-      str += " was won by team 0 ("+scores[0] + "-" + scores[1] +")";
+      str += " was won by team 0 (" + scores[0] + "-" + scores[1] + ")";
     } else if (matchWinner == 1) {
-      str += " was won by team 1 ("+scores[0] + "-" + scores[1] +")";
+      str += " was won by team 1 (" + scores[0] + "-" + scores[1] + ")";
     } else {
       str += " was a draw.";
     }

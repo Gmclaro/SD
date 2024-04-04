@@ -203,9 +203,9 @@ public class ContestantBench {
     public synchronized void declareMatchWinner(int[] scores) {
         matchOver = true;
         notifyAll();
-        repo.setMatchWinner(scores);
         ((Referee) Thread.currentThread()).setEntityState(RefereeState.END_OF_THE_MATCH);
         repo.setRefereeState(RefereeState.END_OF_THE_MATCH);
+        repo.setMatchWinner(scores);
     }
 
     public synchronized void waitForSeatAtBench() {
