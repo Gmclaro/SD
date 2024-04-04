@@ -33,8 +33,9 @@ public class Referee extends Thread {
     /**
      * Referee instantiation
      * 
-     * @param playground  Reference to the Playground
-     * @param refereeSite Reference to the Referee Site
+     * @param playground      Reference to the Playground
+     * @param refereeSite     Reference to the Referee Site
+     * @param contestantBench Reference to the Contestant Bench
      */
 
     public Referee(Playground playground, RefereeSite refereeSite, ContestantBench contestantBench) {
@@ -66,6 +67,8 @@ public class Referee extends Thread {
 
     /**
      * Get the referee state
+     * 
+     * @return state
      */
     public int getEntityState() {
         return this.state;
@@ -84,10 +87,6 @@ public class Referee extends Thread {
     @Override
     public void run() {
         System.out.println(this.whoAmI() + " has started.");
-
-        /**
-         * Start of Referee life cycle
-         */
         int currentGame;
         int ropePosition;
 
