@@ -13,25 +13,70 @@ import genclass.TextFile;
  * 
  * It is a shared region.
  */
-
 public class GeneralRepository {
+  /**
+   * Name of the log file
+   */
   private String logFileName;
 
+  /**
+   * Current state of the game
+   */
   private int currentGame;
+
+  /**
+   * Current trial of the game
+   */
   private int currentTrial;
+
+  /**
+   * Position of the rope
+   */
   private int positionOfRope;
 
+  /**
+   * Current state of the entities
+   */
   private int refereeState;
+
+  /**
+   * Current state of the entities
+   */
   private int[] coachState;
+
+  /**
+   * Current state of the entities
+   */
   private int[][] contestantState;
 
+  /**
+   * Strength of each Contestants
+   */
   private int[][] contestantStrength;
+
+  /**
+   * Contestants in the playground that will play or are playing
+   */
   private int[][] activeContestants;
 
+  /**
+   * Match team winner
+   */
   private int matchWinner;
+
+  /**
+   * Game team winner
+   */
   private int gameWinner;
 
+  /**
+   * Flag to indicate the end of the game
+   */
   private Boolean endOfGame;
+
+  /**
+   * Flag to indicate the end of the match
+   */
   private Boolean endOfMatch;
 
   /**
@@ -40,6 +85,9 @@ public class GeneralRepository {
    * It is responsible for logging the internal state of the problem in a file.
    * 
    * It is a shared region.
+   * 
+   * @param logFileName        Name of the log file
+   * @param contestantStrength Initial strength of the Contestants
    */
 
   public GeneralRepository(String logFileName, int[][] contestantStrength) {
@@ -49,17 +97,12 @@ public class GeneralRepository {
       this.logFileName = logFileName;
     }
 
-    /**
-     * Header of the log file
-     */
-    // this.header();
-
-    /**
+    /*
      * Inital Strength of the Contestants
      */
     this.contestantStrength = contestantStrength;
 
-    /**
+    /*
      * Initial state of the game
      */
     this.currentGame = 0;
@@ -84,13 +127,16 @@ public class GeneralRepository {
 
     this.activeContestants = new int[2][SimulParse.CONTESTANT_PER_TEAM];
 
-    /**
-     * writing TEXT
+    /*
+     * Writing the header of the log file
      */
     this.header();
     this.updateInfoTemplate(true);
   }
 
+  /**
+   * Write the header of the log file
+   */
   public synchronized void header() {
     TextFile log = new TextFile();
 
@@ -112,6 +158,9 @@ public class GeneralRepository {
     }
   }
 
+  /**
+   * Write the result of each game in the log file
+   */
   public synchronized void showGameResult(int difference) {
     if (difference > 0) {
       gameWinner = 0;
@@ -153,6 +202,9 @@ public class GeneralRepository {
     }
   }
 
+  /**
+   * Write the legend of the log file
+   */
   public synchronized void legend() {
     TextFile log = new TextFile();
     if (!log.openForAppending(".", logFileName)) {
@@ -178,6 +230,12 @@ public class GeneralRepository {
     }
   }
 
+  /**
+   * Update the internal state of the entities and write it in the log file the
+   * entity state changes.
+   * 
+   * @param startOfMatch Flag to indicate the start of the match
+   */
   public synchronized void updateInfoTemplate(boolean startOfMatch) {
     TextFile log = new TextFile();
     if (!log.openForAppending(".", logFileName)) {
@@ -291,6 +349,9 @@ public class GeneralRepository {
     }
   }
 
+  /**
+   * Write the header of a new game in the log file
+   */
   public synchronized void newGameStarted() {
     currentGame++;
     currentTrial = 0;
@@ -315,37 +376,85 @@ public class GeneralRepository {
     }
   }
 
+  /**
+   * Update the internal state of the Referee and call the method to write the
+   * change of state in the log file.
+   *
+   * @param refereeState
+   */
   public synchronized void setRefereeState(int refereeState) {
     this.refereeState = refereeState;
     this.updateInfoTemplate(false);
   }
 
+  /**
+   * Update the internal state of one of the Coaches and call the method to write
+   * the change of state in the log file.
+   * 
+   * @param coachID    Team of the Coach
+   * @param coachState State of the Coach
+   */
   public synchronized void setCoachState(int coachID, int coachState) {
     this.coachState[coachID] = coachState;
     this.updateInfoTemplate(false);
   }
 
+  /**
+   * Update the internal state of one of the Contestants and call the method to
+   * write the change of state in the log file.
+   * 
+   * @param team  Team of the Contestant
+   * @param id    ID of the Contestant
+   * @param state State of the Contestant
+   */
   public synchronized void setContestantState(int team, int id, int state) {
     contestantState[team][id] = state;
     this.updateInfoTemplate(false);
   }
 
+  /**
+   * Set the strength of one of the Contestants.
+   * 
+   * @param team     Team of the Contestant
+   * @param id       ID of the Contestant
+   * @param strength Strength of the Contestant
+   */
   public synchronized void setContestantStrength(int team, int id, int strength) {
     contestantStrength[team][id] = strength;
   }
 
+  /**
+   * Set the active Contestants in the playground.
+   * 
+   * @param team Team of the Contestant
+   * @param id   ID of the Contestant
+   */
   public synchronized void setActiveContestant(int team, int id) {
     activeContestants[team][id] = 1;
   }
 
+  /**
+   * Remove a Contestant from the playground.
+   * 
+   * @param team Team of the Contestant
+   * @param id   ID of the Contestant
+   */
   public synchronized void setRemoveContestant(int team, int id) {
     activeContestants[team][id] = 0;
   }
 
+  /**
+   * Set the position of the rope.
+   * 
+   * @param positionOfRope Position of the rope
+   */
   public synchronized void setRopePosition(int positionOfRope) {
     this.positionOfRope = positionOfRope;
   }
 
+  /**
+   * Add a new trial to the game.
+   */
   public synchronized void setNewTrial() {
     currentTrial++;
   }
@@ -353,11 +462,11 @@ public class GeneralRepository {
   /**
    * Set the match winner.
    * 
-   * matchWinner == 0 -> team 0 wins
-   * matchWinner == 1 -> team 1 wins
-   * matchWinner == 2 -> draw
+   * matchWinner == 0 -> team 0 wins.
+   * matchWinner == 1 -> team 1 wins.
+   * matchWinner == 2 -> draw.
    * 
-   * @param scores
+   * @param scores Scores of the match
    */
 
   public synchronized void setMatchWinner(int[] scores) {
@@ -398,6 +507,9 @@ public class GeneralRepository {
     }
   }
 
+  /**
+   * Set the end of the game.
+   */
   public synchronized void setEndOfGame() {
     this.endOfGame = true;
   }

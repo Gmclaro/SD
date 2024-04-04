@@ -4,17 +4,46 @@ import commonInfra.View;
 import entities.*;
 import main.SimulParse;
 
+/**
+ * ContestantBench shared memory region.
+ */
 public class ContestantBench {
 
+    /**
+     * General Repository of Information
+     */
     private final GeneralRepository repo;
 
+    /**
+     * Characteristics of the Contestants in the bench
+     */
     private final View[][] contestants;
+
+    /**
+     * Array of Contestants that will play in the playground
+     */
     private final int[][] playgroundQueue;
+
+    /**
+     * Number of Contestants in the bench for each team
+     */
     private final int[] inBench;
 
+    /**
+     * Flag to indicate if the match is over
+     */
     private boolean matchOver;
+
+    /**
+     * Flag to indicate if the referee called the trial
+     */
     private int callTrial;
 
+    /**
+     * ContestantBench instantiation
+     * 
+     * @param repo General Repository of Information
+     */
     public ContestantBench(GeneralRepository repo) {
         this.repo = repo;
 
@@ -32,7 +61,7 @@ public class ContestantBench {
     }
 
     /**
-     * Referee is announce a new trial
+     * Referee has announce a new trial.
      */
     public synchronized void callTrial() {
         this.callTrial = 2;
@@ -46,8 +75,8 @@ public class ContestantBench {
     /**
      * Coach is waiting for the referee to call the trial
      * 
-     * @param team
-     * @return
+     * @param team Team of the Coach
+     * @return 1 if the trial was called, 0 if the match is over
      */
     public synchronized int waitForCallTrial(int team) {
         ((Coach) Thread.currentThread()).setEntityState(CoachState.WAIT_FOR_REFEREE_COMMAND);
@@ -74,8 +103,8 @@ public class ContestantBench {
      * By default all Contestants are seated in the bench, only after the Coach
      * calls the chosen ones.
      * 
-     * @param team
-     * @param selected
+     * @param team     Team of the Coach
+     * @param selected Ids of Contestants selected to play
      */
     public synchronized void callContestants(int team, int[] selected) {
         for (int i = 0; i < SimulParse.CONTESTANT_PER_TEAM; i++)
@@ -88,8 +117,8 @@ public class ContestantBench {
     /**
      * Place Contestant in the bench, and wait to be called
      * 
-     * @param team
-     * @param id
+     * @param team Team of the Contestant
+     * @param id   Id of the Contestant
      * @return
      */
 
@@ -160,8 +189,8 @@ public class ContestantBench {
     /**
      * Contestant is placed in the bench
      * 
-     * @param team
-     * @param id
+     * @param team Team of the Contestant
+     * @param id   Id of the Contestant
      */
     public synchronized void seatDown(int team, int id) {
         Contestant contestant = (Contestant) Thread.currentThread();
@@ -180,6 +209,8 @@ public class ContestantBench {
     /**
      * Coach gets all information about the Contestants
      * 
+     * @param team Team of the Coach
+     * @return Array of Views with the Contestants information
      */
     public synchronized View[] reviewNotes(int team) {
         while (inBench[team] < SimulParse.CONTESTANT_PER_TEAM) {
@@ -208,6 +239,9 @@ public class ContestantBench {
         repo.setMatchWinner(scores);
     }
 
+    /**
+     * Contestant waits for the referee to declare the match winner
+     */
     public synchronized void waitForSeatAtBench() {
 
         while (inBench[0] < SimulParse.CONTESTANT_PER_TEAM || inBench[1] < SimulParse.CONTESTANT_PER_TEAM) {
@@ -216,10 +250,17 @@ public class ContestantBench {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            
+
         }
     }
 
+    /**
+     * Set the strength of a Contestant
+     * 
+     * @param team     Team of the Contestant
+     * @param id       Id of the Contestant
+     * @param strength Strength of the Contestant
+     */
     public void setStrength(int team, int id, int strength) {
         contestants[team][id].setValue(strength);
     }
