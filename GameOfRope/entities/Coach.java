@@ -55,6 +55,7 @@ public class Coach extends Thread {
 
     /**
      * Set the coach state
+     * @param state Coach state
      */
     public void setEntityState(int state) {
         this.state = state;
@@ -72,6 +73,7 @@ public class Coach extends Thread {
 
     /**
      * Set the coach team
+     * @param team Coach team
      */
     public void setTeam(int team) {
         this.team = team;

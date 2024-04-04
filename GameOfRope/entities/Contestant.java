@@ -74,7 +74,7 @@ public class Contestant extends Thread {
     /**
      * Set contestant id
      * 
-     * @param contestantID contestant id
+     * @param id contestant id
      */
     public void setID(int id) {
         this.id = id;

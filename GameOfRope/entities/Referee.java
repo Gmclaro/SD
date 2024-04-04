@@ -77,12 +77,12 @@ public class Referee extends Thread {
     /**
      * Referee life cycle
      * 
-     * assertTrialDecision() == true -> trial is not over
-     * assertTrialDecision() == false -> trial is over
+     * assertTrialDecision() == true : trial is not over
+     * assertTrialDecision() == false : trial is over
      * 
-     * ropePosition < 0 -> team 0 wins
-     * ropePosition > 0 -> team 1 wins
-     * ropePosition == 0 -> draw
+     * ropePosition if greater than  0 : team 0 wins
+     * ropePosition if lesser than  0 : team 1 wins
+     * ropePosition if equal to  0 : draw
      */
     @Override
     public void run() {
