@@ -3,21 +3,38 @@ package commonInfra;
 import main.SimulParse;
 import java.util.HashSet;
 
+/**
+ * This class represents the strategy used by the teams to select their players.
+ */
 public class Strategy {
 
+    /**
+     * Functional interface to define the strategy to select the team.
+     * @param contestants The list of contestants to select the team from.
+     */
     @FunctionalInterface
     public interface InnerStrategy {
         int[] selectTeam(View[] contestants);
     }
 
+    /**
+     * Enum to define the strategy type.
+     */
     public enum StrategyType {
         STRONGEST,
         FIFO,
         RANDOM,
     }
 
+    /**
+     * The strategy to use.
+     */
     private InnerStrategy strategy;
 
+    /**
+     * Constructor to create the strategy.
+     * @param type The type of strategy to use.
+     */
     public Strategy(StrategyType type) {
         switch (type) {
             case STRONGEST:
@@ -36,10 +53,23 @@ public class Strategy {
         }
     }
 
+    /**
+     * Get the strategy.
+     * @return The strategy.
+     */
     public InnerStrategy getStrategy() {
         return this.strategy;
     }
+
+    /**
+     * The strategy to select the strongest players.
+     */
     private class StrongestStrategy implements InnerStrategy {
+        /**
+         * Select the team based on the strongest players.
+         * @param contestants The list of contestants to select the team from.
+         * @return The selected team.
+         */
         @Override
         public int[] selectTeam(View[] contestants) {
             for (int i = 1; i < contestants.length; ++i) {
@@ -61,9 +91,20 @@ public class Strategy {
         }
     }
 
+    /**
+     * The strategy to select the players based on the FIFO order.
+     */
     private class FifoStrategy implements InnerStrategy {
+        /**
+         * The FIFO queue to store the contestants and their order to be selected.
+         */
         private MemFIFO<View> fifo;
 
+        /**
+         * Select the team based on the FIFO order.
+         * @param contestants The list of contestants to select the team from.
+         * @return The selected team.
+         */
         @Override
         public int[] selectTeam(View[] contestants) {
             int[] selected = new int[3];
@@ -93,7 +134,15 @@ public class Strategy {
         }
     }
 
+    /**
+     * The strategy to select the players randomly.
+     */
     private class RandomStrategy implements InnerStrategy {
+        /**
+         * Select the team based on the random selection.
+         * @param contestants The list of contestants to select the team from.
+         * @return The selected team.
+         */
         @Override
         public int[] selectTeam(View[] contestants) {
             HashSet<Integer> setSelected = new HashSet<Integer>();
