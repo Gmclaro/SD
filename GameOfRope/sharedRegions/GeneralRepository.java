@@ -380,7 +380,7 @@ public class GeneralRepository {
    * Update the internal state of the Referee and call the method to write the
    * change of state in the log file.
    *
-   * @param refereeState
+   * @param refereeState State of the Referee
    */
   public synchronized void setRefereeState(int refereeState) {
     this.refereeState = refereeState;

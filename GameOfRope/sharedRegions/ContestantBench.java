@@ -73,10 +73,13 @@ public class ContestantBench {
     }
 
     /**
-     * Coach is waiting for the referee to call the trial
+     * Coach is waiting for the referee to call the trial.
+     * 
+     * 0 if the match is over.
+     * 1 if the trial was called.
      * 
      * @param team Team of the Coach
-     * @return 1 if the trial was called, 0 if the match is over
+     * @return int order of the Coach in the playground
      */
     public synchronized int waitForCallTrial(int team) {
         ((Coach) Thread.currentThread()).setEntityState(CoachState.WAIT_FOR_REFEREE_COMMAND);
@@ -210,7 +213,7 @@ public class ContestantBench {
      * Coach gets all information about the Contestants
      * 
      * @param team Team of the Coach
-     * @return Array of Views with the Contestants information
+     * @return View[] Array of Views with the Contestants information
      */
     public synchronized View[] reviewNotes(int team) {
         while (inBench[team] < SimulParse.CONTESTANT_PER_TEAM) {
@@ -229,7 +232,7 @@ public class ContestantBench {
      * 
      * Reset the matchOver flag and notify all the threads
      * 
-     * @param scores
+     * @param scores Scores of the match
      */
     public synchronized void declareMatchWinner(int[] scores) {
         matchOver = true;

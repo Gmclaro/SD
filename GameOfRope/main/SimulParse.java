@@ -1,11 +1,18 @@
 package main;
 
+/**
+ * Simulation Parse, file with the simulation parameters
+ * 
+ */
 public class SimulParse {
     /**
      * Number of contestants
      */
     public static final int CONTESTANT_PER_TEAM = 5;
 
+    /**
+     * Number of contestants in the playground per team
+     */
     public static final int CONTESTANT_IN_PLAYGROUND_PER_TEAM = 3;
 
     /**

@@ -31,7 +31,7 @@ public class Referee extends Thread {
     private int[] scores;
 
     /**
-     * Referee instantiation
+     * Referee Constructor
      * 
      * @param playground      Reference to the Playground
      * @param refereeSite     Reference to the Referee Site
@@ -51,7 +51,7 @@ public class Referee extends Thread {
     /**
      * Name of the Thread
      * 
-     * @return String
+     * @return String Thread name
      */
 
     public String whoAmI() {
@@ -60,6 +60,8 @@ public class Referee extends Thread {
 
     /**
      * Set the referee state
+     * 
+     * @param int state referee state
      */
     public void setEntityState(int state) {
         this.state = state;
@@ -68,7 +70,7 @@ public class Referee extends Thread {
     /**
      * Get the referee state
      * 
-     * @return state
+     * @return state referee state
      */
     public int getEntityState() {
         return this.state;

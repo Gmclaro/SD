@@ -29,7 +29,7 @@ public class View {
     /**
      * Get the key of the view.
      * 
-     * @return The key of the view.
+     * @return int The key of the view.
      */
     public int getKey() {
         return key;
@@ -38,7 +38,7 @@ public class View {
     /**
      * Get the value of the view.
      * 
-     * @return The value of the view.
+     * @return int The value of the view.
      */
     public int getValue() {
         return value;

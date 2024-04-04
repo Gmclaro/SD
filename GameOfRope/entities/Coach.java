@@ -8,7 +8,7 @@ import sharedRegions.*;
 
 public class Coach extends Thread {
     /**
-     * Coach ID
+     * Coach team
      */
 
     private int team;
@@ -38,7 +38,7 @@ public class Coach extends Thread {
     private RefereeSite refereeSite;
 
     /**
-     * Stratgies
+     * Stratgies of the coach
      * 
      */
     private Strategy coachStrategy;
@@ -46,7 +46,7 @@ public class Coach extends Thread {
     /**
      * Name of the Thread
      * 
-     * @return String
+     * @return String Thread name
      */
 
     public String whoAmI() {
@@ -65,7 +65,7 @@ public class Coach extends Thread {
     /**
      * Get the coach state
      * 
-     * @return state
+     * @return state Coach state
      */
 
     public int getEntityState() {
@@ -84,7 +84,7 @@ public class Coach extends Thread {
     /**
      * Get the coach team
      * 
-     * @return team
+     * @return int Coach team
      */
 
     public int getTeam() {
@@ -120,7 +120,7 @@ public class Coach extends Thread {
     public void run() {
         System.out.println(this.whoAmI() + " has started.");
 
-        /**
+        /*
          * Start of Coach life cycle
          */
         int orders;
@@ -163,7 +163,7 @@ public class Coach extends Thread {
      * Select the team based on the strategy
      * 
      * @param selected The list of contestants to select the team from.
-     * @return The selected team.
+     * @return int[] The selected team.
      */
 
     private int[] selectContestants(View[] selected) {

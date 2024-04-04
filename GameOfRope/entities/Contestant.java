@@ -2,7 +2,6 @@ package entities;
 
 import sharedRegions.ContestantBench;
 import sharedRegions.Playground;
-import sharedRegions.RefereeSite;
 
 /**
  * Custom Thread
@@ -33,20 +32,25 @@ public class Contestant extends Thread {
     private int state;
 
     /**
-     * Shared memory region declaration
+     * Playground shared memory region declaration
      */
     private final Playground playground;
+
+    /**
+     * ContestantBench shared memory region declaration
+     */
     private final ContestantBench contestantBench;
 
     /**
      * Contestant Constructor
      * 
-     * @param name         thread name
-     * @param contestantID contestant id
-     * @param teamID       team id
-     * @param playground   reference to playground
-     * @param refereeSite  reference to refereeSite
-     * @param bench        reference to contestantBench
+     * @param name        thread name
+     * @param team        team
+     * @param id          Contestant id
+     * @param strength    Contestant strength
+     * @param playground  reference to playground
+     * @param refereeSite reference to refereeSite
+     * @param bench       reference to contestantBench
      */
     public Contestant(int team, int id, int contestantStrength, Playground playground,
             ContestantBench contestantBench) {
@@ -64,7 +68,7 @@ public class Contestant extends Thread {
     /**
      * Name of the Thread
      * 
-     * @return String
+     * @return String Thread name
      */
 
     public String whoAmI() {
@@ -83,25 +87,25 @@ public class Contestant extends Thread {
     /**
      * Get contestant id
      * 
-     * @return contestant id
+     * @return int contestant id
      */
     public int getID() {
         return this.id;
     }
 
     /**
-     * Get contestant id
+     * Get team
      * 
-     * @return contestant id
+     * @return int team
      */
     public int getTeam() {
         return this.team;
     }
 
     /**
-     * Set contestant id
+     * Set team
      * 
-     * @param contestantID contestant id
+     * @param team team
      */
     public void setTeam(int team) {
         this.team = team;
@@ -110,7 +114,7 @@ public class Contestant extends Thread {
     /**
      * Set contestant state
      * 
-     * @param contestantState contestant state
+     * @param state contestant state
      */
     public void setEntityState(int state) {
         this.state = state;
@@ -119,7 +123,7 @@ public class Contestant extends Thread {
     /**
      * Get contestant state
      * 
-     * @return contestant state
+     * @return int contestant state
      */
     public int getEntityState() {
         return this.state;
@@ -128,7 +132,7 @@ public class Contestant extends Thread {
     /**
      * Get strength of the contestant
      * 
-     * @return strength
+     * @return int strength of the contestant
      */
     public int getStrength() {
         return this.strength;
@@ -179,7 +183,7 @@ public class Contestant extends Thread {
      * 
      * Internal operation
      * 
-     * @return strength of the contestant
+     * @return int strength of the contestant
      */
     public synchronized int pullTheRope() {
         this.strength = this.strength--;
@@ -191,7 +195,6 @@ public class Contestant extends Thread {
 
     /**
      * Rest increases the strength of the Contestant
-     * 
      */
 
     public void rest() {

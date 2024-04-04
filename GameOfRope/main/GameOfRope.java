@@ -14,18 +14,38 @@ public class GameOfRope {
     public static void main(String[] args) {
 
         /**
-         * Declaring Shared Regions
+         * Declaring General Repository
          */
         GeneralRepository repo;
+
+        /**
+         * Declaring Playground
+         */
         Playground playground;
+
+        /**
+         * Declaring RefereeSite
+         */
         RefereeSite refereeSite;
+
+        /**
+         * Declaring ContestantBench
+         */
         ContestantBench contestantBench;
 
         /**
-         * Declaring Threads
+         * Declaring Referee Threads
          */
         Referee referee;
+
+        /**
+         * Declaring Coach Threads
+         */
         Coach[] coach = new Coach[2];
+
+        /**
+         * Declaring and Instanciation Contestant Threads
+         */
         Contestant[][] contestants = new Contestant[2][SimulParse.CONTESTANT_PER_TEAM];
 
         /**
@@ -37,7 +57,15 @@ public class GameOfRope {
          * Choosing which file to print the output
          */
         String fileName = "log";
+
+        /**
+         * Option to overwrite the file
+         */
         char option;
+
+        /**
+         * Success of the file creation
+         */
         boolean success = false;
 
         Scanner sc = new Scanner(System.in);

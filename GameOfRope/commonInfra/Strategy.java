@@ -58,7 +58,7 @@ public class Strategy {
     /**
      * Get the strategy.
      * 
-     * @return The strategy.
+     * @return InnerStrategy The strategy.
      */
     public InnerStrategy getStrategy() {
         return this.strategy;
@@ -72,7 +72,7 @@ public class Strategy {
          * Select the team based on the strongest players.
          * 
          * @param contestants The list of contestants to select the team from.
-         * @return The selected team.
+         * @return int[] The selected team.
          */
         @Override
         public int[] selectTeam(View[] contestants) {
@@ -108,7 +108,7 @@ public class Strategy {
          * Select the team based on the FIFO order.
          * 
          * @param contestants The list of contestants to select the team from.
-         * @return The selected team.
+         * @return int[] The selected team.
          */
         @Override
         public int[] selectTeam(View[] contestants) {
@@ -147,7 +147,7 @@ public class Strategy {
          * Select the team based on the random selection.
          * 
          * @param contestants The list of contestants to select the team from.
-         * @return The selected team.
+         * @return int[] The selected team.
          */
         @Override
         public int[] selectTeam(View[] contestants) {

@@ -15,6 +15,12 @@ public class RefereeSite {
 
     private int teamsReady;
 
+    /**
+     * Referee Site Constructor
+     * 
+     * @param repo General Repository
+     */
+
     public RefereeSite(GeneralRepository repo) {
         this.repo = repo;
         teamsReady = 0;
