@@ -9,6 +9,10 @@ public class RefereeSite {
      */
     private final GeneralRepository repo;
 
+    /**
+     * Number of teams ready
+     */
+
     private int teamsReady;
 
     public RefereeSite(GeneralRepository repo) {
