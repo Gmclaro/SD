@@ -56,7 +56,7 @@ public class GameOfRope {
         /**
          * Choosing which file to print the output
          */
-        String fileName = "log";
+        String fileName = "";
 
         /**
          * Option to overwrite the file
