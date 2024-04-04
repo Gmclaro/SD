@@ -119,7 +119,7 @@ public class ContestantBench {
      * 
      * @param team Team of the Contestant
      * @param id   Id of the Contestant
-     * @return
+     * @return int Order of the Contestant in the playground
      */
 
     public int waitForCallContestant(int team, int id) {
@@ -142,9 +142,9 @@ public class ContestantBench {
         /**
          * Contestants are seaten in the bench and wait to be called
          * 
-         * order == 0 -> Contestant was not selected yet
-         * order == 1 -> Contestant was selected to play
-         * order == 2 -> Contestant was selected to play and is already in the bench
+         * order == 0 : Contestant was not selected yet
+         * order == 1 : Contestant was selected to play
+         * order == 2 : Contestant was selected to play and is already in the bench
          */
         synchronized (this) {
             while (!matchOver && playgroundQueue[team][id] == 0) {
