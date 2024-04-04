@@ -10,6 +10,7 @@ public class Strategy {
 
     /**
      * Functional interface to define the strategy to select the team.
+     * 
      * @param contestants The list of contestants to select the team from.
      */
     @FunctionalInterface
@@ -33,6 +34,7 @@ public class Strategy {
 
     /**
      * Constructor to create the strategy.
+     * 
      * @param type The type of strategy to use.
      */
     public Strategy(StrategyType type) {
@@ -55,6 +57,7 @@ public class Strategy {
 
     /**
      * Get the strategy.
+     * 
      * @return The strategy.
      */
     public InnerStrategy getStrategy() {
@@ -67,6 +70,7 @@ public class Strategy {
     private class StrongestStrategy implements InnerStrategy {
         /**
          * Select the team based on the strongest players.
+         * 
          * @param contestants The list of contestants to select the team from.
          * @return The selected team.
          */
@@ -102,6 +106,7 @@ public class Strategy {
 
         /**
          * Select the team based on the FIFO order.
+         * 
          * @param contestants The list of contestants to select the team from.
          * @return The selected team.
          */
@@ -140,6 +145,7 @@ public class Strategy {
     private class RandomStrategy implements InnerStrategy {
         /**
          * Select the team based on the random selection.
+         * 
          * @param contestants The list of contestants to select the team from.
          * @return The selected team.
          */
