@@ -25,7 +25,6 @@ public class Playground {
 
     private final int[] arrivedContestants;
 
-
     /**
      * Number of contestants that have finished the trial
      */
@@ -49,14 +48,20 @@ public class Playground {
      * It is used to control the flow of the game
      */
 
-     /**
-      * Flag that indicates the start of the trial
-      */
+    /**
+     * Flag that indicates the start of the trial
+     */
     private boolean startOfTrial;
-     /**
-      * Flag that indicates the end of the trial
-      */
+    /**
+     * Flag that indicates the end of the trial
+     */
     private boolean endOfTrial;
+
+    /**
+     * Playground instantiation
+     * 
+     * @param repo Reference to the General Repository
+     */
 
     public Playground(GeneralRepository repo) {
         this.repo = repo;
@@ -75,12 +80,18 @@ public class Playground {
     /**
      * Contestants go to the playground and inform when they have arrived
      * 
-     * @param team
+     * @param team The team of the contestant
      */
     public synchronized void followCoachAdvice(int team) {
         arrivedContestants[team]++;
         notifyAll();
     }
+
+    /**
+     * Coaches wait for the contestants to arrive at the playground
+     * 
+     * @param team The team of the coach
+     */
 
     public synchronized void waitForFollowCoachAdvice(int team) {
         ((Coach) Thread.currentThread()).setEntityState(CoachState.ASSEMBLE_TEAM);
@@ -98,7 +109,7 @@ public class Playground {
     }
 
     /**
-     * 
+     * The Referee will start the trial
      */
     public synchronized void startTrial() {
         ((Referee) Thread.currentThread()).setEntityState(RefereeState.WAIT_FOR_TRIAL_CONCLUSION);
@@ -113,8 +124,8 @@ public class Playground {
     /**
      * Contestants wait for the trial to start
      * 
-     * @param team
-     * @param id
+     * @param team The team of the contestant
+     * @param id   The id of the contestant
      */
     public synchronized void waitForStartTrial(int team, int id) {
         ((Contestant) Thread.currentThread()).setEntityState(ContestantState.STAND_IN_POSITION);
@@ -134,14 +145,28 @@ public class Playground {
 
     }
 
+    /**
+     * Contestants get ready to start the trial
+     * 
+     * @param team The team of the contestant
+     * @param id   The id of the contestant
+     */
+
     public synchronized void getReady(int team, int id) {
         repo.setActiveContestant(team, id);
     }
 
+    /**
+     * Contestants inform that they are done pulling the rope
+     */
     public synchronized void amDone() {
         nOfAmDone++;
         notifyAll();
     }
+
+    /**
+     * Contestants wait for the decision of the referee
+     */
 
     public synchronized void waitForAmDone() {
         while (nOfAmDone < 2 * SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM) {
@@ -159,10 +184,10 @@ public class Playground {
      * Referee will compare the strength of the teams and decide if the trial has
      * ended.
      * 
-     * false -> trial has ended
-     * true -> trial has not ended
+     * false : trial has ended
+     * true : trial has not ended
      * 
-     * @return boolean
+     * @return boolean The decision of the referee
      */
     public synchronized boolean assertTrialDecision() {
         endOfTrial = true;
@@ -188,9 +213,9 @@ public class Playground {
      * Contestants will do trial lifecycle, where he pulls the rope, inform that he
      * is done and wait for the decision of referee
      * 
-     * @param team
-     * @param id
-     * @param strength
+     * @param team     The coach team
+     * @param id       The id of the contestants
+     * @param strength The strength of the contestants
      */
 
     public void waitForAssertTrialDecision(int team, int id) {
@@ -237,7 +262,7 @@ public class Playground {
     /**
      * Coach will wait until the decision of the referee of the trial
      * 
-     * @param team
+     * @param team The team of the coach
      */
     public void waitForAssertTrialDecision(int team) {
         synchronized (this) {
@@ -257,7 +282,7 @@ public class Playground {
     /**
      * The referee will declare the winner of the game
      * 
-     * @return int
+     * @return int The difference of strength between the teams
      */
     public synchronized int declareGameWinner() {
         ((Referee) Thread.currentThread()).setEntityState(RefereeState.END_OF_A_GAME);
