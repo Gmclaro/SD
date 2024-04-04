@@ -140,10 +140,6 @@ public class Contestant extends Thread {
     @Override
     public void run() {
         System.out.println(this.whoAmI() + " has started.");
-
-        /**
-         * Contestant life cycle
-         */
         contestantBench.seatDown(this.team, this.id);
         System.out.println(this.whoAmI() + " -> seatDown()");
 

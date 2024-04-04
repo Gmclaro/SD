@@ -26,6 +26,10 @@ public class RefereeSite {
         repo.setRefereeState(RefereeState.START_OF_A_GAME);
     }
 
+    /**
+     * The referee waits for the coaches to inform the teams are ready
+     */
+
     public synchronized void informReferee() {
         teamsReady++;
         notifyAll();

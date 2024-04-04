@@ -62,6 +62,8 @@ public class Coach extends Thread {
 
     /**
      * Get the coach state
+     * 
+     * @return state
      */
 
     public int getEntityState() {
@@ -77,6 +79,8 @@ public class Coach extends Thread {
 
     /**
      * Get the coach team
+     * 
+     * @return team
      */
 
     public int getTeam() {
@@ -84,9 +88,13 @@ public class Coach extends Thread {
     }
 
     /**
-     * Coach instantiation
+     * Coach entity constructor
      * 
-     * @param coachID
+     * @param team            Coach team
+     * @param contestantBench reference to contestant bench
+     * @param playground      reference to playground
+     * @param refereeSite     reference to referee site
+     * @param coachStrategy   coach strategy
      */
 
     public Coach(int team, ContestantBench contestantBench, Playground playground, RefereeSite refereeSite,
@@ -103,7 +111,6 @@ public class Coach extends Thread {
     /**
      * Coach life cycle
      * 
-     * orders == 0 -> end of the match, the Coach Thread ends
      */
     @Override
     public void run() {
@@ -147,6 +154,13 @@ public class Coach extends Thread {
             System.out.println(this.whoAmI() + " -> selectContestants()");
         }
     }
+
+    /**
+     * Select the team based on the strategy
+     * 
+     * @param selected The list of contestants to select the team from.
+     * @return The selected team.
+     */
 
     private int[] selectContestants(View[] selected) {
         int[] sel = coachStrategy.getStrategy().selectTeam(selected);

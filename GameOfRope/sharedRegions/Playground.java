@@ -7,24 +7,55 @@ import commonInfra.View;
 
 public class Playground {
 
+    /**
+     * Reference to the General Repository
+     */
+
     private final GeneralRepository repo;
+
+    /**
+     * Characteristics of contestants in the playground
+     */
 
     private final View[][] contestants;
 
+    /**
+     * Contestants in the playground
+     */
+
     private final int[] arrivedContestants;
 
+
+    /**
+     * Number of contestants that have finished the trial
+     */
     private int nOfAmDone;
+
+    /**
+     * Number of trials played
+     */
 
     private int playedTrial;
 
+    /**
+     * Strength of the teams
+     */
+
     private final int[] strengthPerTeam;
 
-    /**
+    /*
      * Flags
      * 
      * It is used to control the flow of the game
      */
+
+     /**
+      * Flag that indicates the start of the trial
+      */
     private boolean startOfTrial;
+     /**
+      * Flag that indicates the end of the trial
+      */
     private boolean endOfTrial;
 
     public Playground(GeneralRepository repo) {
@@ -53,8 +84,8 @@ public class Playground {
 
     public synchronized void waitForFollowCoachAdvice(int team) {
         ((Coach) Thread.currentThread()).setEntityState(CoachState.ASSEMBLE_TEAM);
-        repo.setCoachState(team,CoachState.ASSEMBLE_TEAM);
-        
+        repo.setCoachState(team, CoachState.ASSEMBLE_TEAM);
+
         while (arrivedContestants[team] < SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM) {
             try {
                 wait();
@@ -70,7 +101,7 @@ public class Playground {
      * 
      */
     public synchronized void startTrial() {
-        ((Referee)Thread.currentThread()).setEntityState(RefereeState.WAIT_FOR_TRIAL_CONCLUSION);
+        ((Referee) Thread.currentThread()).setEntityState(RefereeState.WAIT_FOR_TRIAL_CONCLUSION);
         repo.setRefereeState(RefereeState.WAIT_FOR_TRIAL_CONCLUSION);
 
         startOfTrial = true;
@@ -144,7 +175,7 @@ public class Playground {
          * Referee will check if the trial was a knockout or if the trial limit was met
          */
         if (playedTrial >= SimulParse.TRIALS
-                || ( result>= SimulParse.KNOCKOUT)) {
+                || (result >= SimulParse.KNOCKOUT)) {
             playedTrial = 0;
             notifyAll();
             return false;
