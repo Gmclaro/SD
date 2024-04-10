@@ -215,8 +215,7 @@ public class ContestantBench {
         contestants[team][id].setValue(contestant.getStrength());
 
         inBench[team]++;
-
-        
+                
         notifyAll();
     }
 
@@ -227,7 +226,8 @@ public class ContestantBench {
      * @return View[] Array of Views with the Contestants information
      */
     public synchronized View[] reviewNotes(int team) {
-        while (inBench[team] < SimulParse.CONTESTANT_PER_TEAM) {
+        //while (inBench[team] < SimulParse.CONTESTANT_PER_TEAM) {
+        while ((inBench[0] + inBench[1]) < (2 * SimulParse.CONTESTANT_PER_TEAM)) {
             try {
                 wait();
             } catch (InterruptedException e) {
@@ -267,16 +267,4 @@ public class ContestantBench {
 
         }
     }
-
-    /**
-     * Set the strength of a Contestant
-     * 
-     * @param team     Team of the Contestant
-     * @param id       Id of the Contestant
-     * @param strength Strength of the Contestant
-     */
-    public synchronized void setStrength(int team, int id, int strength) {
-        contestants[team][id].setValue(strength);
-    }
-
 }

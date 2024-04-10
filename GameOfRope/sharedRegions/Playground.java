@@ -213,8 +213,8 @@ public class Playground {
      * Contestants will do trial lifecycle, where he pulls the rope, inform that he
      * is done and wait for the decision of referee
      * 
-     * @param team     The coach team
-     * @param id       The id of the contestants
+     * @param team The coach team
+     * @param id   The id of the contestants
      */
 
     public void waitForAssertTrialDecision(int team, int id) {
@@ -224,10 +224,12 @@ public class Playground {
         Contestant contestant;
         synchronized (this) {
             contestant = (Contestant) Thread.currentThread();
-            contestant.setEntityState(ContestantState.DO_YOUR_BEST);
-            repo.setContestantState(team, id, ContestantState.DO_YOUR_BEST);
+
             strengthPerTeam[team] += contestant.pullTheRope();
             repo.setContestantStrength(team, id, contestant.getStrength());
+
+            contestant.setEntityState(ContestantState.DO_YOUR_BEST);
+            repo.setContestantState(team, id, ContestantState.DO_YOUR_BEST);
         }
 
         /**
