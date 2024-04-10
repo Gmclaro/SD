@@ -225,9 +225,9 @@ public class Playground {
         synchronized (this) {
             contestant = (Contestant) Thread.currentThread();
             contestant.setEntityState(ContestantState.DO_YOUR_BEST);
-
             repo.setContestantState(team, id, ContestantState.DO_YOUR_BEST);
             strengthPerTeam[team] += contestant.pullTheRope();
+            repo.setContestantStrength(team, id, contestant.getStrength());
         }
 
         /**

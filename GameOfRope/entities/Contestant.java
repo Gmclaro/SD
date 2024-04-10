@@ -183,8 +183,9 @@ public class Contestant extends Thread {
      * 
      * @return int strength of the contestant
      */
-    public synchronized int pullTheRope() {
+    public int pullTheRope() {
         this.strength = this.strength--;
+        // TODO: ERROS AQUI
 
         contestantBench.setStrength(this.team, this.id, this.strength);
 

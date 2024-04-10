@@ -43,7 +43,7 @@ public class Referee extends Thread {
         this.playground = playground;
         this.refereeSite = refereeSite;
         this.contestantBench = contestantBench;
-        this.state = -1;
+        this.state = RefereeState.START_OF_THE_MATCH;
 
         this.scores = new int[] { 0, 0 };
     }

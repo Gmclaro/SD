@@ -57,13 +57,14 @@ public class ContestantBench {
         this.playgroundQueue = new int[2][SimulParse.CONTESTANT_PER_TEAM];
 
         this.inBench = new int[] { 0, 0 };
-        this.matchOver = false;
+        this.matchOver = true;
     }
 
     /**
      * Referee has announce a new trial.
      */
     public synchronized void callTrial() {
+        this.matchOver = false;
         this.callTrial = 2;
         notifyAll();
 
@@ -132,9 +133,9 @@ public class ContestantBench {
         Contestant contestant;
         synchronized (this) {
             contestant = (Contestant) Thread.currentThread();
-            contestant.setEntityState(ContestantState.SEAT_AT_THE_BENCH);
+            //contestant.setEntityState(ContestantState.SEAT_AT_THE_BENCH);
 
-            repo.setContestantState(team, id, ContestantState.SEAT_AT_THE_BENCH);
+            //repo.setContestantState(team, id, ContestantState.SEAT_AT_THE_BENCH);
 
             contestants[team][id].setValue(contestant.getStrength());
 
@@ -196,6 +197,16 @@ public class ContestantBench {
      * @param id   Id of the Contestant
      */
     public synchronized void seatDown(int team, int id) {
+        while (matchOver) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        repo.setRemoveContestant(team, id);
+
         Contestant contestant = (Contestant) Thread.currentThread();
         contestant.setEntityState(ContestantState.SEAT_AT_THE_BENCH);
 
@@ -205,7 +216,7 @@ public class ContestantBench {
 
         inBench[team]++;
 
-        repo.setRemoveContestant(team, id);
+        
         notifyAll();
     }
 
@@ -264,7 +275,7 @@ public class ContestantBench {
      * @param id       Id of the Contestant
      * @param strength Strength of the Contestant
      */
-    public void setStrength(int team, int id, int strength) {
+    public synchronized void setStrength(int team, int id, int strength) {
         contestants[team][id].setValue(strength);
     }
 
