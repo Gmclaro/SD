@@ -121,13 +121,13 @@ public class GeneralRepository {
 
     this.coachState = new int[SimulParse.COACH];
     for (int i = 0; i < SimulParse.COACH; i++) {
-      this.coachState[i] = CoachState.WAIT_FOR_REFEREE_COMMAND;
+      this.coachState[i] = -1;
     }
 
     this.contestantState = new int[2][SimulParse.CONTESTANT_PER_TEAM];
     for (int i = 0; i < 2; i++) {
       for (int j = 0; j < SimulParse.CONTESTANT_PER_TEAM; j++) {
-        this.contestantState[i][j] = ContestantState.SEAT_AT_THE_BENCH;
+        this.contestantState[i][j] = -1;
       }
     }
 
@@ -289,6 +289,9 @@ public class GeneralRepository {
 
     for (int i = 0; i < SimulParse.COACH; i++) {
       switch (this.coachState[i]) {
+        case -1:
+          coachState[i] = "----";
+          break;
         case CoachState.WAIT_FOR_REFEREE_COMMAND:
           coachState[i] = "WFRC";
           break;
@@ -306,6 +309,9 @@ public class GeneralRepository {
     for (int i = 0; i < SimulParse.COACH; i++) {
       for (int j = 0; j < SimulParse.CONTESTANT_PER_TEAM; j++) {
         switch (this.contestantState[i][j]) {
+          case -1:
+            contestantState[i][j] = "---";
+            break;
           case ContestantState.SEAT_AT_THE_BENCH:
             contestantState[i][j] = "STB";
             break;

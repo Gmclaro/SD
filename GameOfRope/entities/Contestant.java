@@ -56,7 +56,7 @@ public class Contestant extends Thread {
         this.id = id;
         this.team = team;
         this.strength = contestantStrength;
-        this.state = ContestantState.SEAT_AT_THE_BENCH;
+        this.state = -1;
 
         // shared regions
         this.playground = playground;

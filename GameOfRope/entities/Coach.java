@@ -105,7 +105,7 @@ public class Coach extends Thread {
             StrategyType coachStrategy) {
         super("Coach(" + team + ")");
         this.team = team;
-        this.state = CoachState.WAIT_FOR_REFEREE_COMMAND;
+        this.state = -1;
         this.contestantBench = contestantBench;
         this.playground = playground;
         this.refereeSite = refereeSite;
