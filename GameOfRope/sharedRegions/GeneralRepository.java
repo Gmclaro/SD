@@ -2,6 +2,7 @@ package sharedRegions;
 
 import entities.*;
 import main.*;
+import commonInfra.View;
 
 import genclass.GenericIO;
 import genclass.TextFile;
@@ -55,9 +56,14 @@ public class GeneralRepository {
   private int[][] contestantStrength;
 
   /**
+   * Number of contestants in the playground per team
+   */
+  private int[] nActiveContestants;
+
+  /**
    * Contestants in the playground that will play or are playing
    */
-  private int[][] activeContestants;
+  private View[][] activeContestants;
 
   /**
    * Match team winner
@@ -125,19 +131,29 @@ public class GeneralRepository {
       }
     }
 
-    this.activeContestants = new int[2][SimulParse.CONTESTANT_PER_TEAM];
+    this.nActiveContestants = new int[SimulParse.COACH];
+    for (int i = 0; i < SimulParse.COACH; i++) {
+      this.nActiveContestants[i] = 5;
+    }
+
+    this.activeContestants = new View[SimulParse.COACH][SimulParse.CONTESTANT_PER_TEAM];
+    for (int i = 0; i < SimulParse.COACH; i++) {
+      for (int j = 0; j < SimulParse.CONTESTANT_PER_TEAM; j++) {
+        this.activeContestants[i][j] = new View(-1, -1);
+      }
+    }
 
     /*
      * Writing the header of the log file
      */
     this.header();
-    this.updateInfoTemplate(true);
+    this.updateInfoTemplate();
   }
 
   /**
    * Write the header of the log file
    */
-  public synchronized void header() {
+  private void header() {
     TextFile log = new TextFile();
 
     if (!log.openForWriting(".", logFileName)) {
@@ -163,7 +179,7 @@ public class GeneralRepository {
    * 
    * @param difference Difference of the scores of the teams
    */
-  public synchronized void showGameResult(int difference) {
+  public void showGameResult(int difference) {
     if (difference > 0) {
       gameWinner = 0;
     } else if (difference < 0) {
@@ -207,7 +223,7 @@ public class GeneralRepository {
   /**
    * Write the legend of the log file
    */
-  public synchronized void legend() {
+  public void legend() {
     TextFile log = new TextFile();
     if (!log.openForAppending(".", logFileName)) {
       GenericIO.writelnString("The operation of opening the file " + logFileName + " failed!");
@@ -238,7 +254,7 @@ public class GeneralRepository {
    * 
    * @param startOfMatch Flag to indicate the start of the match
    */
-  public synchronized void updateInfoTemplate(boolean startOfMatch) {
+  public void updateInfoTemplate() {
     TextFile log = new TextFile();
     if (!log.openForAppending(".", logFileName)) {
       GenericIO.writelnString("The operation of creating the file " + logFileName + " failed!");
@@ -317,30 +333,31 @@ public class GeneralRepository {
       }
     }
 
-    if (startOfMatch) {
-      str += "- - - . - - - -- --";
+    String aux[] = new String[] { " ", " " };
 
-    } else {
-      String aux[] = new String[] { "", "" };
-      for (int i = 0; i < SimulParse.COACH; i++) {
-        int active = 0;
-        for (int j = 0; j < SimulParse.CONTESTANT_PER_TEAM; j++) {
-          if (activeContestants[i][j] == 1) {
-            aux[i] += String.format("%1d", j) + " ";
-            active++;
-          }
-        }
-        if (active != SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM) {
-          for (int j = 0; j < (SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM - active); j++) {
-            aux[i] += "- ";
-          }
-        }
-
+    for (int i = 0; i < SimulParse.COACH; i++) {
+      int idPerTeam[] = new int[SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM];
+      for (int j = 0; j < idPerTeam.length; j++) {
+        idPerTeam[j] = -1;
       }
-      str += String.format("%6s. %6s", aux[0], aux[1]);
 
-      str += String.format("%2d %2d", currentTrial, positionOfRope);
+      for (int j = 0; j < SimulParse.CONTESTANT_PER_TEAM; j++) {
+        if (activeContestants[i][j].getKey() == -1)
+          continue;
+
+        idPerTeam[activeContestants[i][j].getKey()] = activeContestants[i][j].getValue();
+      }
+
+      aux[i] = String.format(
+          "%1s %1s %1s ",
+          idPerTeam[0] == -1 ? "-" : Integer.toString(idPerTeam[0]),
+          idPerTeam[1] == -1 ? "-" : Integer.toString(idPerTeam[1]),
+          idPerTeam[2] == -1 ? "-" : Integer.toString(idPerTeam[2]));
+
     }
+    str += String.format("%6s. %6s", aux[0], aux[1]);
+
+    str += String.format("%2d %2d", currentTrial, positionOfRope);
 
     if (!endOfMatch)
       log.writelnString(str);
@@ -354,7 +371,7 @@ public class GeneralRepository {
   /**
    * Write the header of a new game in the log file
    */
-  public synchronized void newGameStarted() {
+  public void newGameStarted() {
     currentGame++;
     currentTrial = 0;
     positionOfRope = 0;
@@ -384,9 +401,9 @@ public class GeneralRepository {
    *
    * @param refereeState State of the Referee
    */
-  public synchronized void setRefereeState(int refereeState) {
+  public void setRefereeState(int refereeState) {
     this.refereeState = refereeState;
-    this.updateInfoTemplate(false);
+    this.updateInfoTemplate();
   }
 
   /**
@@ -396,9 +413,9 @@ public class GeneralRepository {
    * @param coachID    Team of the Coach
    * @param coachState State of the Coach
    */
-  public synchronized void setCoachState(int coachID, int coachState) {
+  public void setCoachState(int coachID, int coachState) {
     this.coachState[coachID] = coachState;
-    this.updateInfoTemplate(false);
+    this.updateInfoTemplate();
   }
 
   /**
@@ -409,9 +426,9 @@ public class GeneralRepository {
    * @param id    ID of the Contestant
    * @param state State of the Contestant
    */
-  public synchronized void setContestantState(int team, int id, int state) {
+  public void setContestantState(int team, int id, int state) {
     contestantState[team][id] = state;
-    this.updateInfoTemplate(false);
+    this.updateInfoTemplate();
   }
 
   /**
@@ -421,7 +438,7 @@ public class GeneralRepository {
    * @param id       ID of the Contestant
    * @param strength Strength of the Contestant
    */
-  public synchronized void setContestantStrength(int team, int id, int strength) {
+  public void setContestantStrength(int team, int id, int strength) {
     contestantStrength[team][id] = strength;
   }
 
@@ -431,8 +448,10 @@ public class GeneralRepository {
    * @param team Team of the Contestant
    * @param id   ID of the Contestant
    */
-  public synchronized void setActiveContestant(int team, int id) {
-    activeContestants[team][id] = 1;
+  public void setActiveContestant(int team, int id) {
+    activeContestants[team][id].setKey(nActiveContestants[team]);
+    activeContestants[team][id].setValue(id);
+    nActiveContestants[team] = nActiveContestants[team] + 1;
   }
 
   /**
@@ -441,8 +460,11 @@ public class GeneralRepository {
    * @param team Team of the Contestant
    * @param id   ID of the Contestant
    */
-  public synchronized void setRemoveContestant(int team, int id) {
-    activeContestants[team][id] = 0;
+  public void setRemoveContestant(int team, int id) {
+    activeContestants[team][id].setKey(-1);
+    activeContestants[team][id].setValue(-1);
+    // System.out.println("HEY"+nActiveContestants[team]);
+    nActiveContestants[team] = nActiveContestants[team] - 1;
   }
 
   /**
@@ -450,14 +472,14 @@ public class GeneralRepository {
    * 
    * @param positionOfRope Position of the rope
    */
-  public synchronized void setRopePosition(int positionOfRope) {
+  public void setRopePosition(int positionOfRope) {
     this.positionOfRope = positionOfRope;
   }
 
   /**
    * Add a new trial to the game.
    */
-  public synchronized void setNewTrial() {
+  public void setNewTrial() {
     currentTrial++;
   }
 
@@ -471,7 +493,7 @@ public class GeneralRepository {
    * @param scores Scores of the match
    */
 
-  public synchronized void setMatchWinner(int[] scores) {
+  public void setMatchWinner(int[] scores) {
     if (scores[0] > scores[1]) {
       matchWinner = 0;
     } else if (scores[0] < scores[1]) {
@@ -512,7 +534,7 @@ public class GeneralRepository {
   /**
    * Set the end of the game.
    */
-  public synchronized void setEndOfGame() {
+  public void setEndOfGame() {
     this.endOfGame = true;
   }
 
