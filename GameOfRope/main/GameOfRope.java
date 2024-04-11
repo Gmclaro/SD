@@ -117,10 +117,12 @@ public class GameOfRope {
         playground = new Playground(repo);
         contestantBench = new ContestantBench(repo);
 
-        /**
-         * Instanciate each thread
-         */
-        referee = new Referee(playground, refereeSite, contestantBench);
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < SimulParse.CONTESTANT_PER_TEAM; j++) {
+                contestants[i][j] = new Contestant(i, j, contestantStrength[i][j], playground,
+                        contestantBench);
+            }
+        }
 
         for (int i = 0; i < 2; i++) {
             int strat = (int) (Math.random() * 3);
@@ -138,12 +140,10 @@ public class GameOfRope {
 
         }
 
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < SimulParse.CONTESTANT_PER_TEAM; j++) {
-                contestants[i][j] = new Contestant(i, j, contestantStrength[i][j], playground,
-                        contestantBench);
-            }
-        }
+        /**
+         * Instanciate each thread
+         */
+        referee = new Referee(playground, refereeSite, contestantBench);
 
         /**
          * Starting the lifecycle of each Thread/Entity
