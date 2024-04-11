@@ -104,8 +104,9 @@ public class Playground {
                 e.printStackTrace();
             }
         }
+        notifyAll();
 
-        arrivedContestants[team] = 0;
+        //arrivedContestants[team] = 0;
     }
 
     /**
@@ -169,7 +170,7 @@ public class Playground {
      */
 
     public synchronized void waitForAmDone() {
-        while (nOfAmDone < 2 * SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM) {
+        while (nOfAmDone < (2 * SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM)) {
             try {
                 wait();
             } catch (InterruptedException e) {
@@ -191,8 +192,9 @@ public class Playground {
      */
     public synchronized boolean assertTrialDecision() {
         endOfTrial = true;
+        notifyAll();
 
-        int result = Math.abs(strengthPerTeam[0] - strengthPerTeam[1]);
+        int result = strengthPerTeam[0] - strengthPerTeam[1];
 
         repo.setRopePosition(result);
 
@@ -205,6 +207,9 @@ public class Playground {
             notifyAll();
             return false;
         }
+
+        strengthPerTeam[0] = 0;
+        strengthPerTeam[1] = 0;
 
         return true;
     }
@@ -255,7 +260,9 @@ public class Playground {
                 }
 
             }
+            arrivedContestants[team]--;
             notifyAll();
+            System.out.println("OUT " + arrivedContestants[0] + " " +arrivedContestants[1]);
         }
 
     }
@@ -270,13 +277,16 @@ public class Playground {
             ((Coach) Thread.currentThread()).setEntityState(CoachState.WATCH_TRIAL);
             repo.setCoachState(team, CoachState.WATCH_TRIAL);
 
-            while (!endOfTrial) {
+            System.out.println("IN  "+arrivedContestants[0] + " " +arrivedContestants[1]);
+
+            while (!endOfTrial || arrivedContestants[0] > 0 || arrivedContestants[1] > 0) {
                 try {
                     wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
+            notifyAll();
         }
     }
 

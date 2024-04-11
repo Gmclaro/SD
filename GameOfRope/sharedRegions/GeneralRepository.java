@@ -363,7 +363,7 @@ public class GeneralRepository {
     }
     str += String.format("%6s. %6s", aux[0], aux[1]);
 
-    str += String.format("%2d %2d", currentTrial, positionOfRope);
+    str += String.format("%2d %2d", currentTrial, Math.abs(positionOfRope));
 
     if (!endOfMatch)
       log.writelnString(str);
@@ -455,9 +455,8 @@ public class GeneralRepository {
    * @param id   ID of the Contestant
    */
   public void setActiveContestant(int team, int id) {
-    activeContestants[team][id].setKey(nActiveContestants[team]);
+    activeContestants[team][id].setKey(nActiveContestants[team]++);
     activeContestants[team][id].setValue(id);
-    nActiveContestants[team] = nActiveContestants[team] + 1;
   }
 
   /**
@@ -478,8 +477,8 @@ public class GeneralRepository {
    * 
    * @param positionOfRope Position of the rope
    */
-  public void setRopePosition(int positionOfRope) {
-    this.positionOfRope = positionOfRope;
+  public synchronized void setRopePosition(int positionOfRope) {
+    this.positionOfRope += positionOfRope;
   }
 
   /**

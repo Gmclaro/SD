@@ -56,6 +56,7 @@ public class RefereeSite {
                 e.printStackTrace();
             }
         }
+        notifyAll();
 
         /**
          * Reset the number of teams ready

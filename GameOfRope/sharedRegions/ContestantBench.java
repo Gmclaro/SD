@@ -99,6 +99,7 @@ public class ContestantBench {
         }
 
         callTrial--;
+        notifyAll();
         return 1;
     }
 
@@ -133,9 +134,9 @@ public class ContestantBench {
         Contestant contestant;
         synchronized (this) {
             contestant = (Contestant) Thread.currentThread();
-            //contestant.setEntityState(ContestantState.SEAT_AT_THE_BENCH);
+            // contestant.setEntityState(ContestantState.SEAT_AT_THE_BENCH);
 
-            //repo.setContestantState(team, id, ContestantState.SEAT_AT_THE_BENCH);
+            // repo.setContestantState(team, id, ContestantState.SEAT_AT_THE_BENCH);
 
             contestants[team][id].setValue(contestant.getStrength());
 
@@ -215,7 +216,7 @@ public class ContestantBench {
         contestants[team][id].setValue(contestant.getStrength());
 
         inBench[team]++;
-                
+
         notifyAll();
     }
 
@@ -226,8 +227,9 @@ public class ContestantBench {
      * @return View[] Array of Views with the Contestants information
      */
     public synchronized View[] reviewNotes(int team) {
-        //while (inBench[team] < SimulParse.CONTESTANT_PER_TEAM) {
-        while ((inBench[0] + inBench[1]) < (2 * SimulParse.CONTESTANT_PER_TEAM)) {
+        // while (inBench[team] < SimulParse.CONTESTANT_PER_TEAM) {
+        // while ((inBench[0] + inBench[1]) < (2 * SimulParse.CONTESTANT_PER_TEAM)) {
+        while ((inBench[0] < SimulParse.CONTESTANT_PER_TEAM) || (inBench[1] < SimulParse.CONTESTANT_PER_TEAM)) {
             try {
                 wait();
             } catch (InterruptedException e) {
