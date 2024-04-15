@@ -168,7 +168,6 @@ public class Playground {
      */
     public synchronized void amDone() {
         this.nOfAmDone++;
-        System.out.println("AD"+this.nOfAmDone);
         notifyAll();
     }
 
@@ -268,7 +267,6 @@ public class Playground {
             }
             arrivedContestants[team]--;
             notifyAll();
-            System.out.println("OUT " + arrivedContestants[0] + " " + arrivedContestants[1]);
         }
 
     }
@@ -282,8 +280,6 @@ public class Playground {
         synchronized (this) {
             ((Coach) Thread.currentThread()).setEntityState(CoachState.WATCH_TRIAL);
             repo.setCoachState(team, CoachState.WATCH_TRIAL);
-
-            System.out.println("IN  " + arrivedContestants[0] + " " + arrivedContestants[1]);
 
             while (!endOfTrial || arrivedContestants[0] > 0 || arrivedContestants[1] > 0) {
                 try {

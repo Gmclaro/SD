@@ -469,7 +469,6 @@ public class GeneralRepository {
   public void setRemoveContestant(int team, int id) {
     activeContestants[team][id].setKey(-1);
     activeContestants[team][id].setValue(-1);
-    // System.out.println("HEY"+nActiveContestants[team]);
     nActiveContestants[team] = nActiveContestants[team] - 1;
   }
 
