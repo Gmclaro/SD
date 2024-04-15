@@ -148,6 +148,18 @@ public class GeneralRepository {
      */
     this.header();
     this.updateInfoTemplate();
+
+    this.coachState = new int[SimulParse.COACH];
+    for (int i = 0; i < SimulParse.COACH; i++) {
+      this.coachState[i] = CoachState.WAIT_FOR_REFEREE_COMMAND;
+    }
+
+    this.contestantState = new int[2][SimulParse.CONTESTANT_PER_TEAM];
+    for (int i = 0; i < 2; i++) {
+      for (int j = 0; j < SimulParse.CONTESTANT_PER_TEAM; j++) {
+        this.contestantState[i][j] = ContestantState.SEAT_AT_THE_BENCH;
+      }
+    }
   }
 
   /**
@@ -224,7 +236,7 @@ public class GeneralRepository {
   /**
    * Write the legend of the log file
    */
-  public void legend() {
+  private void legend() {
     TextFile log = new TextFile();
     if (!log.openForAppending(".", logFileName)) {
       GenericIO.writelnString("The operation of opening the file " + logFileName + " failed!");
@@ -255,7 +267,7 @@ public class GeneralRepository {
    * 
    * @param startOfMatch Flag to indicate the start of the match
    */
-  public void updateInfoTemplate() {
+  private void updateInfoTemplate() {
     TextFile log = new TextFile();
     if (!log.openForAppending(".", logFileName)) {
       GenericIO.writelnString("The operation of creating the file " + logFileName + " failed!");
@@ -534,6 +546,7 @@ public class GeneralRepository {
       GenericIO.writelnString("The operation of closing the file " + logFileName + " failed!");
       System.exit(1);
     }
+    this.legend();
   }
 
   /**
