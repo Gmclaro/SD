@@ -218,6 +218,7 @@ public class GeneralRepository {
       GenericIO.writelnString("The operation of closing the file " + logFileName + " failed!");
       System.exit(1);
     }
+    positionOfRope = 0;
   }
 
   /**
@@ -478,7 +479,7 @@ public class GeneralRepository {
    * @param positionOfRope Position of the rope
    */
   public synchronized void setRopePosition(int positionOfRope) {
-    this.positionOfRope += positionOfRope;
+    this.positionOfRope = positionOfRope;
   }
 
   /**

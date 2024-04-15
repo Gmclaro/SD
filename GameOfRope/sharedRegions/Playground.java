@@ -42,6 +42,11 @@ public class Playground {
 
     private final int[] strengthPerTeam;
 
+    /**
+     * Rope Position
+     */
+    private int ropePosition;
+
     /*
      * Flags
      * 
@@ -69,8 +74,9 @@ public class Playground {
 
         // during the game
         arrivedContestants = new int[] { 0, 0 };
-        nOfAmDone = 0;
+        this.nOfAmDone = 0;
         strengthPerTeam = new int[2];
+        ropePosition = 0;
 
         // Flags
         startOfTrial = false;
@@ -106,7 +112,7 @@ public class Playground {
         }
         notifyAll();
 
-        //arrivedContestants[team] = 0;
+        // arrivedContestants[team] = 0;
     }
 
     /**
@@ -161,7 +167,8 @@ public class Playground {
      * Contestants inform that they are done pulling the rope
      */
     public synchronized void amDone() {
-        nOfAmDone++;
+        this.nOfAmDone++;
+        System.out.println("AD"+this.nOfAmDone);
         notifyAll();
     }
 
@@ -178,7 +185,7 @@ public class Playground {
             }
         }
 
-        nOfAmDone = 0;
+        this.nOfAmDone = 0;
     }
 
     /**
@@ -194,15 +201,15 @@ public class Playground {
         endOfTrial = true;
         notifyAll();
 
-        int result = strengthPerTeam[0] - strengthPerTeam[1];
+        ropePosition += strengthPerTeam[0] - strengthPerTeam[1];
 
-        repo.setRopePosition(result);
+        repo.setRopePosition(ropePosition);
 
         /**
          * Referee will check if the trial was a knockout or if the trial limit was met
          */
         if (playedTrial >= SimulParse.TRIALS
-                || (result >= SimulParse.KNOCKOUT)) {
+                || (Math.abs(ropePosition) >= SimulParse.KNOCKOUT)) {
             playedTrial = 0;
             notifyAll();
             return false;
@@ -250,9 +257,8 @@ public class Playground {
          * Contestant informs that he is done pulling the rope
          */
         synchronized (this) {
-
+            amDone();
             while (!endOfTrial) {
-                amDone();
                 try {
                     wait();
                 } catch (InterruptedException e) {
@@ -262,7 +268,7 @@ public class Playground {
             }
             arrivedContestants[team]--;
             notifyAll();
-            System.out.println("OUT " + arrivedContestants[0] + " " +arrivedContestants[1]);
+            System.out.println("OUT " + arrivedContestants[0] + " " + arrivedContestants[1]);
         }
 
     }
@@ -277,7 +283,7 @@ public class Playground {
             ((Coach) Thread.currentThread()).setEntityState(CoachState.WATCH_TRIAL);
             repo.setCoachState(team, CoachState.WATCH_TRIAL);
 
-            System.out.println("IN  "+arrivedContestants[0] + " " +arrivedContestants[1]);
+            System.out.println("IN  " + arrivedContestants[0] + " " + arrivedContestants[1]);
 
             while (!endOfTrial || arrivedContestants[0] > 0 || arrivedContestants[1] > 0) {
                 try {
@@ -299,17 +305,18 @@ public class Playground {
         ((Referee) Thread.currentThread()).setEntityState(RefereeState.END_OF_A_GAME);
         repo.setRefereeState(RefereeState.END_OF_A_GAME);
 
-        int difference = strengthPerTeam[0] - strengthPerTeam[1];
-
         repo.setEndOfGame();
 
-        repo.showGameResult(difference);
+        repo.showGameResult(ropePosition);
 
         for (int i = 0; i < SimulParse.COACH; i++) {
             strengthPerTeam[i] = 0;
         }
 
-        return difference;
+        int aux = ropePosition;
+        ropePosition = 0;
+
+        return aux;
     }
 
 }
