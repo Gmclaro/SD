@@ -198,6 +198,5 @@ public class GameOfRope {
             }
         }
 
-        repo.legend();
     }
 }
