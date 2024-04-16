@@ -253,7 +253,6 @@ public class GeneralRepository {
    * Update the internal state of the entities and write it in the log file the
    * entity state changes.
    * 
-   * @param startOfMatch Flag to indicate the start of the match
    */
   public void updateInfoTemplate() {
     TextFile log = new TextFile();

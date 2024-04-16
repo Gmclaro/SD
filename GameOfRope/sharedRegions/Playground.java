@@ -5,6 +5,11 @@ import main.SimulParse;
 
 import commonInfra.View;
 
+/**
+ * Playground
+ * Shared Memory Region where the game takes place
+ */
+
 public class Playground {
 
     /**

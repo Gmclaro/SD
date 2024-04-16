@@ -3,6 +3,12 @@ package entities;
 import main.SimulParse;
 import sharedRegions.*;
 
+/**
+ * Custom Thread
+ * It simulates the life cycle of a referee
+ * It will be a static solution
+ */
+
 public class Referee extends Thread {
 
     /**

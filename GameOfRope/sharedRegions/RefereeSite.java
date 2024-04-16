@@ -2,6 +2,11 @@ package sharedRegions;
 
 import entities.*;
 
+/**
+ * Referee Site
+ * Shared Memory Region
+ */
+
 public class RefereeSite {
 
     /**

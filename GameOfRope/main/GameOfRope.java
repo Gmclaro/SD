@@ -8,8 +8,19 @@ import java.util.Scanner;
 
 import java.io.File;
 
+/**
+ * Main class of the Game of the Rope
+ */
+
 public class GameOfRope {
+
+
     Referee referee;
+
+    /**
+     * Main method
+     * @param args
+     */
 
     public static void main(String[] args) {
 

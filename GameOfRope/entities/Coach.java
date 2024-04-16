@@ -6,6 +6,12 @@ import commonInfra.Strategy;
 import commonInfra.Strategy.StrategyType;
 import sharedRegions.*;
 
+/**
+ * Custom Thread
+ * It simulates the life cycle of a coach
+ * It will be a static solution
+ */
+
 public class Coach extends Thread {
     /**
      * Coach team
