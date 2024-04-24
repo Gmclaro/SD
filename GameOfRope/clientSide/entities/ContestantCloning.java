@@ -1,0 +1,71 @@
+package clientSide.entities;
+
+/**
+ * Contestant Clone
+ * It specifies the contestant cloning.
+ */
+
+public interface ContestantCloning {
+
+    /**
+     * Set the state of the contestant
+     * @param state the state of the contestant
+     */
+
+    public void setEntityState(int state);
+
+    /**
+     * Get the state of the contestant
+     * @return the state of the contestant
+     */
+
+    public int getEntityState();
+
+    /**
+     * Set the team of the contestant
+     * @param team the team of the contestant
+     */
+
+    public void setTeam(int team);
+
+
+    /**
+     * Get the team of the contestant
+     * @return the team of the contestant
+     */
+
+    public int getTeam();
+
+
+    /**
+     * Set the id of the contestant
+     * @param id the id of the contestant
+     */
+
+    public void setID(int id);
+
+    /**
+     * Get the id of the contestant
+     * @return the id of the contestant
+     */
+
+    public int getID();
+
+    /**
+     * Get the strength of the contestant
+     * @return the strength of the contestant
+     */
+
+    public int getStrength();
+
+    /**
+     * Set the strength of the contestant
+     * @param strength the strength of the contestant
+     */
+
+    public void setStrength(int strength);
+
+
+
+    
+}
