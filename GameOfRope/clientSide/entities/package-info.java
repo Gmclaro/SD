@@ -1,0 +1,5 @@
+/**
+ *   Entities
+ */
+
+package clientSide.entities;

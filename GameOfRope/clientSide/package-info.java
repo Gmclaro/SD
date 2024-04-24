@@ -1,0 +1,5 @@
+/**
+ *   Shared regions.
+ */
+
+package clientSide;

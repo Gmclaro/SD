@@ -1,5 +1,0 @@
-/**
- *   Shared regions.
- */
-
-package sharedRegions;
