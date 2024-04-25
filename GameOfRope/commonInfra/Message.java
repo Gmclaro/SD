@@ -31,7 +31,7 @@ public class Message implements Serializable {
 
     private View[] aboutContestants = new View[SimulParse.CONTESTANT_PER_TEAM];
 
-    private int[] selectedd = new int[SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM];
+    private int[] selected = new int[SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM];
 
     private int strength = -1;
 
@@ -130,10 +130,10 @@ public class Message implements Serializable {
      * @param value1  set team
      * @param value2  set selected
      */
-    public Message(int msgType, int value1, int[] value2) {
+    public Message(int msgType, int team, int[] selected) {
         this.msgType = msgType;
-        this.team = value1;
-        this.selectedd = value2;
+        this.team = team;
+        this.selected = selected;
     }
 
     /**
@@ -143,10 +143,10 @@ public class Message implements Serializable {
      * @param value1  set team
      * @param value2  set id
      */
-    public Message(int msgType, int value1, int value2) {
+    public Message(int msgType, int team, int id) {
         this.msgType = msgType;
-        this.team = value1;
-        this.id = value2;
+        this.team = team;
+        this.id = id;
     }
 
 }
