@@ -9,117 +9,47 @@ package commonInfra;
 
 public class MessageType
 {
-  /**
-   *  Initialization of the logging file name and the number of iterations (service request).
+
+
+
+  /*
+   * Refereree site INPUT/OUTPUT messages
    */
 
-   public static final int SETNFIC = 1;
 
   /**
-   *  Logging file was initialized (reply).
+   * Referee - Operation get announce new game (REQUEST)
    */
-
-   public static final int NFICDONE = 2;
+   public static final int REQ_ANNOUNCE_NEW_GAME = 1;
 
   /**
-   *  Request hair cut (service request).
+   * Referee - Operation get announce new game (REPLY)
    */
 
-   public static final int REQCUTH = 3;
+  public static final int REP_ANNOUNCE_NEW_GAME = 2;
 
   /**
-   *  Hair was cut (reply).
+   * Referee - Operation get inform referee (REQUEST)
    */
 
-   public static final int CUTHDONE = 4;
+  public static final int REQ_INFORM_REFEREE = 3;
 
   /**
-   *  Barber shop is full (reply).
+   * Referee - Operation get inform referee (REPLY)
    */
 
-   public static final int BSHOPF = 5;
+  public static final int REP_INFORM_REFEREE = 4;
+
 
   /**
-   *  Barber goes to sleep (service request).
+   * Referee - Operation get wait for inform referee (REQUEST)
    */
 
-   public static final int SLEEP = 6;
+  public static final int REQ_WAIT_FOR_INFORM_REFEREE = 5;
 
   /**
-   *  Barber is asleep (reply).
+   * Referee - Operation get wait for inform referee (REPLY)
    */
 
-   public static final int SLEEPDONE = 7;
-
-  /**
-   *  Call a customer (service request).
-   */
-
-   public static final int CALLCUST = 8;
-
-  /**
-   *  Customer was called (reply).
-   */
-
-   public static final int CCUSTDONE = 9;
-
-  /**
-   *  Barber receives payment (service request).
-   */
-
-   public static final int RECPAY = 10;
-
-  /**
-   *  Payment was received (reply).
-   */
-
-   public static final int RPAYDONE = 11;
-
-  /**
-   *  End of work - barber (service request).
-   */
-
-   public static final int ENDOP = 12;
-
-  /**
-   *  Barber goes home (reply).
-   */
-
-   public static final int EOPDONE = 13;
-
-  /**
-   *  Server shutdown (service request).
-   */
-
-   public static final int SHUT = 14;
-
-  /**
-   *  Server was shutdown (reply).
-   */
-
-   public static final int SHUTDONE = 15;
-
-  /**
-   *  Set barber state (service request).
-   */
-
-   public static final int STBST = 16;
-
-  /**
-   *  Set customer state (service request).
-   */
-
-   public static final int STCST = 17;
-
-  /**
-   *  Set barber and customer states (service request).
-   */
-
-   public static final int STBCST = 18;
-
-  /**
-   *  Setting acknowledged (reply).
-   */
-
-   public static final int SACK = 19;
+  public static final int REP_WAIT_FOR_INFORM_REFEREE = 6;
 }

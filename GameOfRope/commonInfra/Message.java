@@ -149,4 +149,15 @@ public class Message implements Serializable {
         this.id = id;
     }
 
+    public int getMsgType() {
+        return msgType;
+    }
+
+    public int getEntityState(){
+        return state;
+    }
+    public int setEntityState(int state){
+        return this.state = state;
+    }
+
 }
