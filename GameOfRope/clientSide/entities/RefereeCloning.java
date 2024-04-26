@@ -12,12 +12,12 @@ public interface RefereeCloning {
      * 
      * @param state the state of the referee
      */
-    public void setEntityState(int state);
+    public void setRefereeState(int state);
 
     /**
      * Get the state of the referee
      * 
      * @return the state of the referee
      */
-    public int getEntityState();
+    public int getRefereeState();
 }

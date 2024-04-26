@@ -27,5 +27,32 @@ public class ContestantBenchStub {
         serverHostName = hostname;
         serverPortNumb = port;
     }
+ 
     
+
+    public void shutdown() {
+        ClientCom com;
+        Message inMessage,outMessage;
+
+        com = new ClientCom(serverHostName, serverPortNumb);
+
+        while(!com.open()) {
+            try {
+                Thread.currentThread ().sleep ((long) (10));
+            }
+            catch (InterruptedException e) {}
+        }
+
+        outMessage = new Message(MessageType.REQ_CONTESTANT_BENCH_SHUTDOWN);
+        com.writeObject(outMessage);
+        inMessage = (Message) com.readObject();
+
+        if(inMessage.getMsgType() != MessageType.REP_CONTESTANT_BENCH_SHUTDOWN){
+            System.out.println("Thread "+ Thread.currentThread().getName()+ ":Invalid message type!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        com.close();
+    }
 }

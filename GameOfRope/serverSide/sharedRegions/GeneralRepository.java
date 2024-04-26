@@ -4,7 +4,7 @@ package serverSide.sharedRegions;
 
 import genclass.GenericIO;
 import genclass.TextFile;
-import commonInfra.View;
+import commonInfra.*;
 
 
 import serverSide.main.*;

@@ -11,7 +11,7 @@ public interface CoachCloning {
      * @param state the state of the coach
      */
 
-    public void setEntityState(int state);
+    public void setCoachState(int state);
 
     /**
      * Get the state of the coach
@@ -19,7 +19,7 @@ public interface CoachCloning {
      * @return the state of the coach
      */
 
-    public int getEntityState();
+    public int getCoachState();
 
     /**
      * Set the team of the coach
@@ -27,7 +27,7 @@ public interface CoachCloning {
      * @param team the team of the coach
      */
 
-    public void setTeam(int team);
+    public void setCoachTeam(int team);
 
     /**
      * Get the team of the coach
@@ -35,5 +35,5 @@ public interface CoachCloning {
      * @return the team of the coach
      */
 
-    public int getTeam();
+    public int getCoachTeam();
 }

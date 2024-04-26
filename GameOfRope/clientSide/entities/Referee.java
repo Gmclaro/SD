@@ -111,41 +111,41 @@ public class Referee extends Thread {
             boolean continueGame;
             int currentTrial = 0;
 
-            do {
+            // do {
 
-                contestantBench.callTrial();
-                System.out.println(
-                        "Trial " + (++currentTrial) + ": ----------------------------------------------------------");
-                System.out.println(this.whoAmI() + " -> callTrial()");
+            //     contestantBench.callTrial();
+            //     System.out.println(
+            //             "Trial " + (++currentTrial) + ": ----------------------------------------------------------");
+            //     System.out.println(this.whoAmI() + " -> callTrial()");
 
-                refereeSite.waitForInformReferee();
-                System.out.println(this.whoAmI() + " -> waitForInformReferee()");
+            //     refereeSite.waitForInformReferee();
+            //     System.out.println(this.whoAmI() + " -> waitForInformReferee()");
 
-                playground.startTrial();
-                System.out.println(this.whoAmI() + " -> startTrial()");
+            //     playground.startTrial();
+            //     System.out.println(this.whoAmI() + " -> startTrial()");
 
-                playground.waitForAmDone();
-                System.out.println(this.whoAmI() + " -> waitForAmDone()");
+            //     playground.waitForAmDone();
+            //     System.out.println(this.whoAmI() + " -> waitForAmDone()");
 
-                continueGame = playground.assertTrialDecision();
-                System.out.println(this.whoAmI() + " -> assertTrialDecision()");
-            } while (continueGame);
+            //     continueGame = playground.assertTrialDecision();
+            //     System.out.println(this.whoAmI() + " -> assertTrialDecision()");
+            // } while (continueGame);
 
-            contestantBench.waitForSeatAtBench();
+            // contestantBench.waitForSeatAtBench();
 
-            ropePosition = playground.declareGameWinner();
-            System.out.println(this.whoAmI() + " -> declareGameWinner()");
+            // ropePosition = playground.declareGameWinner();
+            // System.out.println(this.whoAmI() + " -> declareGameWinner()");
 
-            if (ropePosition > 0)
-                scores[0]++;
-            else if (ropePosition < 0)
-                scores[1]++;
-            else {
-            }
+            // if (ropePosition > 0)
+            //     scores[0]++;
+            // else if (ropePosition < 0)
+            //     scores[1]++;
+            // else {
+            // }
         }
 
-        contestantBench.declareMatchWinner(scores);
-        System.out.println(this.whoAmI() + " -> declareMatchWinner()");
+        // contestantBench.declareMatchWinner(scores);
+        // System.out.println(this.whoAmI() + " -> declareMatchWinner()");
 
     }
 }

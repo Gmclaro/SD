@@ -25,7 +25,7 @@ public class ClientGameOfRopeCoach {
      *             bench server
      *             args[6] - name of the platform where is located the general
      *             repository server
-     *             args[7] - port number for listening to service requests of the
+     *             args[7] - port number for listening to service requests of the general repository server
      * 
      */
     public static void main(String[] args) {

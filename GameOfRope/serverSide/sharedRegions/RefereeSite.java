@@ -15,7 +15,7 @@ public class RefereeSite {
     /**
      * Reference to the General Repository
      */
-    private final GeneralRepository repo;
+    private final GeneralRepositoryStub repo;
 
     /**
      * Number of teams ready
@@ -29,7 +29,7 @@ public class RefereeSite {
      * @param repo General Repository
      */
 
-    public RefereeSite(GeneralRepository repo) {
+    public RefereeSite(GeneralRepositoryStub repo) {
         this.repo = repo;
         teamsReady = 0;
     }

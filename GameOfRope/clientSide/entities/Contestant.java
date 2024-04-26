@@ -142,38 +142,38 @@ public class Contestant extends Thread {
     @Override
     public void run() {
         System.out.println(this.whoAmI() + " has started.");
-        contestantBench.seatDown(this.team, this.id);
-        System.out.println(this.whoAmI() + " -> seatDown()");
+        // contestantBench.seatDown(this.team, this.id);
+        // System.out.println(this.whoAmI() + " -> seatDown()");
 
-        int orders;
-        while (true) {
-            orders = contestantBench.waitForCallContestant(team, id);
-            System.out.println(this.whoAmI() + " -> waitForCallContestant()");
+        // int orders;
+        // while (true) {
+        //     orders = contestantBench.waitForCallContestant(team, id);
+        //     System.out.println(this.whoAmI() + " -> waitForCallContestant()");
 
-            switch (orders) {
-                case 0:
-                    return; // match is over and contestant thread is done
-                case 1:
-                    continue; // contestant was not selected, rest
-                case 2:
-                    break; // contestant was selected, go to playground and continue the lifecycle
-            }
+        //     switch (orders) {
+        //         case 0:
+        //             return; // match is over and contestant thread is done
+        //         case 1:
+        //             continue; // contestant was not selected, rest
+        //         case 2:
+        //             break; // contestant was selected, go to playground and continue the lifecycle
+        //     }
 
-            playground.followCoachAdvice(this.team);
-            System.out.println(this.whoAmI() + " -> followCoachAdvice()");
+        //     playground.followCoachAdvice(this.team);
+        //     System.out.println(this.whoAmI() + " -> followCoachAdvice()");
 
-            playground.waitForStartTrial(this.team, this.id);
-            System.out.println(this.whoAmI() + " -> waitForStartTrial()");
+        //     playground.waitForStartTrial(this.team, this.id);
+        //     System.out.println(this.whoAmI() + " -> waitForStartTrial()");
 
-            playground.getReady(this.team, this.id);
-            System.out.println(this.whoAmI() + " -> getReady()");
+        //     playground.getReady(this.team, this.id);
+        //     System.out.println(this.whoAmI() + " -> getReady()");
 
-            playground.waitForAssertTrialDecision(this.team, this.id);
-            System.out.println(this.whoAmI() + " -> waitForAssertTrialDecision()");
+        //     playground.waitForAssertTrialDecision(this.team, this.id);
+        //     System.out.println(this.whoAmI() + " -> waitForAssertTrialDecision()");
 
-            contestantBench.seatDown(this.team, this.id);
-            System.out.println(this.whoAmI() + " -> seatDown()");
-        }
+        //     contestantBench.seatDown(this.team, this.id);
+        //     System.out.println(this.whoAmI() + " -> seatDown()");
+        // }
     }
 
     /**

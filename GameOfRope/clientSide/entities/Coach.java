@@ -125,44 +125,44 @@ public class Coach extends Thread {
     @Override
     public void run() {
         System.out.println(this.whoAmI() + " has started.");
-
+        
         /*
          * Start of Coach life cycle
          */
-        int orders;
+        // int orders;
 
-        View[] aboutContestants = contestantBench.reviewNotes(team);
-        System.out.println(this.whoAmI() + " -> reviewNotes()");
+        // View[] aboutContestants = contestantBench.reviewNotes(team);
+        // System.out.println(this.whoAmI() + " -> reviewNotes()");
 
-        int[] selected = selectContestants(aboutContestants);
-        System.out.println(this.whoAmI() + " -> selectContestants()");
+        // int[] selected = selectContestants(aboutContestants);
+        // System.out.println(this.whoAmI() + " -> selectContestants()");
 
-        while (true) {
-            orders = contestantBench.waitForCallTrial(team);
-            System.out.println(this.whoAmI() + " -> waitForCallTrial()");
+        // while (true) {
+        //     orders = contestantBench.waitForCallTrial(team);
+        //     System.out.println(this.whoAmI() + " -> waitForCallTrial()");
 
-            if (orders == 0) {
-                return;
-            }
+        //     if (orders == 0) {
+        //         return;
+        //     }
 
-            contestantBench.callContestants(team, selected);
-            System.out.println(this.whoAmI() + " -> callContestants()");
+        //     contestantBench.callContestants(team, selected);
+        //     System.out.println(this.whoAmI() + " -> callContestants()");
 
-            playground.waitForFollowCoachAdvice(team);
-            System.out.println(this.whoAmI() + " -> waitForFollowCoachAdvice()");
+        //     playground.waitForFollowCoachAdvice(team);
+        //     System.out.println(this.whoAmI() + " -> waitForFollowCoachAdvice()");
 
-            refereeSite.informReferee();
-            System.out.println(this.whoAmI() + " -> informReferee()");
+        //     refereeSite.informReferee();
+        //     System.out.println(this.whoAmI() + " -> informReferee()");
 
-            playground.waitForAssertTrialDecision(team);
-            System.out.println(this.whoAmI() + " -> waitForAssertTrialDecision()");
+        //     playground.waitForAssertTrialDecision(team);
+        //     System.out.println(this.whoAmI() + " -> waitForAssertTrialDecision()");
 
-            aboutContestants = contestantBench.reviewNotes(team);
-            System.out.println(this.whoAmI() + " -> reviewNotes()");
+        //     aboutContestants = contestantBench.reviewNotes(team);
+        //     System.out.println(this.whoAmI() + " -> reviewNotes()");
 
-            selected = selectContestants(aboutContestants);
-            System.out.println(this.whoAmI() + " -> selectContestants()");
-        }
+        //     selected = selectContestants(aboutContestants);
+        //     System.out.println(this.whoAmI() + " -> selectContestants()");
+        // }
     }
 
     /**

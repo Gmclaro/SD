@@ -62,6 +62,7 @@ public class RefereeSiteStub {
         com.close();
     }
 
+    // TODO: informReferee
     public void informReferee(){
         ClientCom com;
         Message inMessage, outMessage;
@@ -77,6 +78,7 @@ public class RefereeSiteStub {
         
     }
 
+    //TODO: waitForInformReferee
     public void waitForInformReferee(){
         ClientCom com;
         Message inMessage, outMessage;
@@ -89,5 +91,31 @@ public class RefereeSiteStub {
             }
             catch (InterruptedException e) {}
         }
+    }
+
+    public void shutdown() {
+        ClientCom com;
+        Message inMessage,outMessage;
+
+        com = new ClientCom(serverHostName, serverPortNumb);
+
+        while(!com.open()) {
+            try {
+                Thread.currentThread ().sleep ((long) (10));
+            }
+            catch (InterruptedException e) {}
+        }
+
+        outMessage = new Message(MessageType.REQ_REFEREE_SITE_SHUTDOWN);
+        com.writeObject(outMessage);
+        inMessage = (Message) com.readObject();
+
+        if(inMessage.getMsgType() != MessageType.REP_REFEREE_SITE_SHUTDOWN){
+            System.out.println("Thread "+ Thread.currentThread().getName()+ ":Invalid message type!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        com.close();
     }
 }

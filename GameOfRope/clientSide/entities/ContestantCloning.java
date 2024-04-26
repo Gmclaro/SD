@@ -12,14 +12,14 @@ public interface ContestantCloning {
      * @param state the state of the contestant
      */
 
-    public void setEntityState(int state);
+    public void setContestantState(int state);
 
     /**
      * Get the state of the contestant
      * @return the state of the contestant
      */
 
-    public int getEntityState();
+    public int getContestantState();
 
     /**
      * Set the team of the contestant
