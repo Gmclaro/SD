@@ -4,7 +4,8 @@ export CLASSPATH=$CLASSPATH:$PWD/commonInfra/genclass.jar
 read -p "rm .class? (y/n)" answer
 
 if [ "$answer" = "y" ] || [ -z "$answer" ]; then
-    rm -f ./*/*/*.class
+    rm ./*/*/*.class
+    rm ./commonInfra/*.class
     rm log
 fi
 
@@ -13,5 +14,7 @@ if [ "$answer" = "n" ]; then
     exit 0
 fi
 
-javac ./*/*/*.java
+javac -cp ".:./genclass.jar" ./*/*/*.java
+
+
 

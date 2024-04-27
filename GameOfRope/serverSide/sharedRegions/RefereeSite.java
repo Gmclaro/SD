@@ -40,7 +40,7 @@ public class RefereeSite {
     public synchronized void announceNewGame() {
         repo.newGameStarted();
 
-        ((Referee) Thread.currentThread()).setEntityState(RefereeState.START_OF_A_GAME);
+        ((RefereeSiteClientProxy) Thread.currentThread()).setRefereeState(RefereeState.START_OF_A_GAME);
         repo.setRefereeState(RefereeState.START_OF_A_GAME);
     }
 

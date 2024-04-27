@@ -34,11 +34,14 @@ public class RefereeSiteInterface {
                 refereeSite.announceNewGame();
                 outMessage = new Message(MessageType.REP_ANNOUNCE_NEW_GAME, RefereeState.START_OF_A_GAME);
 
+                System.out.println("inMessage:\n" + inMessage.toString());
+
                 break;
 
             default:
                 break;
         }
+        
         return (outMessage);
     }
 

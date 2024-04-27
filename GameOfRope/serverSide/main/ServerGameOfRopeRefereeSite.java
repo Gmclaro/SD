@@ -37,7 +37,7 @@ public class ServerGameOfRopeRefereeSite {
         for (int i = 0; i < args.length; i++) {
             if (i % 2 == 0) {
                 try {
-                    int port = Integer.parseInt(args[i + 1]);
+                    int port = Integer.parseInt(args[i]);
                     if ((port < 4000) || (port > 65536)) {
                         System.out.println("Invalid args[" + i + "] port number!");
                         System.exit(1);

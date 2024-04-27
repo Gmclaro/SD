@@ -39,10 +39,10 @@ public class ClientGameOfRopeReferee {
         }
 
         for (int i = 0; i < 8; i++) {
-            if (i % 2 == 0) {
+            if (i % 2 != 0) {
                 try {
-                    int port = Integer.parseInt(args[i + 1]);
-                    if ((port < 4000) || (port < 65536)) {
+                    int port = Integer.parseInt(args[i]);
+                    if ((port < 4000) || (port > 65536)) {
                         System.out.println("Invalid args[" + i + "] port number!");
                         System.exit(1);
                     }

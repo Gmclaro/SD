@@ -81,8 +81,11 @@ public class Message implements Serializable {
 
         // TODO: value can be refereeState/ropePosition/orders/team/strength
         switch (msgType) {
-            case -10:
-
+            case MessageType.REQ_ANNOUNCE_NEW_GAME:
+                this.state = value;
+                break;
+            case MessageType.REP_ANNOUNCE_NEW_GAME:
+                this.state = value;
                 break;
 
             default:
@@ -153,11 +156,29 @@ public class Message implements Serializable {
         return msgType;
     }
 
-    public int getEntityState(){
+    public int getEntityState() {
         return state;
     }
-    public int setEntityState(int state){
+
+    public int setEntityState(int state) {
         return this.state = state;
+    }
+
+    @Override
+    public String toString() {
+        return "Message{" +
+                "msgType=" + msgType +
+                ", state=" + state +
+                ", team=" + team +
+                ", id=" + id +
+                ", continueGame=" + continueGame +
+                ", ropePostion=" + ropePostion +
+                ", scores=" + scores +
+                ", aboutContestants=" + aboutContestants +
+                ", selected=" + selected +
+                ", strength=" + strength +
+                ", orders=" + orders +
+                '}';
     }
 
 }
