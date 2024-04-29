@@ -1,10 +1,12 @@
 package commonInfra;
 
+import java.io.Serializable;
+
 /**
  * This class represents the view of caracteristics of a player and behaves as
  * an element of a map.
  */
-public class View {
+public class View implements Serializable{
     /**
      * The key of the view.
      */

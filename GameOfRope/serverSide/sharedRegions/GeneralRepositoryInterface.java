@@ -23,8 +23,9 @@ public class GeneralRepositoryInterface {
         switch (inMessage.getMsgType()) {
             case MessageType.REQ_LOG_SET_REFEREE_STATE:
                 repo.setRefereeState(inMessage.getEntityState());
+                System.out.println("Gen Repo Referee state: " + inMessage.getEntityState());
                 outMessage = new Message(MessageType.REP_LOG_SET_REFEREE_STATE);
-
+                break;
             case MessageType.REQ_NEW_GAME_STARTED:
                 repo.newGameStarted();
                 outMessage = new Message(MessageType.REP_NEW_GAME_STARTED);

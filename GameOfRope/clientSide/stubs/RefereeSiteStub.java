@@ -60,6 +60,7 @@ public class RefereeSiteStub {
         }
 
         ((Referee) Thread.currentThread()).setEntityState(inMessage.getEntityState());
+        System.out.println("Referee state: " + ((Referee) Thread.currentThread()).getEntityState());
 
         com.close();
     }

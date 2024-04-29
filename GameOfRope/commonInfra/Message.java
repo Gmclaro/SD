@@ -40,7 +40,7 @@ public class Message implements Serializable {
     /**
      * Message instantiation (form 1).
      * 
-     * @param msgType type of the message
+     * @param type type of the message
      */
     public Message(int msgType) {
         this.msgType = msgType;
@@ -80,16 +80,12 @@ public class Message implements Serializable {
         this.msgType = msgType;
 
         // TODO: value can be refereeState/ropePosition/orders/team/strength
-        switch (msgType) {
-            case MessageType.REQ_ANNOUNCE_NEW_GAME:
-                this.state = value;
-                break;
-            case MessageType.REP_ANNOUNCE_NEW_GAME:
-                this.state = value;
-                break;
-
-            default:
-                break;
+        if (msgType == MessageType.REQ_ANNOUNCE_NEW_GAME || msgType == MessageType.REP_ANNOUNCE_NEW_GAME || msgType == MessageType.REQ_LOG_SET_REFEREE_STATE) {
+            this.state = value;
+        }
+        else {
+            System.out.println ("Message type = " + msgType + ": non-implemented instantiation!");
+            System.exit(1);
         }
     }
 
