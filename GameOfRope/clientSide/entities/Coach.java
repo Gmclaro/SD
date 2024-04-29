@@ -131,6 +131,7 @@ public class Coach extends Thread {
          */
         // int orders;
 
+        // TODO: fazer o reviewNotes no contestantBench -> Fazer MessageType, o REQ Message(MsgType,value1) -> é o form1 fazer o REP Message(MsgType,View[]), fazer o ContestantBenchStub,fazer o contestantBenchProxy, fazer o contestantBenchInterface,contestantBenchMain, fazer o coachMainClient
         // View[] aboutContestants = contestantBench.reviewNotes(team);
         // System.out.println(this.whoAmI() + " -> reviewNotes()");
 
