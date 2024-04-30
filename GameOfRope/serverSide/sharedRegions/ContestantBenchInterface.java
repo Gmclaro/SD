@@ -3,6 +3,7 @@ package serverSide.sharedRegions;
 import clientSide.entities.*;
 import commonInfra.*;
 import serverSide.entities.*;
+import serverSide.main.SimulParse;
 
 public class ContestantBenchInterface {
 
@@ -22,8 +23,11 @@ public class ContestantBenchInterface {
 
         switch(inMessage.getMsgType()){
             case MessageType.REQ_REVIEW_NOTES: 
-                if((inMessage.getTeam() < 0) || (inMessage.getTeam() > 2)){
+                if((inMessage.getTeam() < 1) || (inMessage.getTeam() > SimulParse.COACH)){
                     throw new MessageException("Invalid number of team !", inMessage);
+                }
+                else if(((ContestantBenchClientProxy) Thread.currentThread()).getTeam() != inMessage.getTeam()){
+                    throw new MessageException("Invalid team!", inMessage);
                 }
                 break;
             default:
