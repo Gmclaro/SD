@@ -24,7 +24,7 @@ public class ContestantBenchInterface {
             case MessageType.REQ_REVIEW_NOTES: 
                 if((inMessage.getTeam() < 0) || (inMessage.getTeam() > 2)){
                     throw new MessageException("Invalid number of team !", inMessage);
-                }else if(inMessage.get)
+                }
                 break;
             default:
                 throw new MessageException("Invalid message type!", inMessage);
