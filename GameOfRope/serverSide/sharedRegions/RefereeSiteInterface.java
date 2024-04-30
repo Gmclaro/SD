@@ -27,6 +27,11 @@ public class RefereeSiteInterface {
                     throw new MessageException("Invalid Referee state!", inMessage);
                 }
                 break;
+
+            // TODO: missing msgType here
+
+            case MessageType.REQ_REFEREE_SITE_SHUTDOWN:
+                break;
             default:
                 throw new MessageException("Invalid message type!", inMessage);
         }
@@ -34,11 +39,17 @@ public class RefereeSiteInterface {
         /* Process Messages */
         switch (inMessage.getMsgType()) {
             case MessageType.REQ_ANNOUNCE_NEW_GAME:
-                System.out.println("REQ_ANNOUNCE_NEW_GAME:\n" + inMessage.toString());
                 ((RefereeSiteClientProxy) Thread.currentThread()).setRefereeState(inMessage.getEntityState());
 
                 refereeSite.announceNewGame();
                 outMessage = new Message(MessageType.REP_ANNOUNCE_NEW_GAME, RefereeState.START_OF_A_GAME);
+                break;
+
+            // TODO: missing msgType here
+
+            case MessageType.REQ_REFEREE_SITE_SHUTDOWN:
+                refereeSite.shutdown();
+                outMessage = new Message(MessageType.REP_REFEREE_SITE_SHUTDOWN);
                 break;
 
             default:

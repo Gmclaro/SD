@@ -11,7 +11,7 @@ import serverSide.sharedRegions.RefereeSiteInterface;
 public class ServerGameOfRopeRefereeSite {
 
     // TODO: javadoc
-    public static boolean waitConnection = true;
+    public static boolean waitConnection;
 
     /**
      * Main method.
@@ -68,6 +68,7 @@ public class ServerGameOfRopeRefereeSite {
 
         RefereeSiteClientProxy cliProxy;
 
+        waitConnection = true;
         while (waitConnection) {
             try{
                 sconi  = scon.accept();

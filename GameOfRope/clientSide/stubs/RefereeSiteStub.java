@@ -42,7 +42,6 @@ public class RefereeSiteStub {
         }
 
         outMessage = new Message(MessageType.REQ_ANNOUNCE_NEW_GAME, RefereeState.START_OF_THE_MATCH);
-        System.out.println("outMessage:\n" + outMessage.toString());
         com.writeObject(outMessage);
         inMessage = (Message) com.readObject();
 
@@ -59,8 +58,9 @@ public class RefereeSiteStub {
             System.exit(1);
         }
 
+        System.out.println("Referee state1: " + ((Referee) Thread.currentThread()).getEntityState());
         ((Referee) Thread.currentThread()).setEntityState(inMessage.getEntityState());
-        System.out.println("Referee state: " + ((Referee) Thread.currentThread()).getEntityState());
+        System.out.println("Referee state2: " + ((Referee) Thread.currentThread()).getEntityState());
 
         com.close();
     }
