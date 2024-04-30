@@ -27,6 +27,41 @@ public class ContestantBenchStub {
         serverHostName = hostname;
         serverPortNumb = port;
     }
+
+    public View[] reviewNotes(int team){
+        ClientCom com;
+        Message inMessage, outMessage;
+
+        com = new ClientCom(serverHostName, serverPortNumb);
+
+        while (!com.open()) {
+            try {
+                Thread.currentThread().sleep((long) (10));
+            } catch (InterruptedException e) {
+            }
+        }
+
+        outMessage = new Message(MessageType.REQ_REVIEW_NOTES, team);
+        com.writeObject(outMessage);
+        inMessage = (Message) com.readObject();
+
+
+        if(inMessage.getMsgType() != MessageType.REP_REVIEW_NOTES){
+            System.out.println("Thread "+ Thread.currentThread().getName()+ ":Invalid message type!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        if(inMessage.getTeam() != ((Coach) Thread.currentThread()).getTeam()){
+            System.out.println("Thread "+ Thread.currentThread().getName()+ ":Invalid coachID!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+
+        com.close();
+        return inMessage.getAboutContestants();
+    }
  
     
 

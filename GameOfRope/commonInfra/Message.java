@@ -160,6 +160,14 @@ public class Message implements Serializable {
         return this.state = state;
     }
 
+    public View[] getAboutContestants(){
+        return aboutContestants;
+    }
+
+    public int getTeam() {
+        return team;
+    }
+
     @Override
     public String toString() {
         return "Message{" +
