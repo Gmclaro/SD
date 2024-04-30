@@ -1,5 +1,6 @@
 package serverSide.sharedRegions;
 
+import serverSide.main.ServerGameOfRopeRefereeSite;
 import serverSide.main.SimulParse;
 import serverSide.entities.*;
 import clientSide.entities.*;
@@ -22,6 +23,8 @@ public class RefereeSite {
      */
 
     private int teamsReady;
+
+    private int nEntities = 0;
 
     /**
      * Referee Site Constructor
@@ -70,5 +73,14 @@ public class RefereeSite {
          * Reset the number of teams ready
          */
         teamsReady = 0;
+    }
+
+    public synchronized void shutdown() {
+        nEntities += 1;
+        // TODO: When coach are done remove this, might have to add refereesitestub to the contestantas just to shut down all at the same time
+        //if (nEntities >= (SimulParse.COACH + 1)) {
+            ServerGameOfRopeRefereeSite.waitConnection = false;
+        //}
+        notifyAll();
     }
 }
