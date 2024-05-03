@@ -27,7 +27,6 @@ public class GeneralRepositoryStub {
     this.serverPortNumb = serverPortNumb;
   }
 
-  
   public void setRefereeState(int state) {
     ClientCom com;
     Message outMessage, inMessage;
@@ -41,11 +40,11 @@ public class GeneralRepositoryStub {
       }
     }
 
-    outMessage = new Message(MessageType.REQ_LOG_SET_REFEREE_STATE,state);
+    outMessage = new Message(MessageType.REQ_LOG_SET_REFEREE_STATE, state);
     com.writeObject(outMessage);
     inMessage = (Message) com.readObject();
 
-    if (inMessage.getMsgType() != MessageType.REP_LOG_SET_REFEREE_STATE){
+    if (inMessage.getMsgType() != MessageType.REP_LOG_SET_REFEREE_STATE) {
       System.out.println("Thread " + Thread.currentThread().getName() + ":Type error in setRefereeState()");
       System.out.println(inMessage.toString());
       System.exit(1);
@@ -54,7 +53,17 @@ public class GeneralRepositoryStub {
 
   // TODO : Missing set Entity states
 
+  public void setCoachState(int team, int state) {
 
+  }
+
+  public void setContestantState(int team, int id, int seatAtTheBench) {
+
+  }
+
+  public void setContestantStrength(int team, int id, int strength) {
+
+  }
 
   // TOOD: newGameStated
   public void newGameStarted() {
@@ -85,11 +94,37 @@ public class GeneralRepositoryStub {
 
   // TODO: setNewTrial
   public void setNewTrial() {
+    ClientCom com;
+    Message outMessage, inMessage;
 
+    com = new ClientCom(serverHostName, serverPortNumb);
+
+    while (!com.open()) {
+      try {
+        Thread.currentThread().sleep((long) (10));
+      } catch (InterruptedException e) {
+      }
+    }
+
+    outMessage = new Message(MessageType.REQ_SET_NEW_TRIAL);
+    com.writeObject(outMessage);
+    inMessage = (Message) com.readObject();
+
+    if (inMessage.getMsgType() != MessageType.REP_SET_NEW_TRIAL) {
+      System.out.println("Thread " + Thread.currentThread().getName() + ":Type error in setNewTrial()");
+      System.out.println(inMessage.toString());
+      System.exit(1);
+    }
+
+    com.close();
   }
 
   // TODO: setActiveContestant
   public void setActiveContestant(int team, int id) {
+
+  }
+
+  public void setRemoveContestant(int team, int id) {
 
   }
 
@@ -115,28 +150,28 @@ public class GeneralRepositoryStub {
 
   public void shutdown() {
     ClientCom com;
-    Message inMessage,outMessage;
+    Message inMessage, outMessage;
 
     com = new ClientCom(serverHostName, serverPortNumb);
 
-    while(!com.open()) {
-        try {
-            Thread.currentThread ().sleep ((long) (10));
-        }
-        catch (InterruptedException e) {}
+    while (!com.open()) {
+      try {
+        Thread.currentThread().sleep((long) (10));
+      } catch (InterruptedException e) {
+      }
     }
 
     outMessage = new Message(MessageType.REQ_GENERAL_REPOSITORY_SHUTDOWN);
     com.writeObject(outMessage);
     inMessage = (Message) com.readObject();
 
-    if(inMessage.getMsgType() != MessageType.REP_GENERAL_REPOSITORY_SHUTDOWN){
-        System.out.println("Thread "+ Thread.currentThread().getName()+ ":Invalid message type!");
-        System.out.println(inMessage.toString());
-        System.exit(1);
+    if (inMessage.getMsgType() != MessageType.REP_GENERAL_REPOSITORY_SHUTDOWN) {
+      System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid message type!");
+      System.out.println(inMessage.toString());
+      System.exit(1);
     }
 
     com.close();
-}
+  }
 
 }

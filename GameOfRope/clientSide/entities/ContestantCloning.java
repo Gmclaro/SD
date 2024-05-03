@@ -26,7 +26,7 @@ public interface ContestantCloning {
      * @param team the team of the contestant
      */
 
-    public void setTeam(int team);
+    public void setContestantTeam(int team);
 
 
     /**
@@ -34,7 +34,7 @@ public interface ContestantCloning {
      * @return the team of the contestant
      */
 
-    public int getTeam();
+    public int getContestantTeam();
 
 
     /**

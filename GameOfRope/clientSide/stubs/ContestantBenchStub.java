@@ -17,10 +17,10 @@ public class ContestantBenchStub {
      * Instantiation of a contestant bench stub
      * 
      * @param hostName
-     *            name of the platform where is located the contestant bench
-     *            server
+     *                 name of the platform where is located the contestant bench
+     *                 server
      * @param port
-     *            port number for listening to service requests
+     *                 port number for listening to service requests
      */
 
     public ContestantBenchStub(String hostname, int port) {
@@ -28,7 +28,41 @@ public class ContestantBenchStub {
         serverPortNumb = port;
     }
 
-    public View[] reviewNotes(int team){
+    public void callTrial() {
+        ClientCom com;
+        Message inMessage, outMessage;
+
+        com = new ClientCom(serverHostName, serverPortNumb);
+
+        while (!com.open()) {
+            try {
+                Thread.currentThread().sleep((long) (10));
+            } catch (InterruptedException e) {
+            }
+        }
+
+        outMessage = new Message(MessageType.REQ_CALL_TRIAL, ((Referee) Thread.currentThread()).getEntityState());
+        com.writeObject(outMessage);
+        inMessage = (Message) com.readObject();
+
+        if (inMessage.getMsgType() != MessageType.REP_CALL_TRIAL) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid message type!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        if (inMessage.getEntityState() < RefereeState.START_OF_THE_MATCH || inMessage.getEntityState() > RefereeState.END_OF_THE_MATCH) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid entity state!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        com.close();
+        ((Referee) Thread.currentThread()).setEntityState(inMessage.getEntityState());
+        System.out.println("REP_CALL_TRIAL: " + ((Referee) Thread.currentThread()).getEntityState());
+    }
+
+    public View[] reviewNotes(int team) {
         ClientCom com;
         Message inMessage, outMessage;
 
@@ -45,49 +79,46 @@ public class ContestantBenchStub {
         com.writeObject(outMessage);
         inMessage = (Message) com.readObject();
 
-
-        if(inMessage.getMsgType() != MessageType.REP_REVIEW_NOTES){
-            System.out.println("Thread "+ Thread.currentThread().getName()+ ":Invalid message type!");
+        if (inMessage.getMsgType() != MessageType.REP_REVIEW_NOTES) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid message type!");
             System.out.println(inMessage.toString());
             System.exit(1);
         }
 
-        if(inMessage.getTeam() != ((Coach) Thread.currentThread()).getTeam()){
-            System.out.println("Thread "+ Thread.currentThread().getName()+ ":Invalid coachID!");
+        if (inMessage.getTeam() != ((Coach) Thread.currentThread()).getTeam()) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid coachID!");
             System.out.println(inMessage.toString());
             System.exit(1);
         }
-
 
         com.close();
         return inMessage.getAboutContestants();
     }
- 
-    
 
     public void shutdown() {
         ClientCom com;
-        Message inMessage,outMessage;
+        Message inMessage, outMessage;
 
         com = new ClientCom(serverHostName, serverPortNumb);
 
-        while(!com.open()) {
+        while (!com.open()) {
             try {
-                Thread.currentThread ().sleep ((long) (10));
+                Thread.currentThread().sleep((long) (10));
+            } catch (InterruptedException e) {
             }
-            catch (InterruptedException e) {}
         }
 
         outMessage = new Message(MessageType.REQ_CONTESTANT_BENCH_SHUTDOWN);
         com.writeObject(outMessage);
         inMessage = (Message) com.readObject();
 
-        if(inMessage.getMsgType() != MessageType.REP_CONTESTANT_BENCH_SHUTDOWN){
-            System.out.println("Thread "+ Thread.currentThread().getName()+ ":Invalid message type!");
+        if (inMessage.getMsgType() != MessageType.REP_CONTESTANT_BENCH_SHUTDOWN) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid message type!");
             System.out.println(inMessage.toString());
             System.exit(1);
         }
 
         com.close();
     }
+
 }

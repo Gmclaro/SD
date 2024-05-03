@@ -1,9 +1,11 @@
 package serverSide.entities;
+
+import clientSide.entities.*;
 import commonInfra.*;
 
 import serverSide.sharedRegions.ContestantBenchInterface;
 
-public class ContestantBenchClientProxy extends Thread{
+public class ContestantBenchClientProxy extends Thread implements CoachCloning, RefereeCloning, ContestantCloning {
 
     // TODO: javadoc
 
@@ -13,14 +15,21 @@ public class ContestantBenchClientProxy extends Thread{
 
     private ContestantBenchInterface contestantBenchInterface;
 
-    private int coachState;
-
     private int contestantState;
+
+    private int contestantTeam;
+
+    private int id;
+
+    private int strength;
 
     private int refereeState;
 
+    private int coachState;
 
-    private int team;
+    private int coachTeam;
+
+
 
     public ContestantBenchClientProxy(ServerCom sconi, ContestantBenchInterface contestantBenchInterface) {
         super("ContestantBenchClientProxy(" + ContestantBenchClientProxy.getProxyId() + ")");
@@ -46,37 +55,62 @@ public class ContestantBenchClientProxy extends Thread{
     }
 
     public void setContestantState(int state) {
-        contestantState = state;
+        this.contestantState = state;
     }
 
     public int getContestantState() {
-        return contestantState;
+        return this.contestantState;
     }
 
-    public void setCoachState(int state) {
-        coachState = state;
+    public void setContestantTeam(int team) {
+        this.contestantTeam = team;
     }
 
-    public int getCoachState() {
-        return coachState;
+    public int getContestantTeam() {
+        return this.contestantTeam;
+    }
+
+    public void setID(int id) {
+        this.id = id;
+    }
+
+    public int getID() {
+        return this.id;
+    }
+
+    public int getStrength() {
+        return this.strength;
+    }
+
+    public void setStrength(int strength) {
+        this.strength = strength;
     }
 
     public void setRefereeState(int state) {
-        refereeState = state;
+        this.refereeState = state;
     }
 
     public int getRefereeState() {
-        return refereeState;
+        return this.refereeState;
     }
 
-    public void setTeam(int team) {
-        this.team = team;
+    public void setCoachState(int state) {
+        this.coachState = state;
     }
 
-    public int getTeam() {
-        return team;
+    public int getCoachState() {
+        return this.coachState;
     }
 
+    public void setCoachTeam(int team) {
+        this.coachTeam = team;
+    }
+
+    
+    public int getCoachTeam() {
+        return this.coachTeam;
+    }
+    
 
     @Override
     public void run() {
@@ -96,5 +130,4 @@ public class ContestantBenchClientProxy extends Thread{
         sconi.writeObject(outMessage);
         sconi.close();
     }
-    
 }

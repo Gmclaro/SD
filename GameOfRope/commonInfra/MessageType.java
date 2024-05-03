@@ -171,16 +171,29 @@ public class MessageType {
 
   public static final int REQ_SET_MATCH_WINNER = 28;
 
+  /*
+   * Contestant Bench INPUT/OUTPUT messages
+   */
 
   /**
    * Contestant Bench - Operation review notes (REQUEST)
    */
-  public static final int REQ_REVIEW_NOTES = 29;
+  public static final int REQ_CALL_TRIAL = 29;
 
   /**
    * Contestant Bench - Operation review notes (REPLY)
    */
-  public static final int REP_REVIEW_NOTES = 30;
+  public static final int REP_CALL_TRIAL = 30;
+
+  /**
+   * Contestant Bench - Operation review notes (REQUEST)
+   */
+  public static final int REQ_REVIEW_NOTES = 31;
+
+  /**
+   * Contestant Bench - Operation review notes (REPLY)
+   */
+  public static final int REP_REVIEW_NOTES = 32;
 
   //////////////////////////////////////////////
 

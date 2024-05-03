@@ -80,11 +80,12 @@ public class Message implements Serializable {
         this.msgType = msgType;
 
         // TODO: value can be refereeState/ropePosition/orders/team/strength
-        if (msgType == MessageType.REQ_ANNOUNCE_NEW_GAME || msgType == MessageType.REP_ANNOUNCE_NEW_GAME || msgType == MessageType.REQ_LOG_SET_REFEREE_STATE) {
+        if (msgType == MessageType.REQ_ANNOUNCE_NEW_GAME || msgType == MessageType.REP_ANNOUNCE_NEW_GAME
+                || msgType == MessageType.REQ_CALL_TRIAL || msgType == MessageType.REP_CALL_TRIAL
+                || msgType == MessageType.REQ_LOG_SET_REFEREE_STATE) {
             this.state = value;
-        }
-        else {
-            System.out.println ("Message type = " + msgType + ": non-implemented instantiation!");
+        } else {
+            System.out.println("Message type = " + msgType + ": non-implemented instantiation!");
             System.exit(1);
         }
     }
@@ -160,7 +161,7 @@ public class Message implements Serializable {
         return this.state = state;
     }
 
-    public View[] getAboutContestants(){
+    public View[] getAboutContestants() {
         return aboutContestants;
     }
 

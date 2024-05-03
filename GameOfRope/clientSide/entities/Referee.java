@@ -113,7 +113,7 @@ public class Referee extends Thread {
 
             // do {
 
-            //     contestantBench.callTrial();
+                contestantBench.callTrial();
             //     System.out.println(
             //             "Trial " + (++currentTrial) + ": ----------------------------------------------------------");
             //     System.out.println(this.whoAmI() + " -> callTrial()");

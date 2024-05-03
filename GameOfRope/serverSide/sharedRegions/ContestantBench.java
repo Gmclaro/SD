@@ -14,7 +14,7 @@ public class ContestantBench {
     /**
      * General Repository of Information
      */
-    private final GeneralRepository repo;
+    private final GeneralRepositoryStub repo;
 
     /**
      * Characteristics of the Contestants in the bench
@@ -46,7 +46,7 @@ public class ContestantBench {
      * 
      * @param repo General Repository of Information
      */
-    public ContestantBench(GeneralRepository repo) {
+    public ContestantBench(GeneralRepositoryStub repo) {
         this.repo = repo;
 
         this.contestants = new View[2][SimulParse.CONTESTANT_PER_TEAM];
@@ -70,7 +70,8 @@ public class ContestantBench {
         this.callTrial = 2;
         notifyAll();
 
-        ((Referee) Thread.currentThread()).setEntityState(RefereeState.TEAMS_READY);
+        // TODO: MISSING STUB For generalRepo
+        ((ContestantBenchClientProxy) Thread.currentThread()).setRefereeState(RefereeState.TEAMS_READY);
         repo.setRefereeState(RefereeState.TEAMS_READY);
         repo.setNewTrial();
     }

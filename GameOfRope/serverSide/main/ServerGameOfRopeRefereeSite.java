@@ -5,8 +5,7 @@ import java.net.SocketTimeoutException;
 import clientSide.stubs.GeneralRepositoryStub;
 import commonInfra.ServerCom;
 import serverSide.entities.RefereeSiteClientProxy;
-import serverSide.sharedRegions.RefereeSite;
-import serverSide.sharedRegions.RefereeSiteInterface;
+import serverSide.sharedRegions.*;
 
 public class ServerGameOfRopeRefereeSite {
 
@@ -26,7 +25,7 @@ public class ServerGameOfRopeRefereeSite {
     public static void main(String[] args) {
         RefereeSite refereeSite;
         RefereeSiteInterface refereeSiteInterface;
-        GeneralRepositoryStub generealRepositoryStub;
+        GeneralRepositoryStub generalRepositoryStub;
         ServerCom scon, sconi;
 
         if (args.length != 3) {
@@ -53,8 +52,8 @@ public class ServerGameOfRopeRefereeSite {
 
         /* service is established */
 
-        generealRepositoryStub = new GeneralRepositoryStub(args[1], Integer.parseInt(args[2]));
-        refereeSite = new RefereeSite(generealRepositoryStub);
+        generalRepositoryStub = new GeneralRepositoryStub(args[1], Integer.parseInt(args[2]));
+        refereeSite = new RefereeSite(generalRepositoryStub);
         refereeSiteInterface = new RefereeSiteInterface(refereeSite);
         int port = Integer.parseInt(args[0]);
         scon = new ServerCom(port);
