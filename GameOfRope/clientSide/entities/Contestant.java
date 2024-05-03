@@ -56,7 +56,7 @@ public class Contestant extends Thread {
         this.id = id;
         this.team = team;
         this.strength = contestantStrength;
-        this.state = -1;
+        this.state = ContestantState.SEAT_AT_THE_BENCH;
 
         // shared regions
         this.playground = playground;
@@ -142,8 +142,8 @@ public class Contestant extends Thread {
     @Override
     public void run() {
         System.out.println(this.whoAmI() + " has started.");
-        // contestantBench.seatDown(this.team, this.id);
-        // System.out.println(this.whoAmI() + " -> seatDown()");
+        contestantBench.seatDown(this.team, this.id);
+        System.out.println(this.whoAmI() + " -> seatDown()");
 
         // int orders;
         // while (true) {
@@ -193,5 +193,10 @@ public class Contestant extends Thread {
 
     public void rest() {
         this.strength++;
+    }
+
+    public void setStrength(Object strength2) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setStrength'");
     }
 }

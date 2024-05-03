@@ -70,7 +70,7 @@ public class ContestantBenchClientProxy extends Thread implements CoachCloning, 
         return this.contestantTeam;
     }
 
-    public void setID(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 

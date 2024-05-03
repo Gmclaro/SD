@@ -57,6 +57,7 @@ public class RefereeSiteInterface {
 
         }
 
+        System.out.println("\nRSI processAndReply() -> Reply: " + outMessage.toString());
         return (outMessage);
     }
 

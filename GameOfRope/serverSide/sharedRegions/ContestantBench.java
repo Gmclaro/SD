@@ -210,9 +210,9 @@ public class ContestantBench {
         }
 
         repo.setRemoveContestant(team, id);
-
-        Contestant contestant = (Contestant) Thread.currentThread();
-        contestant.setEntityState(ContestantState.SEAT_AT_THE_BENCH);
+        
+        ContestantBenchClientProxy contestant = (ContestantBenchClientProxy) Thread.currentThread();
+        contestant.setContestantState(ContestantState.SEAT_AT_THE_BENCH);
 
         repo.setContestantState(team, id, ContestantState.SEAT_AT_THE_BENCH);
 

@@ -41,8 +41,7 @@ public class RefereeSiteStub {
             }
         }
 
-        outMessage = new Message(MessageType.REQ_ANNOUNCE_NEW_GAME,
-                ((Referee) Thread.currentThread()).getEntityState());
+        outMessage = new Message(MessageType.REQ_ANNOUNCE_NEW_GAME, RefereeState.START_OF_THE_MATCH);
         com.writeObject(outMessage);
         inMessage = (Message) com.readObject();
 
@@ -52,17 +51,16 @@ public class RefereeSiteStub {
             System.out.println(inMessage.toString());
             System.exit(1);
         }
-        if (inMessage.getEntityState() < RefereeState.START_OF_THE_MATCH
-                || inMessage.getEntityState() > RefereeState.END_OF_THE_MATCH) {
+        if (inMessage.getEntityState() != RefereeState.START_OF_A_GAME) {
             System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid referee state!");
             System.out.println("Expected:" + RefereeState.START_OF_A_GAME + " Got: " + inMessage.getEntityState());
             System.out.println(inMessage.toString());
             System.exit(1);
         }
-
         com.close();
-        ((Referee) Thread.currentThread()).setEntityState(inMessage.getEntityState());
 
+        ((Referee) Thread.currentThread()).setEntityState(inMessage.getEntityState());
+        System.out.println("\nRSS announceNewGame() -> " + ((Referee) Thread.currentThread()).getEntityState());
     }
 
     // TODO: informReferee

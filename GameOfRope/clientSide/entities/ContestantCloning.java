@@ -42,7 +42,7 @@ public interface ContestantCloning {
      * @param id the id of the contestant
      */
 
-    public void setID(int id);
+    public void setId(int id);
 
     /**
      * Get the id of the contestant

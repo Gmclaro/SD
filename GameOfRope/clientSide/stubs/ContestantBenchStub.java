@@ -51,7 +51,8 @@ public class ContestantBenchStub {
             System.exit(1);
         }
 
-        if (inMessage.getEntityState() < RefereeState.START_OF_THE_MATCH || inMessage.getEntityState() > RefereeState.END_OF_THE_MATCH) {
+        if (inMessage.getEntityState() < RefereeState.START_OF_THE_MATCH
+                || inMessage.getEntityState() > RefereeState.END_OF_THE_MATCH) {
             System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid entity state!");
             System.out.println(inMessage.toString());
             System.exit(1);
@@ -59,7 +60,7 @@ public class ContestantBenchStub {
 
         com.close();
         ((Referee) Thread.currentThread()).setEntityState(inMessage.getEntityState());
-        System.out.println("REP_CALL_TRIAL: " + ((Referee) Thread.currentThread()).getEntityState());
+        System.out.println("\nCBS callTrial() -> " + ((Referee) Thread.currentThread()).getEntityState());
     }
 
     public View[] reviewNotes(int team) {
@@ -93,6 +94,62 @@ public class ContestantBenchStub {
 
         com.close();
         return inMessage.getAboutContestants();
+    }
+
+    public void seatDown(int team, int id) {
+        ClientCom com;
+        Message inMessage, outMessage;
+
+        com = new ClientCom(serverHostName, serverPortNumb);
+
+        while (!com.open()) {
+            try {
+                Thread.currentThread().sleep((long) (10));
+            } catch (InterruptedException e) {
+            }
+        }
+
+
+        
+
+        outMessage = new Message(MessageType.REQ_SEAT_DOWN, team, id,
+                ((Contestant) Thread.currentThread()).getStrength(),
+                ((Contestant) Thread.currentThread()).getEntityState());
+
+                System.out.println("Thread " + Thread.currentThread().getName() + ": REQ_SEAT_DOWN\n"+outMessage.toString());
+
+        com.writeObject(outMessage);
+        inMessage = (Message) com.readObject();
+
+        if (inMessage.getMsgType() != MessageType.REP_SEAT_DOWN) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid message type!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        if (inMessage.getTeam() != ((Contestant) Thread.currentThread()).getTeam()) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid team!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        if (inMessage.getID() != ((Contestant) Thread.currentThread()).getID()) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid id!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        if (inMessage.getEntityState() < ContestantState.SEAT_AT_THE_BENCH
+                || inMessage.getEntityState() > ContestantState.DO_YOUR_BEST) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid entity state!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        com.close();
+        ((Contestant) Thread.currentThread()).setEntityState(inMessage.getEntityState());
+        System.out.println("\nCBS seatDown() -> " + ((Contestant) Thread.currentThread()).getEntityState());
+
     }
 
     public void shutdown() {

@@ -49,6 +49,10 @@ public class GeneralRepositoryStub {
       System.out.println(inMessage.toString());
       System.exit(1);
     }
+
+    com.close();
+    System.out.println("\nGRS setRefereeState()");
+
   }
 
   // TODO : Missing set Entity states
@@ -57,8 +61,31 @@ public class GeneralRepositoryStub {
 
   }
 
-  public void setContestantState(int team, int id, int seatAtTheBench) {
+  public void setContestantState(int team, int id, int state) {
+    ClientCom com;
+    Message outMessage, inMessage;
 
+    com = new ClientCom(serverHostName, serverPortNumb);
+
+    while (!com.open()) {
+      try {
+        Thread.currentThread().sleep((long) (10));
+      } catch (InterruptedException e) {
+      }
+    }
+
+    outMessage = new Message(MessageType.REQ_LOG_SET_CONTESTANT_STATE, team, id, state);
+    com.writeObject(outMessage);
+    inMessage = (Message) com.readObject();
+
+    if (inMessage.getMsgType() != MessageType.REP_LOG_SET_CONTESTANT_STATE) {
+      System.out.println("Thread " + Thread.currentThread().getName() + ":Type error in setContestantState()");
+      System.out.println(inMessage.toString());
+      System.exit(1);
+    }
+
+    com.close();
+    System.out.println("GRS setContestantState()");
   }
 
   public void setContestantStrength(int team, int id, int strength) {
@@ -90,6 +117,8 @@ public class GeneralRepositoryStub {
     }
 
     com.close();
+
+    System.out.println("\nGRS newGameStarted()");
   }
 
   // TODO: setNewTrial
@@ -117,6 +146,8 @@ public class GeneralRepositoryStub {
     }
 
     com.close();
+    System.out.println("\nGRS setNewTrial()");
+
   }
 
   // TODO: setActiveContestant
@@ -125,6 +156,29 @@ public class GeneralRepositoryStub {
   }
 
   public void setRemoveContestant(int team, int id) {
+    ClientCom com;
+    Message outMessage, inMessage;
+
+    com = new ClientCom(serverHostName, serverPortNumb);
+
+    while (!com.open()) {
+      try {
+        Thread.currentThread().sleep((long) (10));
+      } catch (InterruptedException e) {
+      }
+    }
+
+    outMessage = new Message(MessageType.REQ_LOG_SET_REMOVE_CONTESTANT, team, id);
+    com.writeObject(outMessage);
+    inMessage = (Message) com.readObject();
+
+    if (inMessage.getMsgType() != MessageType.REP_LOG_SET_REMOVE_CONTESTANT) {
+      System.out.println("Thread " + Thread.currentThread().getName() + ":Type error in setRemoveContestant()");
+      System.out.println(inMessage.toString());
+      System.exit(1);
+    }
+    com.close();
+    System.out.println("\nGRS setRemoveContestant()");
 
   }
 

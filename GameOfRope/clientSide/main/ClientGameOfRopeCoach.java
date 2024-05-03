@@ -44,7 +44,7 @@ public class ClientGameOfRopeCoach {
             if (i % 2 == 0) {
                 try {
                     int port = Integer.parseInt(args[i + 1]);
-                    if ((port < 4000) || (port < 65536)) {
+                    if ((port < 4000) || (port > 65536)) {
                         System.out.println("Invalid args[" + i + "] port number!");
                         System.exit(1);
                     }
@@ -79,10 +79,10 @@ public class ClientGameOfRopeCoach {
             }
         }
 
-        refereeSiteStub.shutdown();
-        playgroundStub.shutdown();
-        contestantBenchStub.shutdown();
-        generalRepositoryStub.shutdown();
+        // refereeSiteStub.shutdown();
+        // playgroundStub.shutdown();
+        // contestantBenchStub.shutdown();
+        // generalRepositoryStub.shutdown();
     }
 
     public static StrategyType selectStrategy(int team) {
