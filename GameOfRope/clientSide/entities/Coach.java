@@ -129,25 +129,25 @@ public class Coach extends Thread {
         /*
          * Start of Coach life cycle
          */
-        // int orders;
+        int orders;
 
         // TODO: fazer o reviewNotes no contestantBench -> Fazer MessageType, o REQ Message(MsgType,value1) -> é o form1 fazer o REP Message(MsgType,View[]), fazer o ContestantBenchStub,fazer o contestantBenchProxy, fazer o contestantBenchInterface,contestantBenchMain, fazer o coachMainClient
-        //View[] aboutContestants = contestantBench.reviewNotes(team);
+        View[] aboutContestants = contestantBench.reviewNotes(team);
         System.out.println(this.whoAmI() + " -> reviewNotes()");
 
-        // int[] selected = selectContestants(aboutContestants);
-        // System.out.println(this.whoAmI() + " -> selectContestants()");
+        int[] selected = selectContestants(aboutContestants);
+        System.out.println(this.whoAmI() + " -> selectContestants()");
 
         // while (true) {
-        //     orders = contestantBench.waitForCallTrial(team);
-        //     System.out.println(this.whoAmI() + " -> waitForCallTrial()");
+            orders = contestantBench.waitForCallTrial(team);
+            System.out.println(this.whoAmI() + " -> waitForCallTrial()");
 
-        //     if (orders == 0) {
-        //         return;
-        //     }
+             if (orders == 0) {
+                 return;
+             }
 
-        //     contestantBench.callContestants(team, selected);
-        //     System.out.println(this.whoAmI() + " -> callContestants()");
+             contestantBench.callContestants(team, selected);
+             System.out.println(this.whoAmI() + " -> callContestants()");
 
         //     playground.waitForFollowCoachAdvice(team);
         //     System.out.println(this.whoAmI() + " -> waitForFollowCoachAdvice()");

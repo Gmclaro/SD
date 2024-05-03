@@ -83,11 +83,12 @@ public class Message implements Serializable {
         if (msgType == MessageType.REQ_ANNOUNCE_NEW_GAME || msgType == MessageType.REP_ANNOUNCE_NEW_GAME
                 || msgType == MessageType.REQ_CALL_TRIAL || msgType == MessageType.REP_CALL_TRIAL
                 || msgType == MessageType.REQ_LOG_SET_REFEREE_STATE || msgType == MessageType.REP_LOG_SET_REFEREE_STATE
-                || msgType == MessageType.REQ_LOG_SET_CONTESTANT_STATE
                 || msgType == MessageType.REP_LOG_SET_CONTESTANT_STATE
-                || msgType == MessageType.REQ_LOG_SET_REMOVE_CONTESTANT
                 || msgType == MessageType.REP_LOG_SET_REMOVE_CONTESTANT) {
             this.state = value;
+        } else if (msgType == MessageType.REQ_REVIEW_NOTES || msgType == MessageType.REQ_WAIT_FOR_CALL_TRIAL) {
+            this.team = value;
+
         } else {
             System.out.println("Message type = " + msgType + ": non-implemented instantiation!");
             System.exit(1);
@@ -122,9 +123,10 @@ public class Message implements Serializable {
      * @param msgType type of the message
      * @param value   get aboutContestants
      */
-    public Message(int msgType, View[] value) {
+    public Message(int msgType, int team, View[] aboutContestants) {
         this.msgType = msgType;
-        this.aboutContestants = value;
+        this.team = team;
+        this.aboutContestants = aboutContestants;
     }
 
     /**
@@ -145,31 +147,44 @@ public class Message implements Serializable {
      * 
      * @param msgType type of the message
      * @param value1  set team
-     * @param value2  set id
+     * @param value2  set id/state
      */
-    public Message(int msgType, int team, int id) {
+    public Message(int msgType, int team, int value) {
         this.msgType = msgType;
         this.team = team;
-        this.id = id;
+        if (msgType == MessageType.REQ_LOG_SET_COACH_STATE) {
+            this.state = value;
+        } else if (msgType == MessageType.REQ_LOG_SET_REMOVE_CONTESTANT) {
+            this.id = value;
+        } else {
+            System.out.println("ATENCAO" + msgType);
+            System.out.println("Message type = " + msgType + ": non-implemented instantiation!");
+            System.exit(1);
+        }
     }
 
     /**
      * Message instantiation (form 12).
      * 
      * @param msgType type of the message
-     * @param value1  set team
-     * @param value2  set id
-     * @param value3  set strength/state
+     * @param team    set team
+     * @param value1  set id/orders
+     * @param value2  set strength/state
      */
 
-    public Message(int msgType, int team, int id, int value) {
+    public Message(int msgType, int team, int value1, int value2) {
         this.msgType = msgType;
         this.team = team;
-        this.id = id;
-        if (msgType == MessageType.REQ_LOG_SET_CONTESTANT_STATE || msgType == MessageType.REP_SEAT_DOWN) {
-            this.state = value;
-        } else if (msgType == MessageType.REQ_LOG_SET_CONTESTANT_STRENGTH) {
-            this.strength = value;
+        if (msgType == MessageType.REP_WAIT_FOR_CALL_TRIAL) {
+            this.orders = value1;
+        } else if (msgType == MessageType.REQ_LOG_SET_CONTESTANT_STATE || msgType == MessageType.REP_SEAT_DOWN) {
+            this.id = value1;
+        }
+
+        if (msgType == MessageType.REQ_LOG_SET_CONTESTANT_STATE || msgType == MessageType.REP_SEAT_DOWN
+                || msgType == MessageType.REP_WAIT_FOR_CALL_TRIAL) {
+            this.state = value2;
+
         } else {
             System.out.println("Message type = " + msgType + ": non-implemented instantiation!");
             System.exit(1);
@@ -220,6 +235,10 @@ public class Message implements Serializable {
 
     public int getStrength() {
         return strength;
+    }
+
+    public int getOrders() {
+        return orders;
     }
 
     @Override

@@ -77,6 +77,7 @@ public class ContestantBenchStub {
         }
 
         outMessage = new Message(MessageType.REQ_REVIEW_NOTES, team);
+
         com.writeObject(outMessage);
         inMessage = (Message) com.readObject();
 
@@ -93,6 +94,7 @@ public class ContestantBenchStub {
         }
 
         com.close();
+        System.out.println("\nCBS reviewNotes()");
         return inMessage.getAboutContestants();
     }
 
@@ -109,14 +111,9 @@ public class ContestantBenchStub {
             }
         }
 
-
-        
-
         outMessage = new Message(MessageType.REQ_SEAT_DOWN, team, id,
                 ((Contestant) Thread.currentThread()).getStrength(),
                 ((Contestant) Thread.currentThread()).getEntityState());
-
-                System.out.println("Thread " + Thread.currentThread().getName() + ": REQ_SEAT_DOWN\n"+outMessage.toString());
 
         com.writeObject(outMessage);
         inMessage = (Message) com.readObject();
@@ -152,6 +149,68 @@ public class ContestantBenchStub {
 
     }
 
+    public int waitForCallTrial(int team) {
+        ClientCom com;
+        Message inMessage, outMessage;
+
+        com = new ClientCom(serverHostName, serverPortNumb);
+
+        while (!com.open()) {
+            try {
+                Thread.currentThread().sleep((long) (10));
+            } catch (InterruptedException e) {
+            }
+        }
+
+        outMessage = new Message(MessageType.REQ_WAIT_FOR_CALL_TRIAL, team);
+        com.writeObject(outMessage);
+        inMessage = (Message) com.readObject();
+
+        if (inMessage.getMsgType() != MessageType.REP_WAIT_FOR_CALL_TRIAL) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid message type!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        if (inMessage.getTeam() != ((Coach) Thread.currentThread()).getTeam()) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid team!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        if (inMessage.getEntityState() < CoachState.WAIT_FOR_REFEREE_COMMAND
+                || inMessage.getEntityState() > CoachState.WATCH_TRIAL) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid entity state!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+        com.close();
+        ((Coach) Thread.currentThread()).setEntityState(inMessage.getEntityState());
+        System.out.println("\nCBS waitForCallTrial() -> " + inMessage.getOrders());
+        return inMessage.getOrders();
+
+    }
+
+    public void callContestants(int team, int[] selected) {
+        ClientCom com;
+        Message inMessage, outMessage;
+
+        com = new ClientCom(serverHostName, serverPortNumb);
+
+        while (!com.open()) {
+            try {
+                Thread.currentThread().sleep((long) (10));
+            } catch (InterruptedException e) {
+            }
+        }
+
+        outMessage = new Message(MessageType.REQ_WAIT_FOR_CALL_TRIAL, team);
+        com.writeObject(outMessage);
+        inMessage = (Message) com.readObject();
+        //TODO: Missing call contestants
+
+    }
+
     public void shutdown() {
         ClientCom com;
         Message inMessage, outMessage;
@@ -177,5 +236,7 @@ public class ContestantBenchStub {
 
         com.close();
     }
+
+
 
 }

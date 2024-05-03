@@ -7,9 +7,6 @@ import serverSide.main.SimulParse;
 
 public class ContestantBenchInterface {
 
-    //TODO: remove this
-    public static int nReq = 0;
-
     private final ContestantBench contestantBench;
 
     public ContestantBenchInterface(ContestantBench contestantBench) {
@@ -41,11 +38,13 @@ public class ContestantBenchInterface {
                 }
                 break;
             case MessageType.REQ_REVIEW_NOTES:
-                if ((inMessage.getTeam() < 1) || (inMessage.getTeam() > SimulParse.COACH)) {
+                if ((inMessage.getTeam() < 0) || (inMessage.getTeam() > SimulParse.COACH)) {
                     throw new MessageException("Invalid number of team !", inMessage);
-                } else if (((ContestantBenchClientProxy) Thread.currentThread()).getCoachTeam() != inMessage
-                        .getTeam()) {
-                    throw new MessageException("Invalid team!", inMessage);
+                }
+                break;
+            case MessageType.REQ_WAIT_FOR_CALL_TRIAL:
+                if ((inMessage.getTeam() < 0) || (inMessage.getTeam() > SimulParse.COACH)) {
+                    throw new MessageException("Invalid number of team !", inMessage);
                 }
                 break;
             default:
@@ -54,7 +53,8 @@ public class ContestantBenchInterface {
         }
 
         /* Process Messages */
-        int team, id;
+        int team, id,orders;
+        View[] aboutContestants;
 
         switch (inMessage.getMsgType()) {
             case MessageType.REQ_CALL_TRIAL:
@@ -79,12 +79,24 @@ public class ContestantBenchInterface {
                 break;
 
             case MessageType.REQ_REVIEW_NOTES:
-                team = ((ContestantBenchClientProxy) Thread.currentThread()).getCoachTeam();
+                team = inMessage.getTeam();
+                ((ContestantBenchClientProxy) Thread.currentThread()).setCoachTeam(team);
 
-                contestantBench.reviewNotes(team);
-                outMessage = new Message(MessageType.REP_REVIEW_NOTES, team);
+                aboutContestants = contestantBench.reviewNotes(team);
+
+                outMessage = new Message(MessageType.REP_REVIEW_NOTES, team, aboutContestants);
 
                 break;
+
+            case MessageType.REQ_WAIT_FOR_CALL_TRIAL:
+                team = inMessage.getTeam();
+                ((ContestantBenchClientProxy) Thread.currentThread()).setCoachTeam(team);
+
+                orders = contestantBench.waitForCallTrial(team);
+
+                outMessage = new Message(MessageType.REP_WAIT_FOR_CALL_TRIAL, team, orders,((ContestantBenchClientProxy) Thread.currentThread()).getCoachState());
+                break;
+
             default:
                 throw new MessageException("Invalid message type!", inMessage);
         }

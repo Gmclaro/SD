@@ -58,7 +58,30 @@ public class GeneralRepositoryStub {
   // TODO : Missing set Entity states
 
   public void setCoachState(int team, int state) {
+    ClientCom com;
+    Message outMessage, inMessage;
 
+    com = new ClientCom(serverHostName, serverPortNumb);
+
+    while (!com.open()) {
+      try {
+        Thread.currentThread().sleep((long) (10));
+      } catch (InterruptedException e) {
+      }
+    }
+
+    outMessage = new Message(MessageType.REQ_LOG_SET_COACH_STATE,team, state);
+    com.writeObject(outMessage);
+    inMessage = (Message) com.readObject();
+
+    if (inMessage.getMsgType() != MessageType.REP_LOG_SET_COACH_STATE) {
+      System.out.println("Thread " + Thread.currentThread().getName() + ":Type error in setCoachState()");
+      System.out.println(inMessage.toString());
+      System.exit(1);
+    }
+
+    com.close();
+    System.out.println("GRS setCoachState()");
   }
 
   public void setContestantState(int team, int id, int state) {
@@ -75,6 +98,9 @@ public class GeneralRepositoryStub {
     }
 
     outMessage = new Message(MessageType.REQ_LOG_SET_CONTESTANT_STATE, team, id, state);
+
+    System.out.println("Sending message: " + outMessage.toString());
+
     com.writeObject(outMessage);
     inMessage = (Message) com.readObject();
 

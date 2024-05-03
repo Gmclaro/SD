@@ -58,12 +58,12 @@ tmux send-keys -t GameOfRope:GameOfRopeServer.3 "java -cp ".:./genclass.jar" ser
 tmux send-keys -t GameOfRope:GameOfRopeServer.4 "java -cp ".:./genclass.jar" serverSide.main.ServerGameOfRopeContestantBench $CONTESTANT_BENCH_PORT $GENERAL_REPO_IP $GENERAL_REPO_PORT" C-m
 
 # wait for the servers to be ready
-sleep 1
+sleep 0.1
 
 # send command to the GameOfRopeClient window
 tmux send-keys -t GameOfRope:GameOfRopeClient.1 "java -cp ".:./genclass.jar" clientSide.main.ClientGameOfRopeReferee $REFEREE_SITE_IP $REFEREE_SITE_PORT $PLAYGROUND_IP $PLAYGROUND_PORT $CONTESTANT_BENCH_IP $CONTESTANT_BENCH_PORT $GENERAL_REPO_IP $GENERAL_REPO_PORT" C-m
-tmux send-keys -t GameOfRope:GameOfRopeClient.2 "java -cp ".:./genclass.jar" clientSide.main.ClientGameOfRopeCoach $REFEREE_SITE_IP $REFEREE_SITE_PORT $PLAYGROUND_IP $PLAYGROUND_PORT $CONTESTANT_BENCH_IP $CONTESTANT_BENCH_PORT $GENERAL_REPO_IP $GENERAL_REPO_PORT" C-m
 tmux send-keys -t GameOfRope:GameOfRopeClient.3 "java -cp ".:./genclass.jar" clientSide.main.ClientGameOfRopeContestant $PLAYGROUND_IP $PLAYGROUND_PORT $CONTESTANT_BENCH_IP $CONTESTANT_BENCH_PORT $GENERAL_REPO_IP $GENERAL_REPO_PORT" C-m
+tmux send-keys -t GameOfRope:GameOfRopeClient.2 "java -cp ".:./genclass.jar" clientSide.main.ClientGameOfRopeCoach $REFEREE_SITE_IP $REFEREE_SITE_PORT $PLAYGROUND_IP $PLAYGROUND_PORT $CONTESTANT_BENCH_IP $CONTESTANT_BENCH_PORT $GENERAL_REPO_IP $GENERAL_REPO_PORT" C-m
 
 
 tmux attach-session

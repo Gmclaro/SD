@@ -1,7 +1,7 @@
 package serverSide.sharedRegions;
 
-import clientSide.entities.ContestantState;
-import clientSide.entities.RefereeState;
+import clientSide.entities.Coach;
+import clientSide.entities.*;
 import commonInfra.Message;
 import commonInfra.MessageException;
 import commonInfra.MessageType;
@@ -26,7 +26,6 @@ public class GeneralRepositoryInterface {
                 }
                 break;
             case MessageType.REQ_LOG_SET_CONTESTANT_STATE:
-            System.out.println("Gen Repo Contestanr state: " + inMessage.getEntityState());
                 if (inMessage.getTeam() < 0 || inMessage.getTeam() > SimulParse.COACH) {
                     throw new MessageException("Invalid Team", inMessage);
                 } else if (inMessage.getID() < 0 || inMessage.getID() > SimulParse.CONTESTANT_PER_TEAM) {
@@ -34,6 +33,14 @@ public class GeneralRepositoryInterface {
                 } else if (inMessage.getEntityState() < ContestantState.SEAT_AT_THE_BENCH
                         || inMessage.getEntityState() > ContestantState.DO_YOUR_BEST) {
                     throw new MessageException("Invalid Contestant State", inMessage);
+                }
+                break;
+            case MessageType.REQ_LOG_SET_COACH_STATE:
+                if (inMessage.getTeam() < 0 || inMessage.getTeam() > SimulParse.COACH) {
+                    throw new MessageException("Invalid Team", inMessage);
+                } else if (inMessage.getEntityState() < CoachState.WAIT_FOR_REFEREE_COMMAND
+                        || inMessage.getEntityState() > CoachState.WATCH_TRIAL) {
+                    throw new MessageException("Invalid Coach State", inMessage);
                 }
                 break;
             case MessageType.REQ_LOG_SET_REMOVE_CONTESTANT:
@@ -59,13 +66,15 @@ public class GeneralRepositoryInterface {
         switch (inMessage.getMsgType()) {
             case MessageType.REQ_LOG_SET_REFEREE_STATE:
                 repo.setRefereeState(inMessage.getEntityState());
-                System.out.println("Gen Repo Referee state: " + inMessage.getEntityState());
                 outMessage = new Message(MessageType.REP_LOG_SET_REFEREE_STATE);
                 break;
             case MessageType.REQ_LOG_SET_CONTESTANT_STATE:
                 repo.setContestantState(inMessage.getTeam(), inMessage.getID(), inMessage.getEntityState());
-                System.out.println("Gen Repo Contestanr state: " + inMessage.getEntityState());
                 outMessage = new Message(MessageType.REP_LOG_SET_CONTESTANT_STATE);
+                break;
+            case MessageType.REQ_LOG_SET_COACH_STATE:
+                repo.setCoachState(inMessage.getTeam(), inMessage.getEntityState());
+                outMessage = new Message(MessageType.REP_LOG_SET_COACH_STATE);
                 break;
 
             case MessageType.REQ_LOG_SET_REMOVE_CONTESTANT:

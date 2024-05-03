@@ -436,8 +436,8 @@ public class GeneralRepository {
    * @param coachID    Team of the Coach
    * @param coachState State of the Coach
    */
-  public void setCoachState(int coachID, int coachState) {
-    this.coachState[coachID] = coachState;
+  public void setCoachState(int team, int state) {
+    this.coachState[team] = state;
     this.updateInfoTemplate();
   }
 

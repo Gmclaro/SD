@@ -86,7 +86,7 @@ public class ContestantBench {
      * @return int order of the Coach in the playground
      */
     public synchronized int waitForCallTrial(int team) {
-        ((Coach) Thread.currentThread()).setEntityState(CoachState.WAIT_FOR_REFEREE_COMMAND);
+        ((ContestantBenchClientProxy) Thread.currentThread()).setCoachState(CoachState.WAIT_FOR_REFEREE_COMMAND);
         repo.setCoachState(team, CoachState.WAIT_FOR_REFEREE_COMMAND);
 
         while (!matchOver && callTrial == 0) {
@@ -210,7 +210,7 @@ public class ContestantBench {
         }
 
         repo.setRemoveContestant(team, id);
-        
+
         ContestantBenchClientProxy contestant = (ContestantBenchClientProxy) Thread.currentThread();
         contestant.setContestantState(ContestantState.SEAT_AT_THE_BENCH);
 
