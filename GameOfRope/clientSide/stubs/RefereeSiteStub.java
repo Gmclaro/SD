@@ -60,7 +60,7 @@ public class RefereeSiteStub {
         com.close();
 
         ((Referee) Thread.currentThread()).setEntityState(inMessage.getEntityState());
-        System.out.println("\nRSS announceNewGame() -> " + ((Referee) Thread.currentThread()).getEntityState());
+        System.out.println("\nRSS announceNewGame() -> Sta" + ((Referee) Thread.currentThread()).getEntityState());
     }
 
     // TODO: informReferee

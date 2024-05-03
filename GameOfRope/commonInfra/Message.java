@@ -86,7 +86,8 @@ public class Message implements Serializable {
                 || msgType == MessageType.REP_LOG_SET_CONTESTANT_STATE
                 || msgType == MessageType.REP_LOG_SET_REMOVE_CONTESTANT) {
             this.state = value;
-        } else if (msgType == MessageType.REQ_REVIEW_NOTES || msgType == MessageType.REQ_WAIT_FOR_CALL_TRIAL) {
+        } else if (msgType == MessageType.REQ_REVIEW_NOTES || msgType == MessageType.REQ_WAIT_FOR_CALL_TRIAL
+                || msgType == MessageType.REP_CALL_CONTESTANTS) {
             this.team = value;
 
         } else {
@@ -239,6 +240,10 @@ public class Message implements Serializable {
 
     public int getOrders() {
         return orders;
+    }
+
+    public int[] getSelected() {
+        return selected;
     }
 
     @Override

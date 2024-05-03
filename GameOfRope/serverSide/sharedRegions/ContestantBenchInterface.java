@@ -47,13 +47,18 @@ public class ContestantBenchInterface {
                     throw new MessageException("Invalid number of team !", inMessage);
                 }
                 break;
+            case MessageType.REQ_CALL_CONTESTANTS:
+                if ((inMessage.getTeam() < 0) || (inMessage.getTeam() > SimulParse.COACH)) {
+                    throw new MessageException("Invalid number of team !", inMessage);
+                }
+                break;
             default:
                 throw new MessageException("Invalid message type!", inMessage);
 
         }
 
         /* Process Messages */
-        int team, id,orders;
+        int team, id, orders;
         View[] aboutContestants;
 
         switch (inMessage.getMsgType()) {
@@ -94,7 +99,18 @@ public class ContestantBenchInterface {
 
                 orders = contestantBench.waitForCallTrial(team);
 
-                outMessage = new Message(MessageType.REP_WAIT_FOR_CALL_TRIAL, team, orders,((ContestantBenchClientProxy) Thread.currentThread()).getCoachState());
+                outMessage = new Message(MessageType.REP_WAIT_FOR_CALL_TRIAL, team, orders,
+                        ((ContestantBenchClientProxy) Thread.currentThread()).getCoachState());
+                break;
+            
+                case MessageType.REQ_CALL_CONTESTANTS:
+                team = inMessage.getTeam();
+
+                ((ContestantBenchClientProxy) Thread.currentThread()).setCoachTeam(team);
+
+                contestantBench.callContestants(team, inMessage.getSelected());
+
+                outMessage = new Message(MessageType.REP_CALL_CONTESTANTS, team);
                 break;
 
             default:

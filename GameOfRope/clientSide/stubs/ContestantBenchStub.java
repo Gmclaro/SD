@@ -60,7 +60,7 @@ public class ContestantBenchStub {
 
         com.close();
         ((Referee) Thread.currentThread()).setEntityState(inMessage.getEntityState());
-        System.out.println("\nCBS callTrial() -> " + ((Referee) Thread.currentThread()).getEntityState());
+        System.out.println("\nCBS callTrial() -> Sta" + ((Referee) Thread.currentThread()).getEntityState());
     }
 
     public View[] reviewNotes(int team) {
@@ -145,7 +145,7 @@ public class ContestantBenchStub {
 
         com.close();
         ((Contestant) Thread.currentThread()).setEntityState(inMessage.getEntityState());
-        System.out.println("\nCBS seatDown() -> " + ((Contestant) Thread.currentThread()).getEntityState());
+        System.out.println("\nCBS seatDown() -> Sta" + ((Contestant) Thread.currentThread()).getEntityState());
 
     }
 
@@ -186,7 +186,7 @@ public class ContestantBenchStub {
         }
         com.close();
         ((Coach) Thread.currentThread()).setEntityState(inMessage.getEntityState());
-        System.out.println("\nCBS waitForCallTrial() -> " + inMessage.getOrders());
+        System.out.println("\nCBS waitForCallTrial() -> O" + inMessage.getOrders());
         return inMessage.getOrders();
 
     }
@@ -204,10 +204,25 @@ public class ContestantBenchStub {
             }
         }
 
-        outMessage = new Message(MessageType.REQ_WAIT_FOR_CALL_TRIAL, team);
+        outMessage = new Message(MessageType.REQ_CALL_CONTESTANTS, team, selected);
         com.writeObject(outMessage);
         inMessage = (Message) com.readObject();
-        //TODO: Missing call contestants
+
+
+        if (inMessage.getMsgType() != MessageType.REP_CALL_CONTESTANTS) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid message type!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        if (inMessage.getTeam() != ((Coach) Thread.currentThread()).getTeam()) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid team!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        com.close();
+        System.out.println("\nCBS callContestants() ");
 
     }
 
