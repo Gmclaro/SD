@@ -82,7 +82,11 @@ public class Message implements Serializable {
         // TODO: value can be refereeState/ropePosition/orders/team/strength
         if (msgType == MessageType.REQ_ANNOUNCE_NEW_GAME || msgType == MessageType.REP_ANNOUNCE_NEW_GAME
                 || msgType == MessageType.REQ_CALL_TRIAL || msgType == MessageType.REP_CALL_TRIAL
-                || msgType == MessageType.REQ_LOG_SET_REFEREE_STATE) {
+                || msgType == MessageType.REQ_LOG_SET_REFEREE_STATE || msgType == MessageType.REP_LOG_SET_REFEREE_STATE
+                || msgType == MessageType.REQ_LOG_SET_CONTESTANT_STATE
+                || msgType == MessageType.REP_LOG_SET_CONTESTANT_STATE
+                || msgType == MessageType.REQ_LOG_SET_REMOVE_CONTESTANT
+                || msgType == MessageType.REP_LOG_SET_REMOVE_CONTESTANT) {
             this.state = value;
         } else {
             System.out.println("Message type = " + msgType + ": non-implemented instantiation!");
@@ -149,6 +153,47 @@ public class Message implements Serializable {
         this.id = id;
     }
 
+    /**
+     * Message instantiation (form 12).
+     * 
+     * @param msgType type of the message
+     * @param value1  set team
+     * @param value2  set id
+     * @param value3  set strength/state
+     */
+
+    public Message(int msgType, int team, int id, int value) {
+        this.msgType = msgType;
+        this.team = team;
+        this.id = id;
+        if (msgType == MessageType.REQ_LOG_SET_CONTESTANT_STATE || msgType == MessageType.REP_SEAT_DOWN) {
+            this.state = value;
+        } else if (msgType == MessageType.REQ_LOG_SET_CONTESTANT_STRENGTH) {
+            this.strength = value;
+        } else {
+            System.out.println("Message type = " + msgType + ": non-implemented instantiation!");
+            System.exit(1);
+        }
+    }
+
+    /**
+     * Message instantiation (form 13).
+     * 
+     * @param msgType type of the message
+     * @param value1  set team
+     * @param value2  set id
+     * @param value3  set strength
+     * @param value4  set state
+     */
+
+    public Message(int msgType, int team, int id, int strength, int state) {
+        this.msgType = msgType;
+        this.team = team;
+        this.id = id;
+        this.strength = strength;
+        this.state = state;
+    }
+
     public int getMsgType() {
         return msgType;
     }
@@ -167,6 +212,14 @@ public class Message implements Serializable {
 
     public int getTeam() {
         return team;
+    }
+
+    public int getID() {
+        return id;
+    }
+
+    public int getStrength() {
+        return strength;
     }
 
     @Override

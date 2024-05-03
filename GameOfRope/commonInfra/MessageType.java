@@ -188,12 +188,23 @@ public class MessageType {
   /**
    * Contestant Bench - Operation review notes (REQUEST)
    */
-  public static final int REQ_REVIEW_NOTES = 31;
+  public static final int REQ_SEAT_DOWN = 31;
 
   /**
    * Contestant Bench - Operation review notes (REPLY)
    */
-  public static final int REP_REVIEW_NOTES = 32;
+  public static final int REP_SEAT_DOWN = 32;
+
+  /**
+   * Contestant Bench - Operation review notes (REQUEST)
+   */
+  public static final int REQ_REVIEW_NOTES = 33;
+
+  /**
+   * Contestant Bench - Operation review notes (REPLY)
+   */
+
+  public static final int REP_REVIEW_NOTES = 34;
 
   //////////////////////////////////////////////
 
