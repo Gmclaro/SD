@@ -101,19 +101,19 @@ public class GeneralRepository {
    * @param contestantStrength Initial strength of the Contestants
    */
 
-  public GeneralRepository(String logFileName, int[][] contestantStrength) {
+  public GeneralRepository(String logFileName) {
     if (logFileName == null) {
       this.logFileName = "logger";
     } else {
       this.logFileName = logFileName;
     }
 
-    /*
-     * Inital Strength of the Contestants
-     */
-    this.contestantStrength = contestantStrength;
 
-    /*
+  }
+
+  public void initSimul(int[][] contestantStrength) {
+
+        /*
      * Initial state of the game
      */
     this.currentGame = 0;
@@ -148,11 +148,21 @@ public class GeneralRepository {
       }
     }
 
+    this.contestantStrength = new int[SimulParse.COACH][SimulParse.CONTESTANT_PER_TEAM];
+    for (int i = 0; i < SimulParse.COACH; i++) {
+      for (int j = 0; j < SimulParse.CONTESTANT_PER_TEAM; j++) {
+        this.contestantStrength[i][j] = -1;
+      }
+    }
+
+
     /*
      * Writing the header of the log file
      */
     this.header();
     this.updateInfoTemplate();
+
+    this.contestantStrength = contestantStrength;
 
     this.coachState = new int[SimulParse.COACH];
     for (int i = 0; i < SimulParse.COACH; i++) {
@@ -349,7 +359,7 @@ public class GeneralRepository {
     for (int i = 0; i < SimulParse.COACH; i++) {
       str += coachState[i] + " ";
       for (int j = 0; j < SimulParse.CONTESTANT_PER_TEAM; j++) {
-        str += contestantState[i][j] + " " + String.format("%2d", contestantStrength[i][j]) + " ";
+        str += contestantState[i][j] + " " + String.format("%2s", (contestantStrength[i][j] == -1 ? "--" : (Integer.toString(contestantStrength[i][j])))) + " ";
       }
       if (i == 0) {
         str += " ";
