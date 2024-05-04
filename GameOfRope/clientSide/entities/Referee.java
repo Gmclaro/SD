@@ -121,8 +121,8 @@ public class Referee extends Thread {
                 refereeSite.waitForInformReferee();
                 System.out.println(this.whoAmI() + " -> waitForInformReferee()");
 
-            //     playground.startTrial();
-            //     System.out.println(this.whoAmI() + " -> startTrial()");
+                playground.startTrial();
+                System.out.println(this.whoAmI() + " -> startTrial()");
 
             //     playground.waitForAmDone();
             //     System.out.println(this.whoAmI() + " -> waitForAmDone()");

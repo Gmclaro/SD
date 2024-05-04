@@ -282,6 +282,17 @@ public class MessageType {
    */
   public static final int REP_WAIT_FOR_FOLLOW_COACH_ADVICE = 48;
 
+    /**
+   * Playground - Operation start trial (REQUEST)
+   */
+  public static final int REQ_START_TRIAL = 49;
+
+
+  /**
+   * Playground - Operation start trial (REPLY)
+   */
+  public static final int REP_START_TRIAL = 50;
+
 
   //////////////////////////////////////////////
 

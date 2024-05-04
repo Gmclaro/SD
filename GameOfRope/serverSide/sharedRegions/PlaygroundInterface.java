@@ -33,6 +33,11 @@ public class PlaygroundInterface {
                     throw new MessageException("Invalid number of state !", inMessage);
                 }
                 break;
+            case MessageType.REQ_START_TRIAL:
+                if(inMessage.getEntityState() < RefereeState.START_OF_THE_MATCH || inMessage.getEntityState() > RefereeState.END_OF_THE_MATCH){
+                    throw new MessageException("Invalid number of state !", inMessage);
+                }
+                break;
 
             default:
                 throw new MessageException("Invalid message type!", inMessage);
@@ -60,6 +65,14 @@ public class PlaygroundInterface {
 
                 outMessage = new Message(MessageType.REP_WAIT_FOR_FOLLOW_COACH_ADVICE, team,
                         ((PlaygroundClientProxy) Thread.currentThread()).getCoachState());
+                break;
+            case MessageType.REQ_START_TRIAL:
+
+                ((PlaygroundClientProxy) Thread.currentThread()).setRefereeState(inMessage.getEntityState());
+
+                playground.startTrial();
+
+                outMessage = new Message(MessageType.REP_START_TRIAL,((PlaygroundClientProxy) Thread.currentThread()).getRefereeState());
                 break;
 
             default:

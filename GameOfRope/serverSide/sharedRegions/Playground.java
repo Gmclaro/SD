@@ -126,7 +126,7 @@ public class Playground {
      * The Referee will start the trial
      */
     public synchronized void startTrial() {
-        ((Referee) Thread.currentThread()).setEntityState(RefereeState.WAIT_FOR_TRIAL_CONCLUSION);
+        ((PlaygroundClientProxy) Thread.currentThread()).setRefereeState(RefereeState.WAIT_FOR_TRIAL_CONCLUSION);
         repo.setRefereeState(RefereeState.WAIT_FOR_TRIAL_CONCLUSION);
 
         startOfTrial = true;
