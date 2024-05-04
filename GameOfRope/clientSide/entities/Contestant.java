@@ -11,8 +11,6 @@ import clientSide.stubs.PlaygroundStub;
  */
 public class Contestant extends Thread {
 
-    public static int nrest = 0;
-
     /**
      * Constestant Identification
      */
@@ -176,8 +174,8 @@ public class Contestant extends Thread {
             playground.waitForStartTrial(this.team, this.id);
             System.out.println(this.whoAmI() + " -> waitForStartTrial()");
 
-        //     playground.getReady(this.team, this.id);
-        //     System.out.println(this.whoAmI() + " -> getReady()");
+             playground.getReady(this.team, this.id);
+             System.out.println(this.whoAmI() + " -> getReady()");
 
         //     playground.waitForAssertTrialDecision(this.team, this.id);
         //     System.out.println(this.whoAmI() + " -> waitForAssertTrialDecision()");
@@ -193,6 +191,5 @@ public class Contestant extends Thread {
 
     private void rest() {
         this.strength++;
-        System.out.println("T"+team+" I"+id+" NREST: " + ++nrest );
     }
 }

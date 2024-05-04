@@ -50,14 +50,20 @@ public class GeneralRepositoryInterface {
                     throw new MessageException("Invalid Contestant ID", inMessage);
                 }
                 break;
+            case MessageType.REQ_LOG_SET_ACTIVE_CONTESTANT:
+                if (inMessage.getTeam() < 0 || inMessage.getTeam() > SimulParse.COACH) {
+                    throw new MessageException("Invalid Team", inMessage);
+                } else if (inMessage.getID() < 0 || inMessage.getID() > SimulParse.CONTESTANT_PER_TEAM) {
+                    throw new MessageException("Invalid Contestant ID", inMessage);
+                }
+                break;
             case MessageType.REQ_LOG_SET_CONTESTANT_STRENGTH:
-            if (inMessage.getTeam() < 0 || inMessage.getTeam() > SimulParse.COACH) {
-                throw new MessageException("Invalid Team", inMessage);
-            } else if (inMessage.getID() < 0 || inMessage.getID() > SimulParse.CONTESTANT_PER_TEAM) {
-                throw new MessageException("Invalid Contestant ID", inMessage);
-            }
-            break;
-
+                if (inMessage.getTeam() < 0 || inMessage.getTeam() > SimulParse.COACH) {
+                    throw new MessageException("Invalid Team", inMessage);
+                } else if (inMessage.getID() < 0 || inMessage.getID() > SimulParse.CONTESTANT_PER_TEAM) {
+                    throw new MessageException("Invalid Contestant ID", inMessage);
+                }
+                break;
 
             case MessageType.REQ_NEW_GAME_STARTED:
                 // No parameters to validate
@@ -89,12 +95,16 @@ public class GeneralRepositoryInterface {
                 repo.setRemoveContestant(inMessage.getTeam(), inMessage.getID());
                 outMessage = new Message(MessageType.REP_LOG_SET_REMOVE_CONTESTANT);
                 break;
+            case MessageType.REQ_LOG_SET_ACTIVE_CONTESTANT:
+                repo.setActiveContestant(inMessage.getTeam(), inMessage.getID());
+                outMessage = new Message(MessageType.REP_LOG_SET_ACTIVE_CONTESTANT);
+                break;
 
             case MessageType.REQ_LOG_SET_CONTESTANT_STRENGTH:
                 repo.setContestantStrength(inMessage.getTeam(), inMessage.getID(), inMessage.getStrength());
                 outMessage = new Message(MessageType.REP_LOG_SET_CONTESTANT_STRENGTH);
                 break;
-                
+
             case MessageType.REQ_NEW_GAME_STARTED:
                 repo.newGameStarted();
                 outMessage = new Message(MessageType.REP_NEW_GAME_STARTED);

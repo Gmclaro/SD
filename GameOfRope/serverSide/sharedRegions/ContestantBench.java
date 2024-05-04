@@ -141,9 +141,7 @@ public class ContestantBench {
 
             // repo.setContestantState(team, id, ContestantState.SEAT_AT_THE_BENCH);
 
-            System.out.println("1. WAIT FOR CALL CONTESTANTS T" +team + " I"+id + ": " + contestants[team][id].getValue());
             contestants[team][id].setValue(contestant.getStrength());
-            System.out.println("2. WAIT FOR CALL CONTESTANTS T" +team + " I"+id + ": " + contestants[team][id].getValue());
 
             // inBench[team]++;
             notifyAll();

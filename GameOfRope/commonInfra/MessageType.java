@@ -261,7 +261,7 @@ public class MessageType {
   /*
    * Playground INPUT/OUTPUT messages
    */
-  
+
   /**
    * Playground - Operation follow coach advice (REQUEST)
    */
@@ -282,18 +282,17 @@ public class MessageType {
    */
   public static final int REP_WAIT_FOR_FOLLOW_COACH_ADVICE = 48;
 
-    /**
+  /**
    * Playground - Operation start trial (REQUEST)
    */
   public static final int REQ_START_TRIAL = 49;
-
 
   /**
    * Playground - Operation start trial (REPLY)
    */
   public static final int REP_START_TRIAL = 50;
 
-      /**
+  /**
    * Playground - Operation wait for start trial (REQUEST)
    */
   public static final int REQ_WAIT_FOR_START_TRIAL = 51;
@@ -303,6 +302,15 @@ public class MessageType {
    */
   public static final int REP_WAIT_FOR_START_TRIAL = 52;
 
+  /**
+   * Playground - Operation get ready (REQUEST)
+   */
+  public static final int REQ_GET_READY = 53;
+
+  /**
+   * Playground - Operation get ready (REPLY)
+   */
+  public static final int REP_GET_READY = 54;
 
   //////////////////////////////////////////////
 
@@ -321,7 +329,5 @@ public class MessageType {
   public static final int REQ_CONTESTANT_BENCH_SHUTDOWN = 96;
 
   public static final int REP_CONTESTANT_BENCH_SHUTDOWN = 97;
-
-
 
 }

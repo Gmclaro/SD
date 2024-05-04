@@ -193,6 +193,42 @@ public class PlaygroundStub {
 
     // TODO: getReady
     public void getReady(int team, int id) {
+        ClientCom com;
+        Message inMessage, outMessage;
+
+        com = new ClientCom(serverHostName, serverPortNumb);
+
+        while (!com.open()) {
+            try {
+                Thread.currentThread().sleep((long) (10));
+            } catch (InterruptedException e) {
+            }
+        }
+
+        outMessage = new Message(MessageType.REQ_GET_READY, team, id);
+        com.writeObject(outMessage);
+        inMessage = (Message) com.readObject();
+
+        if (inMessage.getMsgType() != MessageType.REP_GET_READY) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid message type!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        if (inMessage.getTeam() != ((Contestant) Thread.currentThread()).getTeam()) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid team!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        if (inMessage.getID() != ((Contestant) Thread.currentThread()).getID()) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid team!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        com.close();
+        System.out.println("\nPS getReady()");
     }
 
     // TODO: amDone

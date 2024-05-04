@@ -198,9 +198,31 @@ public class GeneralRepositoryStub {
 
   }
 
-  // TODO: setActiveContestant
   public void setActiveContestant(int team, int id) {
+    ClientCom com;
+    Message outMessage, inMessage;
 
+    com = new ClientCom(serverHostName, serverPortNumb);
+
+    while (!com.open()) {
+      try {
+        Thread.currentThread().sleep((long) (10));
+      } catch (InterruptedException e) {
+      }
+    }
+
+    outMessage = new Message(MessageType.REQ_LOG_SET_ACTIVE_CONTESTANT, team, id);
+    com.writeObject(outMessage);
+    inMessage = (Message) com.readObject();
+
+    if (inMessage.getMsgType() != MessageType.REP_LOG_SET_ACTIVE_CONTESTANT) {
+      System.out.println("Thread " + Thread.currentThread().getName() + ":Type error in setActiveContestant()");
+      System.out.println(inMessage.toString());
+      System.exit(1);
+    }
+    
+    com.close();
+    System.out.println("\nGRS setActiveContestant()");
   }
 
   public void setRemoveContestant(int team, int id) {

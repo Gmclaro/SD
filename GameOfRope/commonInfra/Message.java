@@ -158,7 +158,9 @@ public class Message implements Serializable {
         if (msgType == MessageType.REQ_LOG_SET_COACH_STATE || msgType == MessageType.REQ_WAIT_FOR_FOLLOW_COACH_ADVICE
                 || msgType == MessageType.REP_WAIT_FOR_FOLLOW_COACH_ADVICE) {
             this.state = value;
-        } else if (msgType == MessageType.REQ_LOG_SET_REMOVE_CONTESTANT) {
+        } else if (msgType == MessageType.REQ_LOG_SET_REMOVE_CONTESTANT
+                || msgType == MessageType.REQ_LOG_SET_ACTIVE_CONTESTANT || msgType == MessageType.REQ_GET_READY
+                || msgType == MessageType.REP_GET_READY) {
             this.id = value;
         } else {
             System.out.println("ATENCAO" + msgType);

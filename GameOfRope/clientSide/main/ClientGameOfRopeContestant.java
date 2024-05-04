@@ -60,7 +60,6 @@ public class ClientGameOfRopeContestant {
         for (int i = 0; i < SimulParse.COACH; i++) {
             for (int j = 0; j < SimulParse.CONTESTANT_PER_TEAM; j++) {
                 strength[i][j] = (int) (Math.random() * 5) + 6;
-                System.out.println("T"+i+" I"+j+" S" +strength[i][j]);
             }
         }
 

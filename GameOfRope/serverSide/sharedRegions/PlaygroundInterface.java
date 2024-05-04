@@ -40,12 +40,20 @@ public class PlaygroundInterface {
                 }
                 break;
             case MessageType.REQ_WAIT_FOR_START_TRIAL:
-                if (inMessage.getEntityState() < ContestantState.SEAT_AT_THE_BENCH
+
+                if (inMessage.getTeam() < 0 || inMessage.getTeam() > SimulParse.COACH) {
+                    throw new MessageException("Invalid number of team !", inMessage);
+                } else if (inMessage.getID() < 0 || inMessage.getID() > SimulParse.CONTESTANT_PER_TEAM) {
+                    throw new MessageException("Invalid number of id !", inMessage);
+                } else if (inMessage.getEntityState() < ContestantState.SEAT_AT_THE_BENCH
                         || inMessage.getEntityState() > ContestantState.DO_YOUR_BEST) {
                     throw new MessageException("Invalid number of state !", inMessage);
-                }else if( inMessage.getTeam() < 0 || inMessage.getTeam() > SimulParse.COACH){
+                }
+                break;
+            case MessageType.REQ_GET_READY:
+                if (inMessage.getTeam() < 0 || inMessage.getTeam() > SimulParse.COACH) {
                     throw new MessageException("Invalid number of team !", inMessage);
-                }else if( inMessage.getID() < 0 || inMessage.getID() > SimulParse.CONTESTANT_PER_TEAM){
+                } else if (inMessage.getID() < 0 || inMessage.getID() > SimulParse.CONTESTANT_PER_TEAM) {
                     throw new MessageException("Invalid number of id !", inMessage);
                 }
                 break;
@@ -98,6 +106,15 @@ public class PlaygroundInterface {
 
                 outMessage = new Message(MessageType.REP_WAIT_FOR_START_TRIAL, team, id,
                         ((PlaygroundClientProxy) Thread.currentThread()).getContestantState());
+                break;
+            case MessageType.REQ_GET_READY:
+
+                team = inMessage.getTeam();
+                id = inMessage.getID();
+
+                playground.getReady(team, id);
+
+                outMessage = new Message(MessageType.REP_GET_READY, team, id);
                 break;
 
             default:
