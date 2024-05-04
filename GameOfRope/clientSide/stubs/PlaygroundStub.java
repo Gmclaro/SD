@@ -1,5 +1,8 @@
 package clientSide.stubs;
 
+import clientSide.entities.Coach;
+import clientSide.entities.Contestant;
+import clientSide.entities.Referee;
 import commonInfra.ClientCom;
 import commonInfra.Message;
 import commonInfra.MessageType;
@@ -31,6 +34,35 @@ public class PlaygroundStub {
 
     // TODO: followCoachAdvice
     public void followCoachAdvice(int team) {
+        ClientCom com;
+        Message inMessage, outMessage;
+
+        com = new ClientCom(serverHostName, serverPortNumb);
+
+        while (!com.open()) {
+            try {
+                Thread.currentThread().sleep((long) (10));
+            } catch (InterruptedException e) {
+            }
+        }
+
+        outMessage = new Message(MessageType.REQ_FOLLOW_COACH_ADVICE, team);
+        com.writeObject(outMessage);
+        inMessage = (Message) com.readObject();
+
+        if (inMessage.getMsgType() != MessageType.REP_FOLLOW_COACH_ADVICE) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid message type!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        if (inMessage.getTeam() != ((Contestant) Thread.currentThread()).getTeam()) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid team!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+        com.close();
+        System.out.println("\nPS followCoachAdvice()");
 
     }
 

@@ -136,6 +136,11 @@ public class Contestant extends Thread {
         return this.strength;
     }
 
+    //TODO: javadoc
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
+
     /**
      * Life cycle of the contestant
      */
@@ -155,14 +160,16 @@ public class Contestant extends Thread {
                      return; // match is over and contestant thread is done
                  case 1:
                         rest(); 
-                        //TODO: uncomment REST
+                        //TODO: uncomment REST - continue and remove return
+                        return;
+                        
                      //continue; // contestant was not selected, rest
                  case 2:
                      break; // contestant was selected, go to playground and continue the lifecycle
              }
 
-        //     playground.followCoachAdvice(this.team);
-        //     System.out.println(this.whoAmI() + " -> followCoachAdvice()");
+             playground.followCoachAdvice(this.team);
+             System.out.println(this.whoAmI() + " -> followCoachAdvice()");
 
         //     playground.waitForStartTrial(this.team, this.id);
         //     System.out.println(this.whoAmI() + " -> waitForStartTrial()");
@@ -179,22 +186,10 @@ public class Contestant extends Thread {
     }
 
     /**
-     * Pull the rope
-     * 
-     * Internal operation
-     * 
-     * @return int strength of the contestant
-     */
-    public int pullTheRope() {
-        return this.strength--;
-    }
-
-    /**
      * Rest increases the strength of the Contestant
      */
 
     private void rest() {
-        System.out.println(this.whoAmI() + " is resting.");
         this.strength++;
     }
 }

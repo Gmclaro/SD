@@ -238,6 +238,41 @@ public class MessageType {
 
   public static final int REP_WAIT_FOR_CALL_CONTESTANTS = 40;
 
+  /**
+   * Contestant Bench - Operation declare match winner (REQUEST)
+   */
+  public static final int REQ_DECLARE_MATCH_WINNER = 41;
+
+  /**
+   * Contestant Bench - Operation declare match winner (REPLY)
+   */
+  public static final int REP_DECLARE_MATCH_WINNER = 42;
+
+  /**
+   * Contestant Bench - Operation wait for seat at bench (REQUEST)
+   */
+  public static final int REQ_WAIT_FOR_SEAT_AT_BENCH = 43;
+
+  /**
+   * Contestant Bench - Operation wait for seat at bench (REPLY)
+   */
+  public static final int REP_WAIT_FOR_SEAT_AT_BENCH = 44;
+
+  /*
+   * Playground INPUT/OUTPUT messages
+   */
+  
+  /**
+   * Playground - Operation follow coach advice (REQUEST)
+   */
+  public static final int REQ_FOLLOW_COACH_ADVICE = 45;
+
+  /**
+   * Playground - Operation follow coach advice (REPLY)
+   */
+  public static final int REP_FOLLOW_COACH_ADVICE = 46;
+
+
   //////////////////////////////////////////////
 
   public static final int REQ_GENERAL_REPOSITORY_SHUTDOWN = 90;
@@ -255,5 +290,7 @@ public class MessageType {
   public static final int REQ_CONTESTANT_BENCH_SHUTDOWN = 96;
 
   public static final int REP_CONTESTANT_BENCH_SHUTDOWN = 97;
+
+
 
 }

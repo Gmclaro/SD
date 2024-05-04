@@ -42,7 +42,7 @@ public interface ContestantCloning {
      * @param id the id of the contestant
      */
 
-    public void setId(int id);
+    public void setID(int id);
 
     /**
      * Get the id of the contestant
@@ -63,12 +63,5 @@ public interface ContestantCloning {
      * @param strength the strength of the contestant
      */
 
-    public void setStrength(int strength);
-
-
-    public void rest();
-
-
-
-    
+    public void setStrength(int strength);    
 }

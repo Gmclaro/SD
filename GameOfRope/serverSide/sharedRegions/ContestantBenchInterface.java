@@ -16,8 +16,6 @@ public class ContestantBenchInterface {
     public Message processAndReply(Message inMessage) throws MessageException {
         Message outMessage = null;
 
-        System.out.println("inMessage:\n" + inMessage.toString());
-
         /* Validate messages */
 
         switch (inMessage.getMsgType()) {
@@ -80,7 +78,7 @@ public class ContestantBenchInterface {
                 team = inMessage.getTeam();
                 id = inMessage.getID();
                 ((ContestantBenchClientProxy) Thread.currentThread()).setContestantTeam(team);
-                ((ContestantBenchClientProxy) Thread.currentThread()).setId(id);
+                ((ContestantBenchClientProxy) Thread.currentThread()).setID(id);
                 ((ContestantBenchClientProxy) Thread.currentThread()).setStrength(inMessage.getStrength());
                 ((ContestantBenchClientProxy) Thread.currentThread()).setContestantState(inMessage.getEntityState());
 
@@ -124,7 +122,7 @@ public class ContestantBenchInterface {
                 team = inMessage.getTeam();
                 id = inMessage.getID();
                 ((ContestantBenchClientProxy) Thread.currentThread()).setContestantTeam(team);
-                ((ContestantBenchClientProxy) Thread.currentThread()).setId(id);
+                ((ContestantBenchClientProxy) Thread.currentThread()).setID(id);
                 ((ContestantBenchClientProxy) Thread.currentThread()).setStrength(inMessage.getStrength());
 
                 orders = contestantBench.waitForCallContestants(team, id);

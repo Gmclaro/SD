@@ -18,7 +18,7 @@ public class Playground {
      * Reference to the General Repository
      */
 
-    private final GeneralRepository repo;
+    private final GeneralRepositoryStub repo;
 
     /**
      * Characteristics of contestants in the playground
@@ -75,7 +75,7 @@ public class Playground {
      * @param repo Reference to the General Repository
      */
 
-    public Playground(GeneralRepository repo) {
+    public Playground(GeneralRepositoryStub repo) {
         this.repo = repo;
         contestants = new View[2][SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM];
 
@@ -235,18 +235,20 @@ public class Playground {
      * @param id   The id of the contestants
      */
 
-    public void waitForAssertTrialDecision(int team, int id) {
+    public void waitForAssertTrialDecision(int team, int id,int strength) {
         /**
          * Contestant pulls the rope
          */
         Contestant contestant;
         synchronized (this) {
             contestant = (Contestant) Thread.currentThread();
-
-            strengthPerTeam[team] += contestant.pullTheRope();
-            repo.setContestantStrength(team, id, contestant.getStrength());
+            
+            strengthPerTeam[team] += strength;
+            strength = pullTheRope(strength);
+            repo.setContestantStrength(team, id,strength);
 
             contestant.setEntityState(ContestantState.DO_YOUR_BEST);
+            contestant.setStrength(strength);
             repo.setContestantState(team, id, ContestantState.DO_YOUR_BEST);
         }
 
@@ -320,6 +322,11 @@ public class Playground {
         ropePosition = 0;
 
         return aux;
+    }
+
+    //TODO:javadoc
+    public int pullTheRope(int strength) {
+        return strength - 1;
     }
 
 }
