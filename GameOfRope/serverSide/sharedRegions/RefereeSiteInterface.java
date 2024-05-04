@@ -28,11 +28,15 @@ public class RefereeSiteInterface {
             case MessageType.REQ_INFORM_REFEREE:
                 // No validation needed
                 break;
+            case MessageType.REQ_WAIT_FOR_INFORM_REFEREE:
+                // No validation needed
+                break;
 
             // TODO: missing msgType here
 
             case MessageType.REQ_REFEREE_SITE_SHUTDOWN:
                 break;
+
             default:
                 throw new MessageException("Invalid message type!", inMessage);
         }
@@ -55,6 +59,10 @@ public class RefereeSiteInterface {
             case MessageType.REQ_INFORM_REFEREE:
                 refereeSite.informReferee();
                 outMessage = new Message(MessageType.REP_INFORM_REFEREE);
+                break;
+            case MessageType.REQ_WAIT_FOR_INFORM_REFEREE:
+                refereeSite.waitForInformReferee();
+                outMessage = new Message(MessageType.REP_WAIT_FOR_INFORM_REFEREE);
                 break;
 
             default:

@@ -114,12 +114,12 @@ public class Referee extends Thread {
             // do {
 
                 contestantBench.callTrial();
-            //     System.out.println(
-            //             "Trial " + (++currentTrial) + ": ----------------------------------------------------------");
-            //     System.out.println(this.whoAmI() + " -> callTrial()");
+                System.out.println(
+                        "Trial " + (++currentTrial) + ": ----------------------------------------------------------");
+                System.out.println(this.whoAmI() + " -> callTrial()");
 
-            //     refereeSite.waitForInformReferee();
-            //     System.out.println(this.whoAmI() + " -> waitForInformReferee()");
+                refereeSite.waitForInformReferee();
+                System.out.println(this.whoAmI() + " -> waitForInformReferee()");
 
             //     playground.startTrial();
             //     System.out.println(this.whoAmI() + " -> startTrial()");
@@ -142,6 +142,9 @@ public class Referee extends Thread {
             //     scores[1]++;
             // else {
             // }
+
+            // TODO: remove this return
+            return;
         }
 
         // contestantBench.declareMatchWinner(scores);
