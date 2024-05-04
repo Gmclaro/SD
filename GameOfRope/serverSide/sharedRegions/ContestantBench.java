@@ -212,8 +212,6 @@ public class ContestantBench {
         }
         // TODO: ATUALIZAR A FORÇA DO CONTESTANT
 
-        repo.setRemoveContestant(team, id);
-
         ContestantBenchClientProxy contestant = (ContestantBenchClientProxy) Thread.currentThread();
         contestant.setContestantState(ContestantState.SEAT_AT_THE_BENCH);
 
@@ -222,6 +220,8 @@ public class ContestantBench {
         contestants[team][id].setValue(contestant.getStrength());
 
         inBench[team]++;
+
+        repo.setRemoveContestant(team, id);
 
         notifyAll();
     }

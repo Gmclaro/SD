@@ -54,6 +54,8 @@ public class Playground {
      */
     private int ropePosition;
 
+    private int nOfGetReady;
+
     /*
      * Flags
      * 
@@ -84,6 +86,7 @@ public class Playground {
         this.nOfAmDone = 0;
         strengthPerTeam = new int[2];
         ropePosition = 0;
+        nOfGetReady = 0;
 
         // Flags
         startOfTrial = false;
@@ -157,6 +160,9 @@ public class Playground {
             }
         }
 
+        nOfGetReady++;
+        notifyAll();
+
     }
 
     /**
@@ -167,6 +173,15 @@ public class Playground {
      */
 
     public synchronized void getReady(int team, int id) {
+        while (nOfGetReady < (2*SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM)) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        notifyAll();
         repo.setActiveContestant(team, id);
     }
 
@@ -204,6 +219,7 @@ public class Playground {
      * @return boolean The decision of the referee
      */
     public synchronized boolean assertTrialDecision() {
+        nOfGetReady = 0;
         endOfTrial = true;
         notifyAll();
 
