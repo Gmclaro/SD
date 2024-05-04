@@ -280,12 +280,56 @@ public class GeneralRepositoryStub {
 
   // TODO : setEndOfGame
   public void setEndOfGame() {
+    ClientCom com;
+    Message outMessage, inMessage;
 
+    com = new ClientCom(serverHostName, serverPortNumb);
+
+    while (!com.open()) {
+      try {
+        Thread.currentThread().sleep((long) (10));
+      } catch (InterruptedException e) {
+      }
+    }
+
+    outMessage = new Message(MessageType.REQ_SET_END_OF_GAME);
+    com.writeObject(outMessage);
+    inMessage = (Message) com.readObject();
+
+    if (inMessage.getMsgType() != MessageType.REP_SET_END_OF_GAME) {
+      System.out.println("Thread " + Thread.currentThread().getName() + ":Type error in setEndOfGame()");
+      System.out.println(inMessage.toString());
+      System.exit(1);
+    }
+    com.close();
+    System.out.println("\nGRS setEndOfGame()");
   }
 
   // TODO: showGameResult
-  public void showGameResult(int ropePosition) {
+  public void showGameResult(int difference) {
+    ClientCom com;
+    Message outMessage, inMessage;
 
+    com = new ClientCom(serverHostName, serverPortNumb);
+
+    while (!com.open()) {
+      try {
+        Thread.currentThread().sleep((long) (10));
+      } catch (InterruptedException e) {
+      }
+    }
+
+    outMessage = new Message(MessageType.REQ_SHOW_GAME_RESULT, difference);
+    com.writeObject(outMessage);
+    inMessage = (Message) com.readObject();
+
+    if (inMessage.getMsgType() != MessageType.REP_SHOW_GAME_RESULT) {
+      System.out.println("Thread " + Thread.currentThread().getName() + ":Type error in showGameResult()");
+      System.out.println(inMessage.toString());
+      System.exit(1);
+    }
+    com.close();
+    System.out.println("\nGRS showGameResult()");
   }
 
   // TODO: setMatchWinner

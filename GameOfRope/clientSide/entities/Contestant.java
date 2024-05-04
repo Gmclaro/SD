@@ -180,8 +180,8 @@ public class Contestant extends Thread {
              playground.waitForAssertTrialDecision(this.team, this.id,this.strength);
              System.out.println(this.whoAmI() + " -> waitForAssertTrialDecision()");
 
-        //     contestantBench.seatDown(this.team, this.id);
-        //     System.out.println(this.whoAmI() + " -> seatDown()");
+            contestantBench.seatDown(this.team, this.id);
+            System.out.println(this.whoAmI() + " -> seatDown()");
         // }
     }
 

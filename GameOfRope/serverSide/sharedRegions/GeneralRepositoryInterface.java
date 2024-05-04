@@ -75,6 +75,12 @@ public class GeneralRepositoryInterface {
             case MessageType.REQ_SET_NEW_TRIAL:
                 // No parameters to validate
                 break;
+            case MessageType.REQ_SET_END_OF_GAME:
+                // No parameters to validate
+                break;
+            case MessageType.REQ_SHOW_GAME_RESULT:
+                // No parameters to validate
+                break;
 
             default:
                 break;
@@ -119,6 +125,14 @@ public class GeneralRepositoryInterface {
             case MessageType.REQ_SET_NEW_TRIAL:
                 repo.setNewTrial();
                 outMessage = new Message(MessageType.REP_SET_NEW_TRIAL);
+                break;
+            case MessageType.REQ_SET_END_OF_GAME:
+                repo.setEndOfGame();
+                outMessage = new Message(MessageType.REP_SET_END_OF_GAME);
+                break;
+            case MessageType.REQ_SHOW_GAME_RESULT:
+                repo.showGameResult(inMessage.getRopePosition());
+                outMessage = new Message(MessageType.REP_SHOW_GAME_RESULT);
                 break;
 
             default:

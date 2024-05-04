@@ -58,6 +58,16 @@ public class MessageType {
    */
   public static final int REP_ASSERT_TRIAL_DECISION = 81;
 
+  /**
+   * Referee - Operation declare game winner (REQUEST)
+   */
+  public static final int REQ_DECLARE_GAME_WINNER = 82;
+
+  /**
+   * Referee - Operation declare game winner (REPLY)
+   */
+  public static final int REP_DECLARE_GAME_WINNER = 83;
+
   /*
    * General Repository site INPUT/OUTPUT messages
    */

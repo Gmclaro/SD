@@ -158,11 +158,11 @@ public class Coach extends Thread {
             playground.waitForAssertTrialDecision(team);
             System.out.println(this.whoAmI() + " -> waitForAssertTrialDecision()");
 
-        //     aboutContestants = contestantBench.reviewNotes(team);
-        //     System.out.println(this.whoAmI() + " -> reviewNotes()");
+            aboutContestants = contestantBench.reviewNotes(team);
+            System.out.println(this.whoAmI() + " -> reviewNotes()");
 
-        //     selected = selectContestants(aboutContestants);
-        //     System.out.println(this.whoAmI() + " -> selectContestants()");
+            selected = selectContestants(aboutContestants);
+            System.out.println(this.whoAmI() + " -> selectContestants()");
         // }
     }
 

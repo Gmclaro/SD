@@ -307,7 +307,7 @@ public class Playground {
      * @return int The difference of strength between the teams
      */
     public synchronized int declareGameWinner() {
-        ((Referee) Thread.currentThread()).setEntityState(RefereeState.END_OF_A_GAME);
+        ((PlaygroundClientProxy) Thread.currentThread()).setRefereeState(RefereeState.END_OF_A_GAME);
         repo.setRefereeState(RefereeState.END_OF_A_GAME);
 
         repo.setEndOfGame();

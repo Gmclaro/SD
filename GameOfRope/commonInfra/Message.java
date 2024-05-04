@@ -85,13 +85,13 @@ public class Message implements Serializable {
                 || msgType == MessageType.REQ_LOG_SET_REFEREE_STATE || msgType == MessageType.REP_LOG_SET_REFEREE_STATE
                 || msgType == MessageType.REP_LOG_SET_CONTESTANT_STATE
                 || msgType == MessageType.REP_LOG_SET_REMOVE_CONTESTANT || msgType == MessageType.REQ_START_TRIAL
-                || msgType == MessageType.REP_START_TRIAL) {
+                || msgType == MessageType.REP_START_TRIAL || msgType == MessageType.REQ_DECLARE_GAME_WINNER) {
             this.state = value;
         } else if (msgType == MessageType.REQ_REVIEW_NOTES || msgType == MessageType.REQ_WAIT_FOR_CALL_TRIAL
                 || msgType == MessageType.REP_CALL_CONTESTANTS || msgType == MessageType.REQ_FOLLOW_COACH_ADVICE
                 || msgType == MessageType.REP_FOLLOW_COACH_ADVICE) {
             this.team = value;
-        } else if (msgType == MessageType.REQ_SET_ROPE_POSITION) {
+        } else if (msgType == MessageType.REQ_SET_ROPE_POSITION || msgType == MessageType.REQ_SHOW_GAME_RESULT) {
             this.ropePostion = value;
         } else {
             System.out.println("Message type = " + msgType + ": non-implemented instantiation!");
@@ -155,7 +155,12 @@ public class Message implements Serializable {
      */
     public Message(int msgType, int team, int value) {
         this.msgType = msgType;
-        this.team = team;
+
+        if (msgType == MessageType.REP_DECLARE_GAME_WINNER) {
+            this.state = value;
+        } else {
+            this.team = team;
+        }
         if (msgType == MessageType.REQ_LOG_SET_COACH_STATE || msgType == MessageType.REQ_WAIT_FOR_FOLLOW_COACH_ADVICE
                 || msgType == MessageType.REP_WAIT_FOR_FOLLOW_COACH_ADVICE
                 || msgType == MessageType.REQ_WAIT_FOR_ASSERT_TRIAL_DECISION_COACH
@@ -165,6 +170,8 @@ public class Message implements Serializable {
                 || msgType == MessageType.REQ_LOG_SET_ACTIVE_CONTESTANT || msgType == MessageType.REQ_GET_READY
                 || msgType == MessageType.REP_GET_READY) {
             this.id = value;
+        } else if (msgType == MessageType.REP_DECLARE_GAME_WINNER) {
+            this.ropePostion = value;
         } else {
             System.out.println("ATENCAO" + msgType);
             System.out.println("Message type = " + msgType + ": non-implemented instantiation!");
@@ -268,6 +275,7 @@ public class Message implements Serializable {
     public int getRopePosition() {
         return ropePostion;
     }
+
     public boolean getContinueGame() {
         return continueGame;
     }

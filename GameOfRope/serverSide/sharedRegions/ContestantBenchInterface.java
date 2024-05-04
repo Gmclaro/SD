@@ -57,6 +57,9 @@ public class ContestantBenchInterface {
                     throw new MessageException("Invalid number of id !", inMessage);
                 }
                 break;
+            case MessageType.REQ_WAIT_FOR_SEAT_AT_BENCH:
+                // No validation required
+                break;
             default:
                 throw new MessageException("Invalid message type!", inMessage);
 
@@ -82,14 +85,14 @@ public class ContestantBenchInterface {
                 ((ContestantBenchClientProxy) Thread.currentThread()).setStrength(inMessage.getStrength());
                 ((ContestantBenchClientProxy) Thread.currentThread()).setContestantState(inMessage.getEntityState());
 
-                //TODO: remove this
+                // TODO: remove this
                 System.out.println("\nCBI REQ_SEAT_DOWN: " + inMessage.toString());
 
                 contestantBench.seatDown(team, id);
 
                 outMessage = new Message(MessageType.REP_SEAT_DOWN, team, id,
                         ((ContestantBenchClientProxy) Thread.currentThread()).getContestantState());
-                        
+
                 break;
 
             case MessageType.REQ_REVIEW_NOTES:
@@ -132,6 +135,11 @@ public class ContestantBenchInterface {
                 orders = contestantBench.waitForCallContestants(team, id);
 
                 outMessage = new Message(MessageType.REP_WAIT_FOR_CALL_CONTESTANTS, team, id, orders);
+                break;
+            case MessageType.REQ_WAIT_FOR_SEAT_AT_BENCH:
+                contestantBench.waitForSeatAtBench();
+                
+                outMessage = new Message(MessageType.REP_WAIT_FOR_SEAT_AT_BENCH);
                 break;
             default:
                 throw new MessageException("Invalid message type!", inMessage);

@@ -131,10 +131,11 @@ public class Referee extends Thread {
                 System.out.println(this.whoAmI() + " -> assertTrialDecision()");
             // } while (continueGame);
 
-            // contestantBench.waitForSeatAtBench();
+            contestantBench.waitForSeatAtBench();
+            System.out.println(this.whoAmI() + " -> waitForSeatAtBench()");
 
-            // ropePosition = playground.declareGameWinner();
-            // System.out.println(this.whoAmI() + " -> declareGameWinner()");
+            ropePosition = playground.declareGameWinner();
+            System.out.println(this.whoAmI() + " -> declareGameWinner()");
 
             // if (ropePosition > 0)
             //     scores[0]++;

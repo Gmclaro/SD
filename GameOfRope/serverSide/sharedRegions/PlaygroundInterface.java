@@ -82,6 +82,12 @@ public class PlaygroundInterface {
                     throw new MessageException("Invalid number of state !", inMessage);
                 }
                 break;
+            case MessageType.REQ_DECLARE_GAME_WINNER:
+                if (inMessage.getEntityState() < RefereeState.START_OF_THE_MATCH
+                        || inMessage.getEntityState() > RefereeState.END_OF_THE_MATCH) {
+                    throw new MessageException("Invalid number of state !", inMessage);
+                }
+                break;
 
             default:
                 throw new MessageException("Invalid message type!", inMessage);
@@ -89,7 +95,7 @@ public class PlaygroundInterface {
         }
 
         /* Process Messages */
-        int team, id;
+        int team, id, ropePosition;
         boolean continueGame;
 
         switch (inMessage.getMsgType()) {
@@ -183,6 +189,15 @@ public class PlaygroundInterface {
 
                 outMessage = new Message(MessageType.REP_WAIT_FOR_ASSERT_TRIAL_DECISION_COACH, team,
                         ((PlaygroundClientProxy) Thread.currentThread()).getCoachState());
+                break;
+            case MessageType.REQ_DECLARE_GAME_WINNER:
+
+                ((PlaygroundClientProxy) Thread.currentThread()).setRefereeState(inMessage.getEntityState());
+
+                ropePosition = playground.declareGameWinner();
+
+                outMessage = new Message(MessageType.REP_DECLARE_GAME_WINNER,
+                        ((PlaygroundClientProxy) Thread.currentThread()).getRefereeState(), ropePosition);
                 break;
             default:
                 throw new MessageException("Invalid message type!", inMessage);

@@ -383,7 +383,41 @@ public class PlaygroundStub {
 
     // TODO: declareGameWinner
 
-    public void declareGameWinner() {
+    public int declareGameWinner() {
+        ClientCom com;
+        Message inMessage, outMessage;
+
+        com = new ClientCom(serverHostName, serverPortNumb);
+
+        while (!com.open()) {
+            try {
+                Thread.currentThread().sleep((long) (10));
+            } catch (InterruptedException e) {
+            }
+        }
+
+        outMessage = new Message(MessageType.REQ_DECLARE_GAME_WINNER, ((Referee) Thread.currentThread()).getEntityState());
+        com.writeObject(outMessage);
+        inMessage = (Message) com.readObject();
+
+        if (inMessage.getMsgType() != MessageType.REP_DECLARE_GAME_WINNER) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid message type!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        if (inMessage.getEntityState() < RefereeState.START_OF_THE_MATCH
+                || inMessage.getEntityState() > RefereeState.END_OF_THE_MATCH) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid entity state!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        com.close();
+        ((Referee) Thread.currentThread()).setEntityState(inMessage.getEntityState());
+        
+        System.out.println("\nPS declareGameWinner() -> Sta" + ((Referee) Thread.currentThread()).getEntityState() + " RP" + inMessage.getRopePosition());
+        return inMessage.getRopePosition();
     }
 
     public void shutdown() {

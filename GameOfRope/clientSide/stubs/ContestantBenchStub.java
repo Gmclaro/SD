@@ -271,6 +271,33 @@ public class ContestantBenchStub {
         return inMessage.getOrders();
     }
 
+    public void waitForSeatAtBench(){
+        ClientCom com;
+        Message inMessage, outMessage;
+
+        com = new ClientCom(serverHostName, serverPortNumb);
+
+        while (!com.open()) {
+            try {
+                Thread.currentThread().sleep((long) (10));
+            } catch (InterruptedException e) {
+            }
+        }
+
+        outMessage = new Message(MessageType.REQ_WAIT_FOR_SEAT_AT_BENCH);
+        com.writeObject(outMessage);
+        inMessage = (Message) com.readObject();
+
+        if (inMessage.getMsgType() != MessageType.REP_WAIT_FOR_SEAT_AT_BENCH) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid message type!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        com.close();
+        System.out.println("\nCBS waitForSeatAtBench()");
+    }
+
     public void shutdown() {
         ClientCom com;
         Message inMessage, outMessage;
