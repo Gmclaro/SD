@@ -77,6 +77,19 @@ public class RefereeSiteStub {
             }
         }
 
+        outMessage = new Message(MessageType.REQ_INFORM_REFEREE);
+        com.writeObject(outMessage);
+        inMessage = (Message) com.readObject();
+
+        if (inMessage.getMsgType() != MessageType.REP_INFORM_REFEREE) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid message type!");
+            System.out.println("Expected:" + MessageType.REP_INFORM_REFEREE + " Got: " + inMessage.getMsgType());
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        com.close();
+        System.out.println("\nRSS informReferee()");
     }
 
     // TODO: waitForInformReferee

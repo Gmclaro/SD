@@ -17,8 +17,6 @@ public class RefereeSiteInterface {
     public Message processAndReply(Message inMessage) throws MessageException {
         Message outMessage = null;
 
-        System.out.println("inMessage:\n" + inMessage.toString());
-
         /* Validate messages */
         switch (inMessage.getMsgType()) {
             case MessageType.REQ_ANNOUNCE_NEW_GAME:
@@ -26,6 +24,9 @@ public class RefereeSiteInterface {
                         || (inMessage.getEntityState() > RefereeState.END_OF_THE_MATCH)) {
                     throw new MessageException("Invalid Referee state!", inMessage);
                 }
+                break;
+            case MessageType.REQ_INFORM_REFEREE:
+                // No validation needed
                 break;
 
             // TODO: missing msgType here
@@ -50,6 +51,10 @@ public class RefereeSiteInterface {
             case MessageType.REQ_REFEREE_SITE_SHUTDOWN:
                 refereeSite.shutdown();
                 outMessage = new Message(MessageType.REP_REFEREE_SITE_SHUTDOWN);
+                break;
+            case MessageType.REQ_INFORM_REFEREE:
+                refereeSite.informReferee();
+                outMessage = new Message(MessageType.REP_INFORM_REFEREE);
                 break;
 
             default:
