@@ -124,11 +124,11 @@ public class Referee extends Thread {
                 playground.startTrial();
                 System.out.println(this.whoAmI() + " -> startTrial()");
 
-            //     playground.waitForAmDone();
-            //     System.out.println(this.whoAmI() + " -> waitForAmDone()");
+                playground.waitForAmDone();
+                System.out.println(this.whoAmI() + " -> waitForAmDone()");
 
-            //     continueGame = playground.assertTrialDecision();
-            //     System.out.println(this.whoAmI() + " -> assertTrialDecision()");
+                continueGame = playground.assertTrialDecision();
+                System.out.println(this.whoAmI() + " -> assertTrialDecision()");
             // } while (continueGame);
 
             // contestantBench.waitForSeatAtBench();

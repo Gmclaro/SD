@@ -14,39 +14,49 @@ public class MessageType {
    */
 
   /**
-   * Referee - Operation get announce new game (REQUEST)
+   * Referee - Operation announce new game (REQUEST)
    */
   public static final int REQ_ANNOUNCE_NEW_GAME = 0;
 
   /**
-   * Referee - Operation get announce new game (REPLY)
+   * Referee - Operation announce new game (REPLY)
    */
 
   public static final int REP_ANNOUNCE_NEW_GAME = 1;
 
   /**
-   * Referee - Operation get inform referee (REQUEST)
+   * Referee - Operation inform referee (REQUEST)
    */
 
   public static final int REQ_INFORM_REFEREE = 2;
 
   /**
-   * Referee - Operation get inform referee (REPLY)
+   * Referee - Operation inform referee (REPLY)
    */
 
   public static final int REP_INFORM_REFEREE = 3;
 
   /**
-   * Referee - Operation get wait for inform referee (REQUEST)
+   * Referee - Operation wait for inform referee (REQUEST)
    */
 
   public static final int REQ_WAIT_FOR_INFORM_REFEREE = 4;
 
   /**
-   * Referee - Operation get wait for inform referee (REPLY)
+   * Referee - Operation wait for inform referee (REPLY)
    */
 
   public static final int REP_WAIT_FOR_INFORM_REFEREE = 5;
+
+  /**
+   * Referee - Operation assert trial decision (REQUEST)
+   */
+  public static final int REQ_ASSERT_TRIAL_DECISION = 80;
+
+  /**
+   * Referee - Operation assert trial decision (REPLY)
+   */
+  public static final int REP_ASSERT_TRIAL_DECISION = 81;
 
   /*
    * General Repository site INPUT/OUTPUT messages
@@ -313,24 +323,34 @@ public class MessageType {
   public static final int REP_GET_READY = 54;
 
   /**
+   * Playground - Operation wait for am done (REQUEST)
+   */
+  public static final int REQ_WAIT_FOR_AM_DONE = 55;
+
+  /**
+   * Playground - Operation wait for am done (REPLY)
+   */
+  public static final int REP_WAIT_FOR_AM_DONE = 56;
+
+  /**
    * Playground - Operation wait for assert trial decision contestant (REQUEST)
    */
-  public static final int REQ_WAIT_FOR_ASSERT_TRIAL_DECISION_CONTESTANT = 55;
+  public static final int REQ_WAIT_FOR_ASSERT_TRIAL_DECISION_CONTESTANT = 57;
 
   /**
    * Playground - Operation wait for assert trial decision contestant (REPLY)
    */
-  public static final int REP_WAIT_FOR_ASSERT_TRIAL_DECISION_CONTESTANT = 56;
+  public static final int REP_WAIT_FOR_ASSERT_TRIAL_DECISION_CONTESTANT = 58;
 
   /**
    * Playground - Operation wait for assert trial decision coach (REQUEST)
    */
-  public static final int REQ_WAIT_FOR_ASSERT_TRIAL_DECISION_COACH = 57;
+  public static final int REQ_WAIT_FOR_ASSERT_TRIAL_DECISION_COACH = 59;
 
   /**
    * Playground - Operation wait for assert trial decision coach (REPLY)
    */
-  public static final int REP_WAIT_FOR_ASSERT_TRIAL_DECISION_COACH = 58;
+  public static final int REP_WAIT_FOR_ASSERT_TRIAL_DECISION_COACH = 60;
 
   //////////////////////////////////////////////
 

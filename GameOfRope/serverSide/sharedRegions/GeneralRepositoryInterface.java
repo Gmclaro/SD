@@ -64,6 +64,9 @@ public class GeneralRepositoryInterface {
                     throw new MessageException("Invalid Contestant ID", inMessage);
                 }
                 break;
+            case MessageType.REQ_SET_ROPE_POSITION:
+                // No parameters to validate
+                break;
 
             case MessageType.REQ_NEW_GAME_STARTED:
                 // No parameters to validate
@@ -103,6 +106,10 @@ public class GeneralRepositoryInterface {
             case MessageType.REQ_LOG_SET_CONTESTANT_STRENGTH:
                 repo.setContestantStrength(inMessage.getTeam(), inMessage.getID(), inMessage.getStrength());
                 outMessage = new Message(MessageType.REP_LOG_SET_CONTESTANT_STRENGTH);
+                break;
+            case MessageType.REQ_SET_ROPE_POSITION:
+                repo.setRopePosition(inMessage.getRopePosition());
+                outMessage = new Message(MessageType.REP_SET_ROPE_POSITION);
                 break;
 
             case MessageType.REQ_NEW_GAME_STARTED:

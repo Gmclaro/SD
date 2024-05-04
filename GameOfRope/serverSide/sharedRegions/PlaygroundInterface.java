@@ -57,6 +57,13 @@ public class PlaygroundInterface {
                     throw new MessageException("Invalid number of id !", inMessage);
                 }
                 break;
+            case MessageType.REQ_WAIT_FOR_AM_DONE:
+                // No validation needed
+                break;
+            case MessageType.REQ_ASSERT_TRIAL_DECISION:
+                // No validation needed
+                break;
+
             case MessageType.REQ_WAIT_FOR_ASSERT_TRIAL_DECISION_CONTESTANT:
                 if (inMessage.getTeam() < 0 || inMessage.getTeam() > SimulParse.COACH) {
                     throw new MessageException("Invalid number of team !", inMessage);
@@ -83,6 +90,7 @@ public class PlaygroundInterface {
 
         /* Process Messages */
         int team, id;
+        boolean continueGame;
 
         switch (inMessage.getMsgType()) {
             case MessageType.REQ_FOLLOW_COACH_ADVICE:
@@ -134,6 +142,19 @@ public class PlaygroundInterface {
 
                 outMessage = new Message(MessageType.REP_GET_READY, team, id);
                 break;
+            case MessageType.REQ_WAIT_FOR_AM_DONE:
+
+                playground.waitForAmDone();
+
+                outMessage = new Message(MessageType.REP_WAIT_FOR_AM_DONE);
+                break;
+
+            case MessageType.REQ_ASSERT_TRIAL_DECISION:
+
+                continueGame = playground.assertTrialDecision();
+
+                outMessage = new Message(MessageType.REP_ASSERT_TRIAL_DECISION, continueGame);
+                break;
             case MessageType.REQ_WAIT_FOR_ASSERT_TRIAL_DECISION_CONTESTANT:
 
                 team = inMessage.getTeam();
@@ -160,7 +181,7 @@ public class PlaygroundInterface {
 
                 playground.waitForAssertTrialDecision(team);
 
-                outMessage = new Message(MessageType.REP_WAIT_FOR_ASSERT_TRIAL_DECISION_CONTESTANT, team,
+                outMessage = new Message(MessageType.REP_WAIT_FOR_ASSERT_TRIAL_DECISION_COACH, team,
                         ((PlaygroundClientProxy) Thread.currentThread()).getCoachState());
                 break;
             default:

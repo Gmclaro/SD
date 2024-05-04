@@ -91,7 +91,8 @@ public class Message implements Serializable {
                 || msgType == MessageType.REP_CALL_CONTESTANTS || msgType == MessageType.REQ_FOLLOW_COACH_ADVICE
                 || msgType == MessageType.REP_FOLLOW_COACH_ADVICE) {
             this.team = value;
-
+        } else if (msgType == MessageType.REQ_SET_ROPE_POSITION) {
+            this.ropePostion = value;
         } else {
             System.out.println("Message type = " + msgType + ": non-implemented instantiation!");
             System.exit(1);
@@ -262,6 +263,13 @@ public class Message implements Serializable {
 
     public int[] getSelected() {
         return selected;
+    }
+
+    public int getRopePosition() {
+        return ropePostion;
+    }
+    public boolean getContinueGame() {
+        return continueGame;
     }
 
     @Override

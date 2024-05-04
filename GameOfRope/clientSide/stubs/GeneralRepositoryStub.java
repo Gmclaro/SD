@@ -252,9 +252,30 @@ public class GeneralRepositoryStub {
 
   }
 
-  // TODO: setRopePosition
   public void setRopePosition(int ropePosition) {
+    ClientCom com;
+    Message outMessage, inMessage;
 
+    com = new ClientCom(serverHostName, serverPortNumb);
+
+    while (!com.open()) {
+      try {
+        Thread.currentThread().sleep((long) (10));
+      } catch (InterruptedException e) {
+      }
+    }
+
+    outMessage = new Message(MessageType.REQ_SET_ROPE_POSITION, ropePosition);
+    com.writeObject(outMessage);
+    inMessage = (Message) com.readObject();
+
+    if (inMessage.getMsgType() != MessageType.REP_SET_ROPE_POSITION) {
+      System.out.println("Thread " + Thread.currentThread().getName() + ":Type error in setRopePosition()");
+      System.out.println(inMessage.toString());
+      System.exit(1);
+    }
+    com.close();
+    System.out.println("\nGRS setRopePosition()");
   }
 
   // TODO : setEndOfGame

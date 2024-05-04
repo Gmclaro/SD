@@ -234,11 +234,59 @@ public class PlaygroundStub {
     // TODO : waitForAmDone
 
     public void waitForAmDone() {
+        ClientCom com;
+        Message inMessage, outMessage;
+
+        com = new ClientCom(serverHostName, serverPortNumb);
+
+        while (!com.open()) {
+            try {
+                Thread.currentThread().sleep((long) (10));
+            } catch (InterruptedException e) {
+            }
+        }
+
+        outMessage = new Message(MessageType.REQ_WAIT_FOR_AM_DONE);
+        com.writeObject(outMessage);
+        inMessage = (Message) com.readObject();
+
+        if (inMessage.getMsgType() != MessageType.REP_WAIT_FOR_AM_DONE) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid message type!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        com.close();
+        System.out.println("\nPS waitForAmDone()");
     }
 
     // TODO: assertTrialDecision
 
-    public void assertTrialDecision() {
+    public boolean assertTrialDecision() {
+        ClientCom com;
+        Message inMessage, outMessage;
+
+        com = new ClientCom(serverHostName, serverPortNumb);
+
+        while (!com.open()) {
+            try {
+                Thread.currentThread().sleep((long) (10));
+            } catch (InterruptedException e) {
+            }
+        }
+        outMessage = new Message(MessageType.REQ_ASSERT_TRIAL_DECISION);
+        com.writeObject(outMessage);
+        inMessage = (Message) com.readObject();
+
+        if (inMessage.getMsgType() != MessageType.REP_ASSERT_TRIAL_DECISION) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid message type!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        com.close();
+        System.out.println("\nPS assertTrialDecision() -> CG" + inMessage.getContinueGame());
+        return inMessage.getContinueGame();
     }
 
     public void waitForAssertTrialDecision(int team, int id, int strength) {

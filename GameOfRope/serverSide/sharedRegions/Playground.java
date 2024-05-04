@@ -287,7 +287,7 @@ public class Playground {
      */
     public void waitForAssertTrialDecision(int team) {
         synchronized (this) {
-            ((Coach) Thread.currentThread()).setEntityState(CoachState.WATCH_TRIAL);
+            ((PlaygroundClientProxy) Thread.currentThread()).setCoachState(CoachState.WATCH_TRIAL);
             repo.setCoachState(team, CoachState.WATCH_TRIAL);
 
             while (!endOfTrial || arrivedContestants[0] > 0 || arrivedContestants[1] > 0) {
