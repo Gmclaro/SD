@@ -142,7 +142,7 @@ public class Playground {
      * @param id   The id of the contestant
      */
     public synchronized void waitForStartTrial(int team, int id) {
-        ((Contestant) Thread.currentThread()).setEntityState(ContestantState.STAND_IN_POSITION);
+        ((PlaygroundClientProxy) Thread.currentThread()).setContestantState(ContestantState.STAND_IN_POSITION);
 
         repo.setContestantState(team, id, ContestantState.STAND_IN_POSITION);
 

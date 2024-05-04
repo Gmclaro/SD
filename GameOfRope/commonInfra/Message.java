@@ -84,7 +84,8 @@ public class Message implements Serializable {
                 || msgType == MessageType.REQ_CALL_TRIAL || msgType == MessageType.REP_CALL_TRIAL
                 || msgType == MessageType.REQ_LOG_SET_REFEREE_STATE || msgType == MessageType.REP_LOG_SET_REFEREE_STATE
                 || msgType == MessageType.REP_LOG_SET_CONTESTANT_STATE
-                || msgType == MessageType.REP_LOG_SET_REMOVE_CONTESTANT|| msgType == MessageType.REQ_START_TRIAL|| msgType == MessageType.REP_START_TRIAL) {
+                || msgType == MessageType.REP_LOG_SET_REMOVE_CONTESTANT || msgType == MessageType.REQ_START_TRIAL
+                || msgType == MessageType.REP_START_TRIAL) {
             this.state = value;
         } else if (msgType == MessageType.REQ_REVIEW_NOTES || msgType == MessageType.REQ_WAIT_FOR_CALL_TRIAL
                 || msgType == MessageType.REP_CALL_CONTESTANTS || msgType == MessageType.REQ_FOLLOW_COACH_ADVICE
@@ -183,12 +184,14 @@ public class Message implements Serializable {
         } else if (msgType == MessageType.REQ_LOG_SET_CONTESTANT_STATE
                 || msgType == MessageType.REQ_LOG_SET_CONTESTANT_STRENGTH || msgType == MessageType.REP_SEAT_DOWN
                 || msgType == MessageType.REQ_WAIT_FOR_CALL_CONTESTANTS
-                || msgType == MessageType.REP_WAIT_FOR_CALL_CONTESTANTS) {
+                || msgType == MessageType.REP_WAIT_FOR_CALL_CONTESTANTS
+                || msgType == MessageType.REQ_WAIT_FOR_START_TRIAL || msgType == MessageType.REP_WAIT_FOR_START_TRIAL) {
             this.id = value1;
         }
 
         if (msgType == MessageType.REQ_LOG_SET_CONTESTANT_STATE || msgType == MessageType.REP_SEAT_DOWN
-                || msgType == MessageType.REP_WAIT_FOR_CALL_TRIAL) {
+                || msgType == MessageType.REP_WAIT_FOR_CALL_TRIAL || msgType == MessageType.REQ_WAIT_FOR_START_TRIAL
+                || msgType == MessageType.REP_WAIT_FOR_START_TRIAL) {
             this.state = value2;
         } else if (msgType == MessageType.REQ_WAIT_FOR_CALL_CONTESTANTS
                 || msgType == MessageType.REQ_LOG_SET_CONTESTANT_STRENGTH) {

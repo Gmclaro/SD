@@ -293,6 +293,16 @@ public class MessageType {
    */
   public static final int REP_START_TRIAL = 50;
 
+      /**
+   * Playground - Operation wait for start trial (REQUEST)
+   */
+  public static final int REQ_WAIT_FOR_START_TRIAL = 51;
+
+  /**
+   * Playground - Operation wait for start trial (REPLY)
+   */
+  public static final int REP_WAIT_FOR_START_TRIAL = 52;
+
 
   //////////////////////////////////////////////
 

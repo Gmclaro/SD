@@ -34,8 +34,19 @@ public class PlaygroundInterface {
                 }
                 break;
             case MessageType.REQ_START_TRIAL:
-                if(inMessage.getEntityState() < RefereeState.START_OF_THE_MATCH || inMessage.getEntityState() > RefereeState.END_OF_THE_MATCH){
+                if (inMessage.getEntityState() < RefereeState.START_OF_THE_MATCH
+                        || inMessage.getEntityState() > RefereeState.END_OF_THE_MATCH) {
                     throw new MessageException("Invalid number of state !", inMessage);
+                }
+                break;
+            case MessageType.REQ_WAIT_FOR_START_TRIAL:
+                if (inMessage.getEntityState() < ContestantState.SEAT_AT_THE_BENCH
+                        || inMessage.getEntityState() > ContestantState.DO_YOUR_BEST) {
+                    throw new MessageException("Invalid number of state !", inMessage);
+                }else if( inMessage.getTeam() < 0 || inMessage.getTeam() > SimulParse.COACH){
+                    throw new MessageException("Invalid number of team !", inMessage);
+                }else if( inMessage.getID() < 0 || inMessage.getID() > SimulParse.CONTESTANT_PER_TEAM){
+                    throw new MessageException("Invalid number of id !", inMessage);
                 }
                 break;
 
@@ -72,7 +83,21 @@ public class PlaygroundInterface {
 
                 playground.startTrial();
 
-                outMessage = new Message(MessageType.REP_START_TRIAL,((PlaygroundClientProxy) Thread.currentThread()).getRefereeState());
+                outMessage = new Message(MessageType.REP_START_TRIAL,
+                        ((PlaygroundClientProxy) Thread.currentThread()).getRefereeState());
+                break;
+
+            case MessageType.REQ_WAIT_FOR_START_TRIAL:
+
+                team = inMessage.getTeam();
+                id = inMessage.getID();
+
+                ((PlaygroundClientProxy) Thread.currentThread()).setContestantState(inMessage.getEntityState());
+
+                playground.waitForStartTrial(team, id);
+
+                outMessage = new Message(MessageType.REP_WAIT_FOR_START_TRIAL, team, id,
+                        ((PlaygroundClientProxy) Thread.currentThread()).getContestantState());
                 break;
 
             default:

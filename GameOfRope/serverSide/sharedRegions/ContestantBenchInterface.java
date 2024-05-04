@@ -82,10 +82,14 @@ public class ContestantBenchInterface {
                 ((ContestantBenchClientProxy) Thread.currentThread()).setStrength(inMessage.getStrength());
                 ((ContestantBenchClientProxy) Thread.currentThread()).setContestantState(inMessage.getEntityState());
 
+                //TODO: remove this
+                System.out.println("\nCBI REQ_SEAT_DOWN: " + inMessage.toString());
+
                 contestantBench.seatDown(team, id);
 
                 outMessage = new Message(MessageType.REP_SEAT_DOWN, team, id,
                         ((ContestantBenchClientProxy) Thread.currentThread()).getContestantState());
+                        
                 break;
 
             case MessageType.REQ_REVIEW_NOTES:

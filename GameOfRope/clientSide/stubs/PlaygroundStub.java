@@ -146,6 +146,49 @@ public class PlaygroundStub {
 
     // TODO: waitforStartTrial
     public void waitForStartTrial(int team, int id) {
+        ClientCom com;
+        Message inMessage, outMessage;
+
+        com = new ClientCom(serverHostName, serverPortNumb);
+
+        while (!com.open()) {
+            try {
+                Thread.currentThread().sleep((long) (10));
+            } catch (InterruptedException e) {
+            }
+        }
+
+        outMessage = new Message(MessageType.REQ_WAIT_FOR_START_TRIAL, team, id,
+                ((Contestant) Thread.currentThread()).getEntityState());
+        com.writeObject(outMessage);
+        inMessage = (Message) com.readObject();
+
+        if (inMessage.getMsgType() != MessageType.REP_WAIT_FOR_START_TRIAL) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid message type!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        if (inMessage.getTeam() != ((Contestant) Thread.currentThread()).getTeam()) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid team!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+        if (inMessage.getID() != ((Contestant) Thread.currentThread()).getID()) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid id!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+        if (inMessage.getEntityState() < ContestantState.SEAT_AT_THE_BENCH
+                || inMessage.getEntityState() > ContestantState.DO_YOUR_BEST) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid entity state!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+        com.close();
+        ((Contestant) Thread.currentThread()).setEntityState(inMessage.getEntityState());
+        System.out.println("\nPS waitForStartTrial() -> Sta" + ((Contestant) Thread.currentThread()).getEntityState());
+
     }
 
     // TODO: getReady
