@@ -1,8 +1,6 @@
 package clientSide.stubs;
 
-import clientSide.entities.Coach;
-import clientSide.entities.Contestant;
-import clientSide.entities.Referee;
+import clientSide.entities.*;
 import commonInfra.ClientCom;
 import commonInfra.Message;
 import commonInfra.MessageType;
@@ -68,7 +66,45 @@ public class PlaygroundStub {
 
     // TODO: waitforFollowCoachAdvice
     public void waitForFollowCoachAdvice(int team) {
+        ClientCom com;
+        Message inMessage, outMessage;
 
+        com = new ClientCom(serverHostName, serverPortNumb);
+
+        while (!com.open()) {
+            try {
+                Thread.currentThread().sleep((long) (10));
+            } catch (InterruptedException e) {
+            }
+        }
+
+        outMessage = new Message(MessageType.REQ_WAIT_FOR_FOLLOW_COACH_ADVICE, team,
+                ((Coach) Thread.currentThread()).getEntityState());
+        com.writeObject(outMessage);
+        inMessage = (Message) com.readObject();
+
+        if (inMessage.getMsgType() != MessageType.REP_WAIT_FOR_FOLLOW_COACH_ADVICE) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid message type!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        if (inMessage.getTeam() != ((Coach) Thread.currentThread()).getTeam()) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid team!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        if (inMessage.getEntityState() < CoachState.WAIT_FOR_REFEREE_COMMAND
+                || inMessage.getEntityState() > CoachState.WATCH_TRIAL) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid entity state!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        com.close();
+        ((Coach) Thread.currentThread()).setEntityState(inMessage.getEntityState());
+        System.out.println("\nPS waitForFollowCoachAdvice() -> Sta" + ((Coach) Thread.currentThread()).getEntityState());
     }
 
     // TODO: startTrial

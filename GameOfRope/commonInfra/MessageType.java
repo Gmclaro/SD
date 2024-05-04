@@ -272,6 +272,16 @@ public class MessageType {
    */
   public static final int REP_FOLLOW_COACH_ADVICE = 46;
 
+  /**
+   * Playground - Operation wait for follow coach advice (REQUEST)
+   */
+  public static final int REQ_WAIT_FOR_FOLLOW_COACH_ADVICE = 47;
+
+  /**
+   * Playground - Operation wait for follow coach advice (REPLY)
+   */
+  public static final int REP_WAIT_FOR_FOLLOW_COACH_ADVICE = 48;
+
 
   //////////////////////////////////////////////
 

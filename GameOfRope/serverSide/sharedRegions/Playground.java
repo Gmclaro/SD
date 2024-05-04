@@ -107,7 +107,7 @@ public class Playground {
      */
 
     public synchronized void waitForFollowCoachAdvice(int team) {
-        ((Coach) Thread.currentThread()).setEntityState(CoachState.ASSEMBLE_TEAM);
+        ((PlaygroundClientProxy) Thread.currentThread()).setCoachState(CoachState.ASSEMBLE_TEAM);
         repo.setCoachState(team, CoachState.ASSEMBLE_TEAM);
 
         while (arrivedContestants[team] < SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM) {

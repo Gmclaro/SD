@@ -149,8 +149,8 @@ public class Coach extends Thread {
              contestantBench.callContestants(team, selected);
              System.out.println(this.whoAmI() + " -> callContestants()");
 
-        //     playground.waitForFollowCoachAdvice(team);
-        //     System.out.println(this.whoAmI() + " -> waitForFollowCoachAdvice()");
+             playground.waitForFollowCoachAdvice(team);
+             System.out.println(this.whoAmI() + " -> waitForFollowCoachAdvice()");
 
         //     refereeSite.informReferee();
         //     System.out.println(this.whoAmI() + " -> informReferee()");
