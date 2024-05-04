@@ -37,6 +37,8 @@ public class Message implements Serializable {
 
     private int orders = -1;
 
+    int[][] contestantStrength = new int[2][SimulParse.CONTESTANT_PER_TEAM];
+
     /**
      * Message instantiation (form 1).
      * 
@@ -242,6 +244,11 @@ public class Message implements Serializable {
         this.state = state;
     }
 
+    public Message(int msgType, int[][] contestantStrength){
+        this.msgType = msgType;
+        this.contestantStrength = contestantStrength;
+    }
+
     public int getMsgType() {
         return msgType;
     }
@@ -289,6 +296,9 @@ public class Message implements Serializable {
     public boolean getContinueGame() {
         return continueGame;
     }
+    public int[][] getContestantStrengths() {
+        return contestantStrength;
+    }
 
     @Override
     public String toString() {
@@ -306,5 +316,7 @@ public class Message implements Serializable {
                 ", orders=" + orders +
                 '}';
     }
+
+
 
 }

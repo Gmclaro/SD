@@ -84,7 +84,9 @@ public class GeneralRepositoryInterface {
             case MessageType.REQ_SET_MATCH_WINNER:
                 // No parameters to validate
                 break;
-
+            case MessageType.REQ_INIT_SIMUL:
+                // No parameters to validate
+                break;
             default:
                 break;
         }
@@ -140,6 +142,10 @@ public class GeneralRepositoryInterface {
             case MessageType.REQ_SET_MATCH_WINNER:
                 repo.setMatchWinner(inMessage.getScores());
                 outMessage = new Message(MessageType.REP_SET_MATCH_WINNER);
+                break;
+            case MessageType.REQ_INIT_SIMUL:
+                repo.initSimul(inMessage.getContestantStrengths());
+                outMessage = new Message(MessageType.REP_INIT_SIMUL);
                 break;
 
             default:

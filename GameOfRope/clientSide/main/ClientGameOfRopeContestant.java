@@ -63,6 +63,8 @@ public class ClientGameOfRopeContestant {
             }
         }
 
+        generalRepositoryStub.initSimul(strength);
+
         for (int i = 0; i < SimulParse.COACH; i++) {
             for (int j = 0; j < SimulParse.CONTESTANT_PER_TEAM; j++) {
                 contestants[i][j] = new Contestant(i, j, strength[i][j], playgroundStub, contestantBenchStub);

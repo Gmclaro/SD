@@ -27,6 +27,33 @@ public class GeneralRepositoryStub {
     this.serverPortNumb = serverPortNumb;
   }
 
+  public void initSimul(int[][] contestantStrength){
+    ClientCom com;
+    Message outMessage, inMessage;
+
+    com = new ClientCom(serverHostName, serverPortNumb);
+
+    while (!com.open()) {
+      try {
+        Thread.currentThread().sleep((long) (10));
+      } catch (InterruptedException e) {
+      }
+    }
+
+    outMessage = new Message(MessageType.REQ_INIT_SIMUL, contestantStrength);
+    com.writeObject(outMessage);
+    inMessage = (Message) com.readObject();
+
+    if (inMessage.getMsgType() != MessageType.REP_INIT_SIMUL) {
+      System.out.println("Thread " + Thread.currentThread().getName() + ":Type error in initSimul()");
+      System.out.println(inMessage.toString());
+      System.exit(1);
+    }
+
+    com.close();
+    System.out.println("\nGRS initSimul()");
+  }
+
   public void setRefereeState(int state) {
     ClientCom com;
     Message outMessage, inMessage;

@@ -41,10 +41,7 @@ public class ServerGameOfRopeGeneralRepository {
             System.exit(1);
         }
 
-        // TODO: remove strength
-        int[][] strength = new int[][] { { 6, 6, 6, 6, 6 }, { 6, 6, 6, 6, 6 } };
-
-        repo = new GeneralRepository("log", strength);
+        repo = new GeneralRepository("log");
         repoInterface = new GeneralRepositoryInterface(repo);
         scon = new ServerCom(port);
 

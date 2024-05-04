@@ -196,6 +196,16 @@ public class MessageType {
    */
   public static final int REP_SET_MATCH_WINNER = 71;
 
+  /**
+   * General Repository - Operation initSimul (REQUEST)
+   */
+  public static final int REQ_INIT_SIMUL = 72;
+
+  /**
+   * General Repository - Operation initSimul (REPLY)
+   */
+  public static final int REP_INIT_SIMUL = 73;
+
   /*
    * Contestant Bench INPUT/OUTPUT messages
    */
