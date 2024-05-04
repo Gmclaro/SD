@@ -183,8 +183,8 @@ public class ContestantBench {
                 //TODO: uncomment REST
                 //contestant.rest();
                 System.out.println("ATENCAO FALTA O REST");
-                contestants[team][id].setValue(contestant.getStrength());
-                repo.setContestantStrength(team, id, contestant.getStrength());
+                contestants[team][id].setValue(contestant.getStrength() + 1);
+                repo.setContestantStrength(team, id, contestant.getStrength() + 1);
             }
 
             /**

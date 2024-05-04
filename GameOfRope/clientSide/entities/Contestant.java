@@ -150,14 +150,16 @@ public class Contestant extends Thread {
              orders = contestantBench.waitForCallContestant(team, id);
              System.out.println(this.whoAmI() + " -> waitForCallContestant()");
 
-        //     switch (orders) {
-        //         case 0:
-        //             return; // match is over and contestant thread is done
-        //         case 1:
-        //             continue; // contestant was not selected, rest
-        //         case 2:
-        //             break; // contestant was selected, go to playground and continue the lifecycle
-        //     }
+             switch (orders) {
+                 case 0:
+                     return; // match is over and contestant thread is done
+                 case 1:
+                        rest(); 
+                        //TODO: uncomment REST
+                     //continue; // contestant was not selected, rest
+                 case 2:
+                     break; // contestant was selected, go to playground and continue the lifecycle
+             }
 
         //     playground.followCoachAdvice(this.team);
         //     System.out.println(this.whoAmI() + " -> followCoachAdvice()");
@@ -191,12 +193,8 @@ public class Contestant extends Thread {
      * Rest increases the strength of the Contestant
      */
 
-    public void rest() {
+    private void rest() {
+        System.out.println(this.whoAmI() + " is resting.");
         this.strength++;
-    }
-
-    public void setStrength(Object strength2) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setStrength'");
     }
 }
