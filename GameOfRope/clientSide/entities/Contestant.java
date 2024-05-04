@@ -177,8 +177,8 @@ public class Contestant extends Thread {
              playground.getReady(this.team, this.id);
              System.out.println(this.whoAmI() + " -> getReady()");
 
-        //     playground.waitForAssertTrialDecision(this.team, this.id);
-        //     System.out.println(this.whoAmI() + " -> waitForAssertTrialDecision()");
+             playground.waitForAssertTrialDecision(this.team, this.id,this.strength);
+             System.out.println(this.whoAmI() + " -> waitForAssertTrialDecision()");
 
         //     contestantBench.seatDown(this.team, this.id);
         //     System.out.println(this.whoAmI() + " -> seatDown()");

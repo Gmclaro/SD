@@ -312,6 +312,26 @@ public class MessageType {
    */
   public static final int REP_GET_READY = 54;
 
+  /**
+   * Playground - Operation wait for assert trial decision contestant (REQUEST)
+   */
+  public static final int REQ_WAIT_FOR_ASSERT_TRIAL_DECISION_CONTESTANT = 55;
+
+  /**
+   * Playground - Operation wait for assert trial decision contestant (REPLY)
+   */
+  public static final int REP_WAIT_FOR_ASSERT_TRIAL_DECISION_CONTESTANT = 56;
+
+  /**
+   * Playground - Operation wait for assert trial decision coach (REQUEST)
+   */
+  public static final int REQ_WAIT_FOR_ASSERT_TRIAL_DECISION_COACH = 57;
+
+  /**
+   * Playground - Operation wait for assert trial decision coach (REPLY)
+   */
+  public static final int REP_WAIT_FOR_ASSERT_TRIAL_DECISION_COACH = 58;
+
   //////////////////////////////////////////////
 
   public static final int REQ_GENERAL_REPOSITORY_SHUTDOWN = 90;

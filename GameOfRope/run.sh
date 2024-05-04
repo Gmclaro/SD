@@ -29,6 +29,7 @@ if [ "$answer" = "n" ]; then
 fi
 
 javac -cp ".:./genclass.jar" ./*/*/*.java
+sleep 0.5
 
 read -p "run? (y/n)" answer
 if [ "$answer" = "n" ]; then

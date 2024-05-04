@@ -57,6 +57,24 @@ public class PlaygroundInterface {
                     throw new MessageException("Invalid number of id !", inMessage);
                 }
                 break;
+            case MessageType.REQ_WAIT_FOR_ASSERT_TRIAL_DECISION_CONTESTANT:
+                if (inMessage.getTeam() < 0 || inMessage.getTeam() > SimulParse.COACH) {
+                    throw new MessageException("Invalid number of team !", inMessage);
+                } else if (inMessage.getID() < 0 || inMessage.getID() > SimulParse.CONTESTANT_PER_TEAM) {
+                    throw new MessageException("Invalid number of id !", inMessage);
+                } else if (inMessage.getEntityState() < ContestantState.SEAT_AT_THE_BENCH
+                        || inMessage.getEntityState() > ContestantState.DO_YOUR_BEST) {
+                    throw new MessageException("Invalid number of state !", inMessage);
+                }
+                break;
+            case MessageType.REQ_WAIT_FOR_ASSERT_TRIAL_DECISION_COACH:
+                if (inMessage.getTeam() < 0 || inMessage.getTeam() > SimulParse.COACH) {
+                    throw new MessageException("Invalid number of team !", inMessage);
+                } else if (inMessage.getEntityState() < CoachState.WAIT_FOR_REFEREE_COMMAND
+                        || inMessage.getEntityState() > CoachState.WATCH_TRIAL) {
+                    throw new MessageException("Invalid number of state !", inMessage);
+                }
+                break;
 
             default:
                 throw new MessageException("Invalid message type!", inMessage);
@@ -116,7 +134,35 @@ public class PlaygroundInterface {
 
                 outMessage = new Message(MessageType.REP_GET_READY, team, id);
                 break;
+            case MessageType.REQ_WAIT_FOR_ASSERT_TRIAL_DECISION_CONTESTANT:
 
+                team = inMessage.getTeam();
+                id = inMessage.getID();
+
+                ((PlaygroundClientProxy) Thread.currentThread()).setContestantTeam(team);
+                ((PlaygroundClientProxy) Thread.currentThread()).setID(id);
+                ((PlaygroundClientProxy) Thread.currentThread()).setStrength(inMessage.getStrength());
+                ((PlaygroundClientProxy) Thread.currentThread()).setContestantState(inMessage.getEntityState());
+
+                playground.waitForAssertTrialDecision(team, id, inMessage.getStrength());
+
+                outMessage = new Message(MessageType.REP_WAIT_FOR_ASSERT_TRIAL_DECISION_CONTESTANT, team, id,
+                        ((PlaygroundClientProxy) Thread.currentThread()).getStrength(),
+                        ((PlaygroundClientProxy) Thread.currentThread()).getContestantState());
+                break;
+
+            case MessageType.REQ_WAIT_FOR_ASSERT_TRIAL_DECISION_COACH:
+
+                team = inMessage.getTeam();
+
+                ((PlaygroundClientProxy) Thread.currentThread()).setCoachTeam(team);
+                ((PlaygroundClientProxy) Thread.currentThread()).setContestantState(inMessage.getEntityState());
+
+                playground.waitForAssertTrialDecision(team);
+
+                outMessage = new Message(MessageType.REP_WAIT_FOR_ASSERT_TRIAL_DECISION_CONTESTANT, team,
+                        ((PlaygroundClientProxy) Thread.currentThread()).getCoachState());
+                break;
             default:
                 throw new MessageException("Invalid message type!", inMessage);
         }

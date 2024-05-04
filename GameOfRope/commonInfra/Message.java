@@ -156,7 +156,9 @@ public class Message implements Serializable {
         this.msgType = msgType;
         this.team = team;
         if (msgType == MessageType.REQ_LOG_SET_COACH_STATE || msgType == MessageType.REQ_WAIT_FOR_FOLLOW_COACH_ADVICE
-                || msgType == MessageType.REP_WAIT_FOR_FOLLOW_COACH_ADVICE) {
+                || msgType == MessageType.REP_WAIT_FOR_FOLLOW_COACH_ADVICE
+                || msgType == MessageType.REQ_WAIT_FOR_ASSERT_TRIAL_DECISION_COACH
+                || msgType == MessageType.REP_WAIT_FOR_ASSERT_TRIAL_DECISION_COACH) {
             this.state = value;
         } else if (msgType == MessageType.REQ_LOG_SET_REMOVE_CONTESTANT
                 || msgType == MessageType.REQ_LOG_SET_ACTIVE_CONTESTANT || msgType == MessageType.REQ_GET_READY

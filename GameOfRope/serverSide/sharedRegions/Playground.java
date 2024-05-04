@@ -239,15 +239,15 @@ public class Playground {
         /**
          * Contestant pulls the rope
          */
-        Contestant contestant;
+        PlaygroundClientProxy contestant;
         synchronized (this) {
-            contestant = (Contestant) Thread.currentThread();
+            contestant = (PlaygroundClientProxy) Thread.currentThread();
             
             strengthPerTeam[team] += strength;
             strength = pullTheRope(strength);
             repo.setContestantStrength(team, id,strength);
 
-            contestant.setEntityState(ContestantState.DO_YOUR_BEST);
+            contestant.setContestantState(ContestantState.DO_YOUR_BEST);
             contestant.setStrength(strength);
             repo.setContestantState(team, id, ContestantState.DO_YOUR_BEST);
         }
