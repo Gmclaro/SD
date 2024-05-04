@@ -85,7 +85,8 @@ public class Message implements Serializable {
                 || msgType == MessageType.REQ_LOG_SET_REFEREE_STATE || msgType == MessageType.REP_LOG_SET_REFEREE_STATE
                 || msgType == MessageType.REP_LOG_SET_CONTESTANT_STATE
                 || msgType == MessageType.REP_LOG_SET_REMOVE_CONTESTANT || msgType == MessageType.REQ_START_TRIAL
-                || msgType == MessageType.REP_START_TRIAL || msgType == MessageType.REQ_DECLARE_GAME_WINNER) {
+                || msgType == MessageType.REP_START_TRIAL || msgType == MessageType.REQ_DECLARE_GAME_WINNER
+                || msgType == MessageType.REP_DECLARE_MATCH_WINNER) {
             this.state = value;
         } else if (msgType == MessageType.REQ_REVIEW_NOTES || msgType == MessageType.REQ_WAIT_FOR_CALL_TRIAL
                 || msgType == MessageType.REP_CALL_CONTESTANTS || msgType == MessageType.REQ_FOLLOW_COACH_ADVICE
@@ -137,13 +138,18 @@ public class Message implements Serializable {
      * Message instantiation (form 10).
      * 
      * @param msgType type of the message
-     * @param value1  set team
-     * @param value2  set selected
+     * @param value1  set team/state
+     * @param value2  set selected/score
      */
-    public Message(int msgType, int team, int[] selected) {
+    public Message(int msgType, int value1, int[] value2) {
         this.msgType = msgType;
-        this.team = team;
-        this.selected = selected;
+        if (msgType == MessageType.REQ_DECLARE_MATCH_WINNER) {
+            this.state = value1;
+            this.scores = value2;
+        } else {
+            this.team = value1;
+            this.selected = value2;
+        }
     }
 
     /**
@@ -153,25 +159,25 @@ public class Message implements Serializable {
      * @param value1  set team
      * @param value2  set id/state
      */
-    public Message(int msgType, int team, int value) {
+    public Message(int msgType, int value1, int value2) {
         this.msgType = msgType;
 
         if (msgType == MessageType.REP_DECLARE_GAME_WINNER) {
-            this.state = value;
+            this.state = value1;
         } else {
-            this.team = team;
+            this.team = value1;
         }
         if (msgType == MessageType.REQ_LOG_SET_COACH_STATE || msgType == MessageType.REQ_WAIT_FOR_FOLLOW_COACH_ADVICE
                 || msgType == MessageType.REP_WAIT_FOR_FOLLOW_COACH_ADVICE
                 || msgType == MessageType.REQ_WAIT_FOR_ASSERT_TRIAL_DECISION_COACH
                 || msgType == MessageType.REP_WAIT_FOR_ASSERT_TRIAL_DECISION_COACH) {
-            this.state = value;
+            this.state = value2;
         } else if (msgType == MessageType.REQ_LOG_SET_REMOVE_CONTESTANT
                 || msgType == MessageType.REQ_LOG_SET_ACTIVE_CONTESTANT || msgType == MessageType.REQ_GET_READY
                 || msgType == MessageType.REP_GET_READY) {
-            this.id = value;
+            this.id = value2;
         } else if (msgType == MessageType.REP_DECLARE_GAME_WINNER) {
-            this.ropePostion = value;
+            this.ropePostion = value2;
         } else {
             System.out.println("ATENCAO" + msgType);
             System.out.println("Message type = " + msgType + ": non-implemented instantiation!");
@@ -270,6 +276,10 @@ public class Message implements Serializable {
 
     public int[] getSelected() {
         return selected;
+    }
+
+    public int[] getScores() {
+        return scores;
     }
 
     public int getRopePosition() {

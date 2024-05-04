@@ -60,6 +60,12 @@ public class ContestantBenchInterface {
             case MessageType.REQ_WAIT_FOR_SEAT_AT_BENCH:
                 // No validation required
                 break;
+            case MessageType.REQ_DECLARE_MATCH_WINNER:
+                if (inMessage.getEntityState() < RefereeState.START_OF_THE_MATCH
+                        || inMessage.getEntityState() > RefereeState.END_OF_THE_MATCH) {
+                    throw new MessageException("Invalid Referee state!", inMessage);
+                }
+                break;
             default:
                 throw new MessageException("Invalid message type!", inMessage);
 
@@ -138,8 +144,15 @@ public class ContestantBenchInterface {
                 break;
             case MessageType.REQ_WAIT_FOR_SEAT_AT_BENCH:
                 contestantBench.waitForSeatAtBench();
-                
+
                 outMessage = new Message(MessageType.REP_WAIT_FOR_SEAT_AT_BENCH);
+                break;
+            case MessageType.REQ_DECLARE_MATCH_WINNER:
+                ((ContestantBenchClientProxy) Thread.currentThread()).setRefereeState(inMessage.getEntityState());
+                contestantBench.declareMatchWinner(inMessage.getScores());
+
+                outMessage = new Message(MessageType.REP_DECLARE_MATCH_WINNER,
+                        ((ContestantBenchClientProxy) Thread.currentThread()).getRefereeState());
                 break;
             default:
                 throw new MessageException("Invalid message type!", inMessage);

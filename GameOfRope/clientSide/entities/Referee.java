@@ -111,7 +111,7 @@ public class Referee extends Thread {
             boolean continueGame;
             int currentTrial = 0;
 
-            // do {
+            do {
 
                 contestantBench.callTrial();
                 System.out.println(
@@ -129,7 +129,7 @@ public class Referee extends Thread {
 
                 continueGame = playground.assertTrialDecision();
                 System.out.println(this.whoAmI() + " -> assertTrialDecision()");
-            // } while (continueGame);
+            } while (continueGame);
 
             contestantBench.waitForSeatAtBench();
             System.out.println(this.whoAmI() + " -> waitForSeatAtBench()");
@@ -137,19 +137,16 @@ public class Referee extends Thread {
             ropePosition = playground.declareGameWinner();
             System.out.println(this.whoAmI() + " -> declareGameWinner()");
 
-            // if (ropePosition > 0)
-            //     scores[0]++;
-            // else if (ropePosition < 0)
-            //     scores[1]++;
-            // else {
-            // }
-
-            // TODO: remove this return
-            return;
+            if (ropePosition > 0)
+                scores[0]++;
+            else if (ropePosition < 0)
+                scores[1]++;
+            else {
+            }
         }
 
-        // contestantBench.declareMatchWinner(scores);
-        // System.out.println(this.whoAmI() + " -> declareMatchWinner()");
+        contestantBench.declareMatchWinner(scores);
+        System.out.println(this.whoAmI() + " -> declareMatchWinner()");
 
     }
 }

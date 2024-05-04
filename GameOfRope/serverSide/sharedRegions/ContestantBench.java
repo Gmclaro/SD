@@ -256,7 +256,7 @@ public class ContestantBench {
     public synchronized void declareMatchWinner(int[] scores) {
         matchOver = true;
         notifyAll();
-        ((Referee) Thread.currentThread()).setEntityState(RefereeState.END_OF_THE_MATCH);
+        ((ContestantBenchClientProxy) Thread.currentThread()).setRefereeState(RefereeState.END_OF_THE_MATCH);
         repo.setRefereeState(RefereeState.END_OF_THE_MATCH);
         repo.setMatchWinner(scores);
     }

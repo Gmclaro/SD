@@ -334,7 +334,29 @@ public class GeneralRepositoryStub {
 
   // TODO: setMatchWinner
   public void setMatchWinner(int[] scores) {
+    ClientCom com;
+    Message outMessage, inMessage;
 
+    com = new ClientCom(serverHostName, serverPortNumb);
+
+    while (!com.open()) {
+      try {
+        Thread.currentThread().sleep((long) (10));
+      } catch (InterruptedException e) {
+      }
+    }
+
+    outMessage = new Message(MessageType.REQ_SET_MATCH_WINNER, scores);
+    com.writeObject(outMessage);
+    inMessage = (Message) com.readObject();
+
+    if (inMessage.getMsgType() != MessageType.REP_SET_MATCH_WINNER) {
+      System.out.println("Thread " + Thread.currentThread().getName() + ":Type error in setMatchWinner()");
+      System.out.println(inMessage.toString());
+      System.exit(1);
+    }
+    com.close();
+    System.out.println("\nGRS setMatchWinner()");
   }
 
   public void shutdown() {

@@ -189,7 +189,12 @@ public class MessageType {
    * General Repository - Operation set match winner (REQUEST)
    */
 
-  public static final int REQ_SET_MATCH_WINNER = 28;
+  public static final int REQ_SET_MATCH_WINNER = 70;
+
+  /**
+   * General Repository - Operation set match winner (REPLY)
+   */
+  public static final int REP_SET_MATCH_WINNER = 71;
 
   /*
    * Contestant Bench INPUT/OUTPUT messages

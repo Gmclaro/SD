@@ -81,6 +81,9 @@ public class GeneralRepositoryInterface {
             case MessageType.REQ_SHOW_GAME_RESULT:
                 // No parameters to validate
                 break;
+            case MessageType.REQ_SET_MATCH_WINNER:
+                // No parameters to validate
+                break;
 
             default:
                 break;
@@ -133,6 +136,10 @@ public class GeneralRepositoryInterface {
             case MessageType.REQ_SHOW_GAME_RESULT:
                 repo.showGameResult(inMessage.getRopePosition());
                 outMessage = new Message(MessageType.REP_SHOW_GAME_RESULT);
+                break;
+            case MessageType.REQ_SET_MATCH_WINNER:
+                repo.setMatchWinner(inMessage.getScores());
+                outMessage = new Message(MessageType.REP_SET_MATCH_WINNER);
                 break;
 
             default:

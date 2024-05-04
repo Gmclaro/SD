@@ -125,35 +125,38 @@ public class Coach extends Thread {
     @Override
     public void run() {
         System.out.println(this.whoAmI() + " has started.");
-        
+
         /*
          * Start of Coach life cycle
          */
         int orders;
 
-        // TODO: fazer o reviewNotes no contestantBench -> Fazer MessageType, o REQ Message(MsgType,value1) -> é o form1 fazer o REP Message(MsgType,View[]), fazer o ContestantBenchStub,fazer o contestantBenchProxy, fazer o contestantBenchInterface,contestantBenchMain, fazer o coachMainClient
+        // TODO: fazer o reviewNotes no contestantBench -> Fazer MessageType, o REQ
+        // Message(MsgType,value1) -> é o form1 fazer o REP Message(MsgType,View[]),
+        // fazer o ContestantBenchStub,fazer o contestantBenchProxy, fazer o
+        // contestantBenchInterface,contestantBenchMain, fazer o coachMainClient
         View[] aboutContestants = contestantBench.reviewNotes(team);
         System.out.println(this.whoAmI() + " -> reviewNotes()");
 
         int[] selected = selectContestants(aboutContestants);
         System.out.println(this.whoAmI() + " -> selectContestants()");
 
-        // while (true) {
+        while (true) {
             orders = contestantBench.waitForCallTrial(team);
             System.out.println(this.whoAmI() + " -> waitForCallTrial()");
 
-             if (orders == 0) {
-                 return;
-             }
+            if (orders == 0) {
+                return;
+            }
 
-             contestantBench.callContestants(team, selected);
-             System.out.println(this.whoAmI() + " -> callContestants()");
+            contestantBench.callContestants(team, selected);
+            System.out.println(this.whoAmI() + " -> callContestants()");
 
-             playground.waitForFollowCoachAdvice(team);
-             System.out.println(this.whoAmI() + " -> waitForFollowCoachAdvice()");
+            playground.waitForFollowCoachAdvice(team);
+            System.out.println(this.whoAmI() + " -> waitForFollowCoachAdvice()");
 
-             refereeSite.informReferee();
-             System.out.println(this.whoAmI() + " -> informReferee()");
+            refereeSite.informReferee();
+            System.out.println(this.whoAmI() + " -> informReferee()");
 
             playground.waitForAssertTrialDecision(team);
             System.out.println(this.whoAmI() + " -> waitForAssertTrialDecision()");
@@ -163,7 +166,7 @@ public class Coach extends Thread {
 
             selected = selectContestants(aboutContestants);
             System.out.println(this.whoAmI() + " -> selectContestants()");
-        // }
+        }
     }
 
     /**
