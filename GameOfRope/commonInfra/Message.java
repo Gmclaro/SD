@@ -170,7 +170,7 @@ public class Message implements Serializable {
      * @param msgType type of the message
      * @param team    set team
      * @param value1  set id/orders
-     * @param value2  set strength/state
+     * @param value2  set strength/state/orders
      */
 
     public Message(int msgType, int team, int value1, int value2) {
@@ -178,13 +178,22 @@ public class Message implements Serializable {
         this.team = team;
         if (msgType == MessageType.REP_WAIT_FOR_CALL_TRIAL) {
             this.orders = value1;
-        } else if (msgType == MessageType.REQ_LOG_SET_CONTESTANT_STATE || msgType == MessageType.REP_SEAT_DOWN) {
+        } else if (msgType == MessageType.REQ_LOG_SET_CONTESTANT_STATE
+                || msgType == MessageType.REQ_LOG_SET_CONTESTANT_STRENGTH || msgType == MessageType.REP_SEAT_DOWN
+                || msgType == MessageType.REQ_WAIT_FOR_CALL_CONTESTANTS
+                || msgType == MessageType.REP_WAIT_FOR_CALL_CONTESTANTS) {
             this.id = value1;
         }
 
         if (msgType == MessageType.REQ_LOG_SET_CONTESTANT_STATE || msgType == MessageType.REP_SEAT_DOWN
                 || msgType == MessageType.REP_WAIT_FOR_CALL_TRIAL) {
             this.state = value2;
+        } else if (msgType == MessageType.REQ_WAIT_FOR_CALL_CONTESTANTS
+                || msgType == MessageType.REQ_LOG_SET_CONTESTANT_STRENGTH) {
+            this.strength = value2;
+
+        } else if (msgType == MessageType.REP_WAIT_FOR_CALL_CONTESTANTS) {
+            this.orders = value2;
 
         } else {
             System.out.println("Message type = " + msgType + ": non-implemented instantiation!");

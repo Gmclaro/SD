@@ -227,6 +227,16 @@ public class MessageType {
    */
   public static final int REP_CALL_CONTESTANTS = 38;
 
+  /**
+   * Contestant Bench - Operation wait for call contestants (REQUEST)
+   */
+  public static final int REQ_WAIT_FOR_CALL_CONTESTANTS = 39;
+
+  /**
+   * Contestant Bench - Operation wait for call contestants (REPLY)
+   */
+
+  public static final int REP_WAIT_FOR_CALL_CONTESTANTS = 40;
 
   //////////////////////////////////////////////
 
@@ -245,6 +255,5 @@ public class MessageType {
   public static final int REQ_CONTESTANT_BENCH_SHUTDOWN = 96;
 
   public static final int REP_CONTESTANT_BENCH_SHUTDOWN = 97;
-
 
 }

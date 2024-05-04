@@ -208,7 +208,6 @@ public class ContestantBenchStub {
         com.writeObject(outMessage);
         inMessage = (Message) com.readObject();
 
-
         if (inMessage.getMsgType() != MessageType.REP_CALL_CONTESTANTS) {
             System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid message type!");
             System.out.println(inMessage.toString());
@@ -223,7 +222,53 @@ public class ContestantBenchStub {
 
         com.close();
         System.out.println("\nCBS callContestants() ");
+    }
 
+    public int waitForCallContestant(int team, int id) {
+        ClientCom com;
+        Message inMessage, outMessage;
+
+        com = new ClientCom(serverHostName, serverPortNumb);
+
+        while (!com.open()) {
+            try {
+                Thread.currentThread().sleep((long) (10));
+            } catch (InterruptedException e) {
+            }
+        }
+
+        outMessage = new Message(MessageType.REQ_WAIT_FOR_CALL_CONTESTANTS, team, id,
+                ((Contestant) Thread.currentThread()).getStrength());
+        com.writeObject(outMessage);
+        inMessage = (Message) com.readObject();
+
+        if (inMessage.getMsgType() != MessageType.REP_WAIT_FOR_CALL_CONTESTANTS) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid message type!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        if (inMessage.getTeam() != ((Contestant) Thread.currentThread()).getTeam()) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid team!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        if (inMessage.getID() != ((Contestant) Thread.currentThread()).getID()) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid id!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        if (inMessage.getOrders() < 0 || inMessage.getOrders() > 2) {
+            System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid orders!");
+            System.out.println(inMessage.toString());
+            System.exit(1);
+        }
+
+        com.close();
+        System.out.println("\nCBS waitForCallContestant() -> O" + inMessage.getOrders());
+        return inMessage.getOrders();
     }
 
     public void shutdown() {
@@ -251,7 +296,5 @@ public class ContestantBenchStub {
 
         com.close();
     }
-
-
 
 }

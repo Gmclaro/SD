@@ -110,6 +110,11 @@ public class ContestantBenchClientProxy extends Thread implements CoachCloning, 
     public int getCoachTeam() {
         return this.coachTeam;
     }
+
+
+    public void rest() {
+        //TODO: Missing Rest
+    }
     
 
     @Override
@@ -130,4 +135,8 @@ public class ContestantBenchClientProxy extends Thread implements CoachCloning, 
         sconi.writeObject(outMessage);
         sconi.close();
     }
+
+
+
+
 }

@@ -66,6 +66,9 @@ public interface ContestantCloning {
     public void setStrength(int strength);
 
 
+    public void rest();
+
+
 
     
 }

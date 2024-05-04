@@ -130,13 +130,13 @@ public class ContestantBench {
      * @return int Order of the Contestant in the playground
      */
 
-    public int waitForCallContestant(int team, int id) {
+    public int waitForCallContestants(int team, int id) {
         /**
          * Updates Contestant current state and placed the Contestant in Bench
          */
-        Contestant contestant;
+        ContestantBenchClientProxy contestant;
         synchronized (this) {
-            contestant = (Contestant) Thread.currentThread();
+            contestant = (ContestantBenchClientProxy) Thread.currentThread();
             // contestant.setEntityState(ContestantState.SEAT_AT_THE_BENCH);
 
             // repo.setContestantState(team, id, ContestantState.SEAT_AT_THE_BENCH);
@@ -180,7 +180,9 @@ public class ContestantBench {
             }
 
             if (order == 1) {
-                contestant.rest();
+                //TODO: uncomment REST
+                //contestant.rest();
+                System.out.println("ATENCAO FALTA O REST");
                 contestants[team][id].setValue(contestant.getStrength());
                 repo.setContestantStrength(team, id, contestant.getStrength());
             }

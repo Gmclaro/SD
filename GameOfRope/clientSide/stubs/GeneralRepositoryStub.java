@@ -99,8 +99,6 @@ public class GeneralRepositoryStub {
 
     outMessage = new Message(MessageType.REQ_LOG_SET_CONTESTANT_STATE, team, id, state);
 
-    System.out.println("Sending message: " + outMessage.toString());
-
     com.writeObject(outMessage);
     inMessage = (Message) com.readObject();
 
@@ -115,7 +113,31 @@ public class GeneralRepositoryStub {
   }
 
   public void setContestantStrength(int team, int id, int strength) {
+    ClientCom com;
+    Message outMessage, inMessage;
 
+    com = new ClientCom(serverHostName, serverPortNumb);
+
+    while (!com.open()) {
+      try {
+        Thread.currentThread().sleep((long) (10));
+      } catch (InterruptedException e) {
+      }
+    }
+
+    outMessage = new Message(MessageType.REQ_LOG_SET_CONTESTANT_STRENGTH, team, id, strength);
+
+    com.writeObject(outMessage);
+    inMessage = (Message) com.readObject();
+
+    if (inMessage.getMsgType() != MessageType.REP_LOG_SET_CONTESTANT_STRENGTH) {
+      System.out.println("Thread " + Thread.currentThread().getName() + ":Type error in setContestantStrength()");
+      System.out.println(inMessage.toString());
+      System.exit(1);
+    }
+
+    com.close();
+    System.out.println("GRS setContestantStrength()");
   }
 
   // TOOD: newGameStated

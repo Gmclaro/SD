@@ -52,6 +52,13 @@ public class ContestantBenchInterface {
                     throw new MessageException("Invalid number of team !", inMessage);
                 }
                 break;
+            case MessageType.REQ_WAIT_FOR_CALL_CONTESTANTS:
+                if ((inMessage.getTeam() < 0) || (inMessage.getTeam() > SimulParse.COACH)) {
+                    throw new MessageException("Invalid number of team !", inMessage);
+                } else if (inMessage.getID() < 0 || inMessage.getID() > SimulParse.CONTESTANT_PER_TEAM) {
+                    throw new MessageException("Invalid number of id !", inMessage);
+                }
+                break;
             default:
                 throw new MessageException("Invalid message type!", inMessage);
 
@@ -102,8 +109,8 @@ public class ContestantBenchInterface {
                 outMessage = new Message(MessageType.REP_WAIT_FOR_CALL_TRIAL, team, orders,
                         ((ContestantBenchClientProxy) Thread.currentThread()).getCoachState());
                 break;
-            
-                case MessageType.REQ_CALL_CONTESTANTS:
+
+            case MessageType.REQ_CALL_CONTESTANTS:
                 team = inMessage.getTeam();
 
                 ((ContestantBenchClientProxy) Thread.currentThread()).setCoachTeam(team);
@@ -113,6 +120,17 @@ public class ContestantBenchInterface {
                 outMessage = new Message(MessageType.REP_CALL_CONTESTANTS, team);
                 break;
 
+            case MessageType.REQ_WAIT_FOR_CALL_CONTESTANTS:
+                team = inMessage.getTeam();
+                id = inMessage.getID();
+                ((ContestantBenchClientProxy) Thread.currentThread()).setContestantTeam(team);
+                ((ContestantBenchClientProxy) Thread.currentThread()).setId(id);
+                ((ContestantBenchClientProxy) Thread.currentThread()).setStrength(inMessage.getStrength());
+
+                orders = contestantBench.waitForCallContestants(team, id);
+
+                outMessage = new Message(MessageType.REP_WAIT_FOR_CALL_CONTESTANTS, team, id, orders);
+                break;
             default:
                 throw new MessageException("Invalid message type!", inMessage);
         }

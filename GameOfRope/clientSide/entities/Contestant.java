@@ -145,10 +145,10 @@ public class Contestant extends Thread {
         contestantBench.seatDown(this.team, this.id);
         System.out.println(this.whoAmI() + " -> seatDown()");
 
-        // int orders;
+        int orders;
         // while (true) {
-        //     orders = contestantBench.waitForCallContestant(team, id);
-        //     System.out.println(this.whoAmI() + " -> waitForCallContestant()");
+             orders = contestantBench.waitForCallContestant(team, id);
+             System.out.println(this.whoAmI() + " -> waitForCallContestant()");
 
         //     switch (orders) {
         //         case 0:
