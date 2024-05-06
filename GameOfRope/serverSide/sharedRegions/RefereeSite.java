@@ -82,7 +82,6 @@ public class RefereeSite {
         if (nEntities >= 2) {
             ServerGameOfRopeRefereeSite.waitConnection = false;
         }
-        System.out.println("NENTITIES:\t" + nEntities);
         notifyAll();
     }
 }

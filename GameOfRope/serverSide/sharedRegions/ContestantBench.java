@@ -287,7 +287,6 @@ public class ContestantBench {
         if (nEntities >= 3) {
             ServerGameOfRopeContestantBench.waitConnection = false;
         }
-        System.out.println("NENTITIES: " + nEntities);
         notifyAll();
     }
 }

@@ -574,7 +574,6 @@ public class GeneralRepository {
     if (nEntities >= 3) {
       ServerGameOfRopeGeneralRepository.waitConnection = false;
     }
-    System.out.println("NENTITIES: " + nEntities);
     notifyAll();
   }
 

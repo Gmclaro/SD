@@ -356,7 +356,6 @@ public class Playground {
         if (nEntities >= 3) {
             ServerGameOfRopePlayground.waitConnection = false;
         }
-        System.out.println("NENTITIES: " + nEntities);
         notifyAll();
     }
 }
