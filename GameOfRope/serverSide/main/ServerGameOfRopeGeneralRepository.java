@@ -7,8 +7,16 @@ import serverSide.entities.GeneralRepositoryClientProxy;
 import serverSide.sharedRegions.GeneralRepository;
 import serverSide.sharedRegions.GeneralRepositoryInterface;
 
+
+/**
+ *    Server side of the General Repository.
+ *    Implementation of a client-server model of type 2 (server replication).
+ *    Communication is based on a communication channel under the TCP protocol.
+ */
 public class ServerGameOfRopeGeneralRepository {
-    // TODO: javadoc
+    /**
+     *   Flag signaling the service is active.
+     */
     public static boolean waitConnection = true;
 
     /**
@@ -16,6 +24,7 @@ public class ServerGameOfRopeGeneralRepository {
      * 
      * @param args runtime arguments.
      *             args[0] - port number for listening to service requests
+     *      
      */
     public static void main(String[] args) {
         GeneralRepository repo;

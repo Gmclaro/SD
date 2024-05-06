@@ -8,9 +8,18 @@ import serverSide.entities.RefereeSiteClientProxy;
 import serverSide.sharedRegions.RefereeSite;
 import serverSide.sharedRegions.RefereeSiteInterface;
 
+
+/**
+ *   Server side of the Referee Site.
+ *
+ *   Implementation of a client-server model of type 2 (server replication).
+ *   Communication is based on a communication channel under the TCP protocol.
+ */
 public class ServerGameOfRopeRefereeSite {
 
-    // TODO: javadoc
+    /**
+     *   Flag signaling the service is active.
+     */
     public static boolean waitConnection;
 
     /**

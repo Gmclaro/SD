@@ -31,6 +31,10 @@ public class RefereeSiteStub {
         serverPortNumb = port;
     }
 
+    /**
+     * The referee announces a new game
+     */
+
     public void announceNewGame() {
         ClientCom com;
         Message inMessage, outMessage;
@@ -66,7 +70,9 @@ public class RefereeSiteStub {
         System.out.println("\nRSS announceNewGame() -> Sta" + ((Referee) Thread.currentThread()).getEntityState());
     }
 
-    // TODO: informReferee
+    /**
+     * The referee waits for the coaches to inform the teams are ready
+     */
     public void informReferee() {
         ClientCom com;
         Message inMessage, outMessage;
@@ -94,8 +100,9 @@ public class RefereeSiteStub {
         com.close();
         System.out.println("\nRSS informReferee()");
     }
-
-    // TODO: waitForInformReferee
+    /**
+     * The referee waits for the coaches to inform the teams are ready
+     */
     public void waitForInformReferee() {
         ClientCom com;
         Message inMessage, outMessage;
@@ -115,7 +122,8 @@ public class RefereeSiteStub {
 
         if (inMessage.getMsgType() != MessageType.REP_WAIT_FOR_INFORM_REFEREE) {
             System.out.println("Thread " + Thread.currentThread().getName() + ":Invalid message type!");
-            System.out.println("Expected:" + MessageType.REP_WAIT_FOR_INFORM_REFEREE + " Got: " + inMessage.getMsgType());
+            System.out
+                    .println("Expected:" + MessageType.REP_WAIT_FOR_INFORM_REFEREE + " Got: " + inMessage.getMsgType());
             System.out.println(inMessage.toString());
             System.exit(1);
         }
@@ -124,6 +132,9 @@ public class RefereeSiteStub {
         System.out.println("\nRSS waitForInformReferee()");
     }
 
+    /**
+     *   Operation server shutdown.
+     */
     public void shutdown() {
         ClientCom com;
         Message inMessage, outMessage;

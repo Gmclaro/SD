@@ -109,6 +109,12 @@ public class GeneralRepository {
 
   }
 
+  /**
+   * Initialize the simulation
+   * 
+   * @param contestantStrength Initial strength of the Contestants
+   */
+
   public void initSimul(int[][] contestantStrength) {
 
     /*
@@ -567,10 +573,12 @@ public class GeneralRepository {
   public void setEndOfGame() {
     this.endOfGame = true;
   }
+    /**
+   * Operation of shutting down the general repository server.
+   */
 
   public synchronized void shutdown() {
     nEntities += 1;
-    // TODO: When coach are done remove this, might have to add refereesitestub to
     // the contestantas just to shut down all at the same time
     if (nEntities >= 3) {
       ServerGameOfRopeGeneralRepository.waitConnection = false;

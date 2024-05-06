@@ -8,8 +8,16 @@ import serverSide.entities.PlaygroundClientProxy;
 import serverSide.sharedRegions.Playground;
 import serverSide.sharedRegions.PlaygroundInterface;
 
+
+/**
+ *   Server side of the Playground
+ *   Implementation of a client-server model of type 2 (server replication).
+ *   Communication is based on a communication channel under the TCP protocol.
+ */
 public class ServerGameOfRopePlayground {
-    // TODO: javadoc
+    /**
+     *   Flag signaling the service is active.
+     */
     public static boolean waitConnection;
 
     /**

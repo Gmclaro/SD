@@ -75,7 +75,6 @@ public class ContestantBench {
         this.callTrial = 2;
         notifyAll();
 
-        // TODO: MISSING STUB For generalRepo
         ((ContestantBenchClientProxy) Thread.currentThread()).setRefereeState(RefereeState.TEAMS_READY);
         repo.setRefereeState(RefereeState.TEAMS_READY);
         repo.setNewTrial();
@@ -215,7 +214,6 @@ public class ContestantBench {
                 e.printStackTrace();
             }
         }
-        // TODO: ATUALIZAR A FORÇA DO CONTESTANT
 
         ContestantBenchClientProxy contestant = (ContestantBenchClientProxy) Thread.currentThread();
         contestant.setContestantState(ContestantState.SEAT_AT_THE_BENCH);
@@ -281,9 +279,12 @@ public class ContestantBench {
         }
     }
 
+    /**
+     * Operation server shutdown.
+     */
+
     public synchronized void shutdown() {
         nEntities += 1;
-        // TODO: When coach are done remove this, might have to add refereesitestub to
         // the contestantas just to shut down all at the same time
         if (nEntities >= 3) {
             ServerGameOfRopeContestantBench.waitConnection = false;

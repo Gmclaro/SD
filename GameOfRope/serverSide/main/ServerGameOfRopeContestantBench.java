@@ -7,8 +7,16 @@ import serverSide.entities.ContestantBenchClientProxy;
 import serverSide.sharedRegions.*;
 import clientSide.stubs.GeneralRepositoryStub;
 
+/**
+ * Server side of the Contestant Bench
+ * Implementation of a client-server model of type 2 (server replication).
+ * Communication is based on a communication channel under the TCP protocol.
+ */
 public class ServerGameOfRopeContestantBench {
-    // TODO: javadoc
+
+    /**
+     * Flag signaling the service active
+     */
     public static boolean waitConnection;
 
     /**

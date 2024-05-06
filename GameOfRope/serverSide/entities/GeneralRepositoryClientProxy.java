@@ -5,12 +5,29 @@ import commonInfra.MessageException;
 import commonInfra.ServerCom;
 import serverSide.sharedRegions.GeneralRepositoryInterface;
 
+/**
+ * Service Provider agent for access to the General Repository
+ * Implementation of client-servev model of type 2 (server replication)
+ * Communication is based on passing messages over sockets using TCP protocol
+ */
 public class GeneralRepositoryClientProxy extends Thread {
-    // TODO: javadoc
+
+    /**
+     * Number of instantiated threads
+     */
     private static int nProxy = 0;
 
+    /**
+     * Communication channel
+     */
     private ServerCom sconi;
 
+    /**
+     * Interface of a client proxy
+     * 
+     * @param sconi                      communication channel
+     * @param generalRepositoryInterface general repository interface
+     */
     private GeneralRepositoryInterface generalRepositoryInterface;
 
     public GeneralRepositoryClientProxy(ServerCom sconi, GeneralRepositoryInterface generalRepositoryInterface) {
@@ -19,6 +36,11 @@ public class GeneralRepositoryClientProxy extends Thread {
         this.generalRepositoryInterface = generalRepositoryInterface;
     }
 
+    /**
+     * Generation of the instantiation identifier.
+     *
+     * @return instantiation identifier
+     */
     public static int getProxyId() {
         Class<?> cl = null;
         int proxyId;
@@ -35,6 +57,10 @@ public class GeneralRepositoryClientProxy extends Thread {
         }
         return proxyId;
     }
+
+    /**
+     * Life cycle of the service provider agent.
+     */
 
     @Override
     public void run() {

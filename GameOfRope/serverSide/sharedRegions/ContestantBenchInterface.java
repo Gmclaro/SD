@@ -9,14 +9,38 @@ import commonInfra.View;
 import serverSide.entities.ContestantBenchClientProxy;
 import serverSide.main.SimulParse;
 
+
+/**
+ *   Interface to the Contestant Bench 
+ *   It is responsible to validate and process the incoming message, execute the corresponding method on the
+ *   Contestant Bench e and generate the outgoing message.
+ *   Implementation of a client-server model of type 2 (server replication).
+ *   Communication is based on a communication channel under the TCP protocol.
+ */
 public class ContestantBenchInterface {
+
+    /**
+     *  Reference to the Contestant Bench
+     */
 
     private final ContestantBench contestantBench;
 
+    /**
+     *   Instantiation of an interface to the Contestant Bench.
+     *
+     *     @param contestantBench Reference to the Contestant Bench
+     */
     public ContestantBenchInterface(ContestantBench contestantBench) {
         this.contestantBench = contestantBench;
     }
-
+    /**
+     *   Processing of the incoming messages
+     *   Validation, execution of the corresponding method and generation of the outgoing message.
+     *
+     * 	   @param inMessage service request
+     * 	   @return service reply
+     * 	   @throws MessageException if incoming message was not valid
+     */
     public Message processAndReply(Message inMessage) throws MessageException {
         Message outMessage = null;
 

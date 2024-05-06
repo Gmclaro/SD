@@ -9,14 +9,40 @@ import commonInfra.MessageType;
 import serverSide.entities.PlaygroundClientProxy;
 import serverSide.main.SimulParse;
 
+
+
+/**
+ *   Interface to the Playground 
+ *   It is responsible to validate and process the incoming message, execute the corresponding method on the
+ *   Playground e and generate the outgoing message.
+ *   Implementation of a client-server model of type 2 (server replication).
+ *   Communication is based on a communication channel under the TCP protocol.
+ */
+
 public class PlaygroundInterface {
 
+    /**
+     *  Reference to the Playground
+     */
     private final Playground playground;
 
+    /**
+     *   Instantiation of an interface to the Playground.
+     *
+     *     @param playground Reference to the Playground
+     */
     public PlaygroundInterface(Playground playground) {
         this.playground = playground;
     }
 
+    /**
+     *   Processing of the incoming messages
+     *   Validation, execution of the corresponding method and generation of the outgoing message.
+     *
+     * 	   @param inMessage service request
+     * 	   @return service reply
+     * 	   @throws MessageException if incoming message was not valid
+     */
     public Message processAndReply(Message inMessage) throws MessageException {
         Message outMessage = null;
 

@@ -87,6 +87,13 @@ public class ClientGameOfRopeCoach {
         generalRepositoryStub.shutdown();
     }
 
+    /**
+     * Select the strategy for the coach.
+     * 
+     * @param team team id
+     * @return strategy type
+     */
+
     public static StrategyType selectStrategy(int team) {
         switch (((int) Math.random() * 3)) {
             case 0:

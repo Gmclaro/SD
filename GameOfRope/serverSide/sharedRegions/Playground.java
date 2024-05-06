@@ -344,14 +344,21 @@ public class Playground {
         return aux;
     }
 
-    // TODO:javadoc
+    /**
+     * Contestant pulls the rope
+     * 
+     * @param strength
+     * @return
+     */
     public int pullTheRope(int strength) {
         return strength - 1;
     }
 
+    /**
+     * Operation server shutdown.
+     */
     public synchronized void shutdown() {
         nEntities += 1;
-        // TODO: When coach are done remove this, might have to add refereesitestub to
         // the contestantas just to shut down all at the same time
         if (nEntities >= 3) {
             ServerGameOfRopePlayground.waitConnection = false;

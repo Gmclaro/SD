@@ -74,9 +74,14 @@ public class RefereeSite {
         teamsReady = 0;
     }
 
+
+    /**
+     *   Operation server shutdown.
+     */
+
     public synchronized void shutdown() {
         nEntities += 1;
-        // TODO: When coach are done remove this, might have to add refereesitestub to
+
         // the contestantas just to shut down all at the same time
         if (nEntities >= 2) {
             ServerGameOfRopeRefereeSite.waitConnection = false;

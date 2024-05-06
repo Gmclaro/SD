@@ -11,6 +11,12 @@ import commonInfra.Message;
 import commonInfra.MessageType;
 import commonInfra.View;
 
+/**
+ * Stub to the Contestant Bench
+ * It instaniates a remote refererence to the Contestant Bench
+ * Implementation of a client-server model of type 2 (server replication).
+ * Communication is based on a communication channel under the TCP protocol.
+ */
 public class ContestantBenchStub {
     /**
      * Name of the platform where is located the Contestant Bench server
@@ -36,6 +42,9 @@ public class ContestantBenchStub {
         serverPortNumb = port;
     }
 
+    /**
+     * Referee has announce a new trial.
+     */
     public void callTrial() {
         ClientCom com;
         Message inMessage, outMessage;
@@ -71,6 +80,12 @@ public class ContestantBenchStub {
         System.out.println("\nCBS callTrial() -> Sta" + ((Referee) Thread.currentThread()).getEntityState());
     }
 
+    /**
+     * Coach gets all information about the Contestants
+     * 
+     * @param team Team of the Coach
+     * @return View[] Array of Views with the Contestants information
+     */
     public View[] reviewNotes(int team) {
         ClientCom com;
         Message inMessage, outMessage;
@@ -106,6 +121,12 @@ public class ContestantBenchStub {
         return inMessage.getAboutContestants();
     }
 
+    /**
+     * Contestant is placed in the bench
+     * 
+     * @param team Team of the Contestant
+     * @param id   Id of the Contestant
+     */
     public void seatDown(int team, int id) {
         ClientCom com;
         Message inMessage, outMessage;
@@ -157,6 +178,12 @@ public class ContestantBenchStub {
 
     }
 
+    /**
+     * Coach is waiting for the referee to call the trial.
+     * 
+     * @param team Team of the Coach
+     * @return int order of the Coach in the playground
+     */
     public int waitForCallTrial(int team) {
         ClientCom com;
         Message inMessage, outMessage;
@@ -199,6 +226,13 @@ public class ContestantBenchStub {
 
     }
 
+    /**
+     * The referee declares the match winner
+     * 
+     * Reset the matchOver flag and notify all the threads
+     * 
+     * @param scores Scores of the match
+     */
     public void callContestants(int team, int[] selected) {
         ClientCom com;
         Message inMessage, outMessage;
@@ -279,7 +313,10 @@ public class ContestantBenchStub {
         return inMessage.getOrders();
     }
 
-    public void waitForSeatAtBench(){
+    /**
+     * Contestant waits for the referee to declare the match winner
+     */
+    public void waitForSeatAtBench() {
         ClientCom com;
         Message inMessage, outMessage;
 
@@ -305,7 +342,13 @@ public class ContestantBenchStub {
         com.close();
         System.out.println("\nCBS waitForSeatAtBench()");
     }
-
+    /**
+     * The referee declares the match winner
+     * 
+     * Reset the matchOver flag and notify all the threads
+     * 
+     * @param scores Scores of the match
+     */
     public void declareMatchWinner(int[] scores) {
         ClientCom com;
         Message inMessage, outMessage;
@@ -318,8 +361,9 @@ public class ContestantBenchStub {
             } catch (InterruptedException e) {
             }
         }
-        
-        outMessage = new Message(MessageType.REQ_DECLARE_MATCH_WINNER, ((Referee) Thread.currentThread()).getEntityState(), scores);
+
+        outMessage = new Message(MessageType.REQ_DECLARE_MATCH_WINNER,
+                ((Referee) Thread.currentThread()).getEntityState(), scores);
         com.writeObject(outMessage);
         inMessage = (Message) com.readObject();
 
@@ -340,6 +384,10 @@ public class ContestantBenchStub {
         ((Referee) Thread.currentThread()).setEntityState(inMessage.getEntityState());
         System.out.println("\nCBS declareMatchWinner() -> Sta" + ((Referee) Thread.currentThread()).getEntityState());
     }
+
+    /**
+     * Operation server shutdown.
+     */
 
     public void shutdown() {
         ClientCom com;
@@ -366,7 +414,5 @@ public class ContestantBenchStub {
 
         com.close();
     }
-
-
 
 }

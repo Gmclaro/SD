@@ -27,6 +27,12 @@ public class GeneralRepositoryStub {
     this.serverPortNumb = serverPortNumb;
   }
 
+    /**
+   * Initialize the simulation
+   * 
+   * @param contestantStrength Initial strength of the Contestants
+   */
+
   public void initSimul(int[][] contestantStrength){
     ClientCom com;
     Message outMessage, inMessage;
@@ -82,7 +88,13 @@ public class GeneralRepositoryStub {
 
   }
 
-  // TODO : Missing set Entity states
+  /**
+   * Update the internal state of one of the Coaches and call the method to write
+   * the change of state in the log file.
+   * 
+   * @param coachID    Team of the Coach
+   * @param coachState State of the Coach
+   */
 
   public void setCoachState(int team, int state) {
     ClientCom com;
@@ -111,6 +123,14 @@ public class GeneralRepositoryStub {
     System.out.println("GRS setCoachState()");
   }
 
+  /**
+   * Update the internal state of one of the Contestants and call the method to
+   * write the change of state in the log file.
+   * 
+   * @param team  Team of the Contestant
+   * @param id    ID of the Contestant
+   * @param state State of the Contestant
+   */
   public void setContestantState(int team, int id, int state) {
     ClientCom com;
     Message outMessage, inMessage;
@@ -138,7 +158,13 @@ public class GeneralRepositoryStub {
     com.close();
     System.out.println("GRS setContestantState()");
   }
-
+  /**
+   * Set the strength of one of the Contestants.
+   * 
+   * @param team     Team of the Contestant
+   * @param id       ID of the Contestant
+   * @param strength Strength of the Contestant
+   */
   public void setContestantStrength(int team, int id, int strength) {
     ClientCom com;
     Message outMessage, inMessage;
@@ -166,8 +192,9 @@ public class GeneralRepositoryStub {
     com.close();
     System.out.println("GRS setContestantStrength()");
   }
-
-  // TOOD: newGameStated
+  /**
+   * Write the header of a new game in the log file
+   */
   public void newGameStarted() {
     ClientCom com;
     Message outMessage, inMessage;
@@ -196,7 +223,9 @@ public class GeneralRepositoryStub {
     System.out.println("\nGRS newGameStarted()");
   }
 
-  // TODO: setNewTrial
+  /**
+   * Add a new trial to the game.
+   */
   public void setNewTrial() {
     ClientCom com;
     Message outMessage, inMessage;
@@ -224,7 +253,12 @@ public class GeneralRepositoryStub {
     System.out.println("\nGRS setNewTrial()");
 
   }
-
+  /**
+   * Set the active Contestants in the playground.
+   * 
+   * @param team Team of the Contestant
+   * @param id   ID of the Contestant
+   */
   public void setActiveContestant(int team, int id) {
     ClientCom com;
     Message outMessage, inMessage;
@@ -251,7 +285,12 @@ public class GeneralRepositoryStub {
     com.close();
     System.out.println("\nGRS setActiveContestant()");
   }
-
+  /**
+   * Remove a Contestant from the playground.
+   * 
+   * @param team Team of the Contestant
+   * @param id   ID of the Contestant
+   */
   public void setRemoveContestant(int team, int id) {
     ClientCom com;
     Message outMessage, inMessage;
@@ -278,7 +317,11 @@ public class GeneralRepositoryStub {
     System.out.println("\nGRS setRemoveContestant()");
 
   }
-
+  /**
+   * Set the position of the rope.
+   * 
+   * @param positionOfRope Position of the rope
+   */
   public void setRopePosition(int ropePosition) {
     ClientCom com;
     Message outMessage, inMessage;
@@ -305,7 +348,9 @@ public class GeneralRepositoryStub {
     System.out.println("\nGRS setRopePosition()");
   }
 
-  // TODO : setEndOfGame
+  /**
+   * Set the end of the game.
+   */
   public void setEndOfGame() {
     ClientCom com;
     Message outMessage, inMessage;
@@ -331,8 +376,11 @@ public class GeneralRepositoryStub {
     com.close();
     System.out.println("\nGRS setEndOfGame()");
   }
-
-  // TODO: showGameResult
+  /**
+   * Write the result of each game in the log file
+   * 
+   * @param difference Difference of the scores of the teams
+   */
   public void showGameResult(int difference) {
     ClientCom com;
     Message outMessage, inMessage;
@@ -359,7 +407,15 @@ public class GeneralRepositoryStub {
     System.out.println("\nGRS showGameResult()");
   }
 
-  // TODO: setMatchWinner
+  /**
+   * Set the match winner.
+   * 
+   * matchWinner == 0 : team 0 wins.
+   * matchWinner == 1 : team 1 wins.
+   * matchWinner == 2 : draw.
+   * 
+   * @param scores Scores of the match
+   */
   public void setMatchWinner(int[] scores) {
     ClientCom com;
     Message outMessage, inMessage;
@@ -386,6 +442,9 @@ public class GeneralRepositoryStub {
     System.out.println("\nGRS setMatchWinner()");
   }
 
+  /**
+   * Operation of shutting down the general repository server.
+   */
   public void shutdown() {
     ClientCom com;
     Message inMessage, outMessage;

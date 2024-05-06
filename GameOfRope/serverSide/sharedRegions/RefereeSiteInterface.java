@@ -6,15 +6,38 @@ import commonInfra.MessageException;
 import commonInfra.MessageType;
 import serverSide.entities.RefereeSiteClientProxy;
 
+
+/**
+ * Interface to the Referee Site
+ * It is responsible to validate and process the incoming message, execute the corresponding method on the
+ * Referee Site and generate the outgoing message.
+ * Implementation of a client-server model of type 2 (server replication).
+ * Communication is based on a communication channel under the TCP protocol.
+ */
 public class RefereeSiteInterface {
 
-    // TODO: javadoc
-
+    /**
+     * Reference to the Referee Site
+     */
     private final RefereeSite refereeSite;
 
+    /**
+     * Instantiation of an interface to the Referee Site.
+     *
+     * @param refereeSite Reference to the Referee Site
+     */
     public RefereeSiteInterface(RefereeSite refereeSite) {
         this.refereeSite = refereeSite;
     }
+
+    /**
+     * Processing of the incoming messages
+     * Validation, execution of the corresponding method and generation of the outgoing message.
+     *
+     * @param inMessage service request
+     * @return service reply
+     * @throws MessageException if incoming message was not valid
+     */
 
     public Message processAndReply(Message inMessage) throws MessageException {
         Message outMessage = null;
@@ -34,8 +57,6 @@ public class RefereeSiteInterface {
                 // No validation needed
                 break;
 
-            // TODO: missing msgType here
-
             case MessageType.REQ_REFEREE_SITE_SHUTDOWN:
                 break;
 
@@ -51,8 +72,6 @@ public class RefereeSiteInterface {
                 refereeSite.announceNewGame();
                 outMessage = new Message(MessageType.REP_ANNOUNCE_NEW_GAME, RefereeState.START_OF_A_GAME);
                 break;
-
-            // TODO: missing msgType here
 
             case MessageType.REQ_REFEREE_SITE_SHUTDOWN:
                 refereeSite.shutdown();

@@ -34,8 +34,11 @@ public class PlaygroundStub {
         serverHostName = hostname;
         serverPortNumb = port;
     }
-
-    // TODO: followCoachAdvice
+    /**
+     * Contestants go to the playground and inform when they have arrived
+     * 
+     * @param team The team of the contestant
+     */
     public void followCoachAdvice(int team) {
         ClientCom com;
         Message inMessage, outMessage;
@@ -68,8 +71,11 @@ public class PlaygroundStub {
         System.out.println("\nPS followCoachAdvice()");
 
     }
-
-    // TODO: waitforFollowCoachAdvice
+    /**
+     * Coaches wait for the contestants to arrive at the playground
+     * 
+     * @param team The team of the coach
+     */
     public void waitForFollowCoachAdvice(int team) {
         ClientCom com;
         Message inMessage, outMessage;
@@ -112,8 +118,9 @@ public class PlaygroundStub {
         System.out
                 .println("\nPS waitForFollowCoachAdvice() -> Sta" + ((Coach) Thread.currentThread()).getEntityState());
     }
-
-    // TODO: startTrial
+    /**
+     * The Referee will start the trial
+     */
 
     public void startTrial() {
         ClientCom com;
@@ -148,8 +155,12 @@ public class PlaygroundStub {
         System.out.println("\nPS startTrial() -> Sta" + ((Referee) Thread.currentThread()).getEntityState());
 
     }
-
-    // TODO: waitforStartTrial
+    /**
+     * Contestants wait for the trial to start
+     * 
+     * @param team The team of the contestant
+     * @param id   The id of the contestant
+     */
     public void waitForStartTrial(int team, int id) {
         ClientCom com;
         Message inMessage, outMessage;
@@ -195,8 +206,14 @@ public class PlaygroundStub {
         System.out.println("\nPS waitForStartTrial() -> Sta" + ((Contestant) Thread.currentThread()).getEntityState());
 
     }
+    /**
+     * Contestants get ready to start the trial
+     * 
+     * @param team The team of the contestant
+     * @param id   The id of the contestant
+     */
 
-    // TODO: getReady
+
     public void getReady(int team, int id) {
         ClientCom com;
         Message inMessage, outMessage;
@@ -236,7 +253,11 @@ public class PlaygroundStub {
         System.out.println("\nPS getReady()");
     }
 
-    // TODO : waitForAmDone
+
+
+    /**
+     * Contestants wait for the decision of the referee
+     */
 
     public void waitForAmDone() {
         ClientCom com;
@@ -265,8 +286,16 @@ public class PlaygroundStub {
         System.out.println("\nPS waitForAmDone()");
     }
 
-    // TODO: assertTrialDecision
 
+    /**
+     * Referee will compare the strength of the teams and decide if the trial has
+     * ended.
+     * 
+     * false : trial has ended
+     * true : trial has not ended
+     * 
+     * @return boolean The decision of the referee
+     */
     public boolean assertTrialDecision() {
         ClientCom com;
         Message inMessage, outMessage;
@@ -293,7 +322,13 @@ public class PlaygroundStub {
         System.out.println("\nPS assertTrialDecision() -> CG" + inMessage.getContinueGame());
         return inMessage.getContinueGame();
     }
-
+    /**
+     * Contestants will do trial lifecycle, where he pulls the rope, inform that he
+     * is done and wait for the decision of referee
+     * 
+     * @param team The coach team
+     * @param id   The id of the contestants
+     */
     public void waitForAssertTrialDecision(int team, int id, int strength) {
         ClientCom com;
         Message inMessage, outMessage;
@@ -344,8 +379,12 @@ public class PlaygroundStub {
                 "\nPS waitForAssertTrialDecision() -> ConSta" + ((Contestant) Thread.currentThread()).getEntityState());
     }
 
-    // TODO: waitForAssertTrialDecision
 
+    /**
+     * Coach will wait until the decision of the referee of the trial
+     * 
+     * @param team The team of the coach
+     */
     public void waitForAssertTrialDecision(int team) {
         ClientCom com;
         Message inMessage, outMessage;
@@ -386,8 +425,12 @@ public class PlaygroundStub {
                 "\nPS waitForAssertTrialDecision() -> CoaSta" + ((Coach) Thread.currentThread()).getEntityState());
     }
 
-    // TODO: declareGameWinner
 
+    /**
+     * The referee will declare the winner of the game
+     * 
+     * @return int The difference of strength between the teams
+     */
     public int declareGameWinner() {
         ClientCom com;
         Message inMessage, outMessage;
@@ -424,6 +467,10 @@ public class PlaygroundStub {
         System.out.println("\nPS declareGameWinner() -> Sta" + ((Referee) Thread.currentThread()).getEntityState() + " RP" + inMessage.getRopePosition());
         return inMessage.getRopePosition();
     }
+
+    /**
+     *   Operation server shutdown.
+     */
 
     public void shutdown() {
         ClientCom com;
