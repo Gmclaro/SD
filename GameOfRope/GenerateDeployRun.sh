@@ -58,10 +58,10 @@ echo "  General Repository of Information"
 mkdir -p $GENERAL_REPO_DIR $GENERAL_REPO_DIR/serverSide/main $GENERAL_REPO_DIR/serverSide/entities $GENERAL_REPO_DIR/serverSide/sharedRegions $GENERAL_REPO_DIR/clientSide/entities $GENERAL_REPO_DIR/commonInfra
 cp genclass.jar $GENERAL_REPO_DIR
 cp serverSide/main/ServerGameOfRopeGeneralRepository.class serverSide/main/SimulParse.class $GENERAL_REPO_DIR/serverSide/main
-cp serverSide/sharedRegions/GeneralRepository.class serverSide/sharedRegions/GeneralRepositoryInterface.class $GENERAL_REPO_DIR/serverSide/sharedRegions
-cp serverSide/entities/GeneralRepositoryClientProxy.class $GENERAL_REPO_DIR/serverSide/entities
+cp serverSide/sharedRegions/GeneralRepository.class serverSide/sharedRegions/GeneralRepositoryInterface.class serverSide/sharedRegions/RefereeSiteInterface.class  $GENERAL_REPO_DIR/serverSide/sharedRegions
+cp serverSide/entities/GeneralRepositoryClientProxy.class serverSide/entities/RefereeSiteClientProxy.class  $GENERAL_REPO_DIR/serverSide/entities
 cp commonInfra/ServerCom.class commonInfra/Message.class commonInfra/MessageType.class commonInfra/MessageException.class commonInfra/View.class $GENERAL_REPO_DIR/commonInfra
-cp clientSide/entities/RefereeState.class clientSide/entities/CoachState.class clientSide/entities/ContestantState.class $GENERAL_REPO_DIR/clientSide/entities
+cp clientSide/entities/RefereeState.class clientSide/entities/CoachState.class clientSide/entities/ContestantState.class clientSide/entities/RefereeCloning.class clientSide/entities/CoachCloning.class $GENERAL_REPO_DIR/clientSide/entities
 
 
 echo "  Referee Site"
@@ -69,7 +69,7 @@ mkdir -p $REFEREE_SITE_DIR $REFEREE_SITE_DIR/serverSide/main $REFEREE_SITE_DIR/s
 cp genclass.jar $REFEREE_SITE_DIR
 cp clientSide/stubs/GeneralRepositoryStub.class $REFEREE_SITE_DIR/clientSide/stubs
 cp clientSide/entities/RefereeState.class clientSide/entities/RefereeCloning.class clientSide/entities/CoachCloning.class $REFEREE_SITE_DIR/clientSide/entities
-cp commonInfra/ServerCom.class commonInfra/ClientCom.class commonInfra/Message.class commonInfra/MessageType.class commonInfra/MessageException.class $REFEREE_SITE_DIR/commonInfra
+cp commonInfra/ServerCom.class commonInfra/ClientCom.class commonInfra/Message.class commonInfra/MessageType.class commonInfra/MessageException.class commonInfra/View.class $REFEREE_SITE_DIR/commonInfra
 cp serverSide/entities/RefereeSiteClientProxy.class $REFEREE_SITE_DIR/serverSide/entities
 cp serverSide/sharedRegions/RefereeSite.class serverSide/sharedRegions/RefereeSiteInterface.class $REFEREE_SITE_DIR/serverSide/sharedRegions
 cp serverSide/main/ServerGameOfRopeRefereeSite.class $REFEREE_SITE_DIR/serverSide/main
@@ -85,7 +85,7 @@ cp serverSide/entities/ContestantBenchClientProxy.class $CONTESTANT_BENCH_DIR/se
 cp serverSide/sharedRegions/ContestantBench.class serverSide/sharedRegions/ContestantBenchInterface.class $CONTESTANT_BENCH_DIR/serverSide/sharedRegions
 
 echo "  Playground"
-mkdir -p $PLAYGROUND_DIR $PLAYGROUND_DIR/serverSide/main $PLAYGROUND_DIR/serverSide/sharedRegions $PLAYGROUND_DIR/serverSide/entities $PLAYGROUND_DIR/clientSide/entities $PLAYGROUND_DIR/commonInfra
+mkdir -p $PLAYGROUND_DIR $PLAYGROUND_DIR/serverSide/main $PLAYGROUND_DIR/serverSide/sharedRegions $PLAYGROUND_DIR/serverSide/entities $PLAYGROUND_DIR/clientSide/entities $PLAYGROUND_DIR/commonInfra $PLAYGROUND_DIR/clientSide/stubs
 cp genclass.jar $PLAYGROUND_DIR
 cp clientSide/entities/CoachState.class clientSide/entities/ContestantState.class clientSide/entities/RefereeState.class clientSide/entities/RefereeCloning.class clientSide/entities/CoachCloning.class clientSide/entities/ContestantCloning.class $PLAYGROUND_DIR/clientSide/entities
 cp clientSide/stubs/GeneralRepositoryStub.class $PLAYGROUND_DIR/clientSide/stubs
@@ -95,24 +95,27 @@ cp serverSide/entities/PlaygroundClientProxy.class $PLAYGROUND_DIR/serverSide/en
 cp serverSide/sharedRegions/Playground.class serverSide/sharedRegions/PlaygroundInterface.class $PLAYGROUND_DIR/serverSide/sharedRegions
 
 echo "  Contestant"
-mkdir -p $CONTESTANT_DIR $CONTESTANT_DIR/serverSide/main $CONTESTANT_DIR/serverSide/sharedRegions $CONTESTANT_DIR/serverSide/entities $CONTESTANT_DIR/clientSide/stubs $CONTESTANT_DIR/clientSide/entities $CONTESTANT_DIR/commonInfra
+mkdir -p $CONTESTANT_DIR $CONTESTANT_DIR/serverSide/main $CONTESTANT_DIR/serverSide/sharedRegions $CONTESTANT_DIR/serverSide/entities $CONTESTANT_DIR/clientSide/stubs $CONTESTANT_DIR/clientSide/entities $CONTESTANT_DIR/commonInfra $CONTESTANT_DIR/clientSide/main
 cp genclass.jar $CONTESTANT_DIR
+cp clientSide/main/ClientGameOfRopeContestant.class $CONTESTANT_DIR/clientSide/main
 cp clientSide/stubs/ContestantBenchStub.class clientSide/stubs/PlaygroundStub.class clientSide/stubs/GeneralRepositoryStub.class $CONTESTANT_DIR/clientSide/stubs
 cp clientSide/entities/Contestant.class clientSide/entities/Coach.class clientSide/entities/Referee.class clientSide/entities/ContestantState.class clientSide/entities/CoachState.class clientSide/entities/RefereeState.class $CONTESTANT_DIR/clientSide/entities
 cp serverSide/main/SimulParse.class $CONTESTANT_DIR/serverSide/main
 cp commonInfra/ClientCom.class commonInfra/Message.class commonInfra/MessageType.class commonInfra/View.class $CONTESTANT_DIR/commonInfra
 
 echo "  Coach"
-mkdir -p $COACH_DIR $COACH_DIR/serverSide/main $COACH_DIR/serverSide/sharedRegions $COACH_DIR/serverSide/entities $COACH_DIR/clientSide/stubs $COACH_DIR/clientSide/entities $COACH_DIR/commonInfra
+mkdir -p $COACH_DIR $COACH_DIR/serverSide/main $COACH_DIR/serverSide/sharedRegions $COACH_DIR/serverSide/entities $COACH_DIR/clientSide/stubs $COACH_DIR/clientSide/entities $COACH_DIR/commonInfra $COACH_DIR/clientSide/main
 cp genclass.jar $COACH_DIR
+cp clientSide/main/ClientGameOfRopeCoach.class $COACH_DIR/clientSide/main
 cp clientSide/stubs/ContestantBenchStub.class clientSide/stubs/PlaygroundStub.class clientSide/stubs/GeneralRepositoryStub.class clientSide/stubs/RefereeSiteStub.class $COACH_DIR/clientSide/stubs
 cp commonInfra/Strategy*.class commonInfra/View.class commonInfra/ClientCom.class commonInfra/Message.class commonInfra/MessageType.class  $COACH_DIR/commonInfra
 cp clientSide/entities/Coach.class clientSide/entities/CoachState.class clientSide/entities/Contestant.class clientSide/entities/ContestantState.class clientSide/entities/RefereeState.class clientSide/entities/Referee.class $COACH_DIR/clientSide/entities
 cp serverSide/main/SimulParse.class $COACH_DIR/serverSide/main
 
 echo "  Referee"
-mkdir -p $REFEREE_DIR $REFEREE_DIR/serverSide/main $REFEREE_DIR/serverSide/sharedRegions $REFEREE_DIR/serverSide/entities $REFEREE_DIR/clientSide/stubs $REFEREE_DIR/clientSide/entities $REFEREE_DIR/commonInfra
+mkdir -p $REFEREE_DIR $REFEREE_DIR/serverSide/main $REFEREE_DIR/serverSide/sharedRegions $REFEREE_DIR/serverSide/entities $REFEREE_DIR/clientSide/stubs $REFEREE_DIR/clientSide/entities $REFEREE_DIR/commonInfra $REFEREE_DIR/clientSide/main
 cp genclass.jar $REFEREE_DIR
+cp clientSide/main/ClientGameOfRopeReferee.class $REFEREE_DIR/clientSide/main
 cp clientSide/stubs/ContestantBenchStub.class clientSide/stubs/PlaygroundStub.class clientSide/stubs/GeneralRepositoryStub.class clientSide/stubs/RefereeSiteStub.class $REFEREE_DIR/clientSide/stubs
 cp serverSide/main/SimulParse.class $REFEREE_DIR/serverSide/main
 cp clientSide/entities/Referee.class clientSide/entities/RefereeState.class clientSide/entities/Contestant.class clientSide/entities/ContestantState.class clientSide/entities/Coach.class clientSide/entities/CoachState.class $REFEREE_DIR/clientSide/entities
@@ -159,10 +162,12 @@ xterm  -T "Referee Site" -hold -e "sh ./DeployRun/RefereeSiteDeploy.sh" &
 xterm  -T "Playground" -hold -e "sh ./DeployRun/PlaygroundDeploy.sh" &
 xterm  -T "Contestant Bench" -hold -e "sh ./DeployRun/ContestantBenchDeploy.sh" &
 
-sleep 1
+sleep 5
 
 xterm  -T "Contestants" -hold -e "sh ./DeployRun/ContestantDeploy.sh" &
+sleep 5
 xterm  -T "Coach" -hold -e "sh ./DeployRun/CoachDeploy.sh" &
+sleep 5
 xterm  -T "Referee" -hold -e "sh ./DeployRun/RefereeDeploy.sh" &
 
 

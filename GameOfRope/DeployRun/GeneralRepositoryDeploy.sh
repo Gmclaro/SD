@@ -26,7 +26,7 @@ COACH_DIR="$BUILD_DIR/dirCoach"
 REFEREE_DIR="$BUILD_DIR/dirReferee"
 
 echo "Transfering data to the General Repository of Information."
-sshpass -f password ssh $HOSTNAME_SD@$GENERAL_REPO_IP "kill $(lsof -t -i:$22141) ; "
+sshpass -f password ssh $HOSTNAME_SD@$GENERAL_REPO_IP 'kill $(lsof -i :22141 -t) '
 sshpass -f password ssh $HOSTNAME_SD@$GENERAL_REPO_IP 'mkdir -p test/GameOfRope '
 sshpass -f password ssh $HOSTNAME_SD@$GENERAL_REPO_IP 'rm -rf test/GameOfRope/* '
 sshpass -f password scp $GENERAL_REPO_DIR.zip $HOSTNAME_SD@$GENERAL_REPO_IP:test/GameOfRope

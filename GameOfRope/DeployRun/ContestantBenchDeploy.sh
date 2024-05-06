@@ -26,7 +26,7 @@ COACH_DIR="$BUILD_DIR/dirCoach"
 REFEREE_DIR="$BUILD_DIR/dirReferee"
 
 echo "Transfering data to the Contestant Bench."
-sshpass -f password ssh $HOSTNAME_SD@$CONTESTANT_BENCH_IP "kill $(lsof -t -i:$22143) ; "
+sshpass -f password ssh $HOSTNAME_SD@$CONTESTANT_BENCH_IP 'kill $(lsof -i :22143 -t) '
 sshpass -f password ssh $HOSTNAME_SD@$CONTESTANT_BENCH_IP 'mkdir -p test/GameOfRope '
 sshpass -f password ssh $HOSTNAME_SD@$CONTESTANT_BENCH_IP 'rm -rf test/GameOfRope/* '
 sshpass -f password scp $CONTESTANT_BENCH_DIR.zip $HOSTNAME_SD@$CONTESTANT_BENCH_IP:test/GameOfRope

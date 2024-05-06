@@ -26,7 +26,7 @@ COACH_DIR="$BUILD_DIR/dirCoach"
 REFEREE_DIR="$BUILD_DIR/dirReferee"
 
 echo "Transfering data to the Playground."
-sshpass -f password ssh $HOSTNAME_SD@$PLAYGROUND_IP "kill $(lsof -t -i:$22144) ; "
+sshpass -f password ssh $HOSTNAME_SD@$PLAYGROUND_IP 'kill $(lsof -i :22144 -t) '
 sshpass -f password ssh $HOSTNAME_SD@$PLAYGROUND_IP 'mkdir -p test/GameOfRope '
 sshpass -f password ssh $HOSTNAME_SD@$PLAYGROUND_IP 'rm -rf test/GameOfRope/* '
 sshpass -f password scp $PLAYGROUND_DIR.zip $HOSTNAME_SD@$PLAYGROUND_IP:test/GameOfRope

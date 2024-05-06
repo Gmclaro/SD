@@ -26,7 +26,7 @@ COACH_DIR="$BUILD_DIR/dirCoach"
 REFEREE_DIR="$BUILD_DIR/dirReferee"
 
 echo "Transfering data to the Referee Site."
-sshpass -f password ssh $HOSTNAME_SD@$REFEREE_SITE_IP "kill $(lsof -t -i:22142) ; "
+sshpass -f password ssh $HOSTNAME_SD@$REFEREE_SITE_IP 'kill $(lsof -i :22142 -t) ; '
 sshpass -f password ssh $HOSTNAME_SD@$REFEREE_SITE_IP 'mkdir -p test/GameOfRope '
 sshpass -f password ssh $HOSTNAME_SD@$REFEREE_SITE_IP 'rm -rf test/GameOfRope/* '
 sshpass -f password scp $REFEREE_SITE_DIR.zip $HOSTNAME_SD@$REFEREE_SITE_IP:test/GameOfRope
