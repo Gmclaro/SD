@@ -1,11 +1,12 @@
 package serverSide.sharedRegions;
 
+import clientSide.entities.CoachState;
+import clientSide.entities.ContestantState;
+import clientSide.entities.RefereeState;
+import clientSide.stubs.GeneralRepositoryStub;
 import commonInfra.View;
-import serverSide.entities.*;
-import clientSide.entities.*;
-import clientSide.stubs.*;
+import serverSide.entities.ContestantBenchClientProxy;
 import serverSide.main.ServerGameOfRopeContestantBench;
-import serverSide.main.ServerGameOfRopeRefereeSite;
 import serverSide.main.SimulParse;
 
 /**

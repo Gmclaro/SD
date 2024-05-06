@@ -2,10 +2,11 @@ package serverSide.main;
 
 import java.net.SocketTimeoutException;
 
+import clientSide.stubs.GeneralRepositoryStub;
 import commonInfra.ServerCom;
 import serverSide.entities.PlaygroundClientProxy;
-import serverSide.sharedRegions.*;
-import clientSide.stubs.GeneralRepositoryStub;
+import serverSide.sharedRegions.Playground;
+import serverSide.sharedRegions.PlaygroundInterface;
 
 public class ServerGameOfRopePlayground {
     // TODO: javadoc

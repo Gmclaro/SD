@@ -1,10 +1,9 @@
 package serverSide.sharedRegions;
 
+import clientSide.entities.RefereeState;
+import clientSide.stubs.GeneralRepositoryStub;
+import serverSide.entities.RefereeSiteClientProxy;
 import serverSide.main.ServerGameOfRopeRefereeSite;
-import serverSide.main.SimulParse;
-import serverSide.entities.*;
-import clientSide.entities.*;
-import clientSide.stubs.*;
 
 /**
  * Referee Site

@@ -1,12 +1,13 @@
 package serverSide.sharedRegions;
 
-import commonInfra.*;
+import clientSide.entities.CoachState;
+import clientSide.entities.ContestantState;
+import clientSide.entities.RefereeState;
+import commonInfra.View;
 import genclass.GenericIO;
 import genclass.TextFile;
-
-import serverSide.main.*;
-import clientSide.entities.*;
-import clientSide.stubs.*;
+import serverSide.main.ServerGameOfRopeGeneralRepository;
+import serverSide.main.SimulParse;
 
 /**
  * General Repository

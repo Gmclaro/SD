@@ -1,8 +1,12 @@
 package serverSide.sharedRegions;
 
-import clientSide.entities.*;
-import commonInfra.*;
-import serverSide.entities.*;
+import clientSide.entities.ContestantState;
+import clientSide.entities.RefereeState;
+import commonInfra.Message;
+import commonInfra.MessageException;
+import commonInfra.MessageType;
+import commonInfra.View;
+import serverSide.entities.ContestantBenchClientProxy;
 import serverSide.main.SimulParse;
 
 public class ContestantBenchInterface {

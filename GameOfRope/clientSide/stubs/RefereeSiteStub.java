@@ -1,7 +1,10 @@
 package clientSide.stubs;
 
-import commonInfra.*;
-import clientSide.entities.*;
+import clientSide.entities.Referee;
+import clientSide.entities.RefereeState;
+import commonInfra.ClientCom;
+import commonInfra.Message;
+import commonInfra.MessageType;
 
 public class RefereeSiteStub {
     /**

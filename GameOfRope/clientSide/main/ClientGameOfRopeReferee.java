@@ -1,7 +1,10 @@
 package clientSide.main;
 
 import clientSide.entities.Referee;
-import clientSide.stubs.*;
+import clientSide.stubs.ContestantBenchStub;
+import clientSide.stubs.GeneralRepositoryStub;
+import clientSide.stubs.PlaygroundStub;
+import clientSide.stubs.RefereeSiteStub;
 
 public class ClientGameOfRopeReferee {
     /**

@@ -1,8 +1,11 @@
 package serverSide.entities;
 
-import clientSide.entities.*;
-import commonInfra.*;
-
+import clientSide.entities.CoachCloning;
+import clientSide.entities.ContestantCloning;
+import clientSide.entities.RefereeCloning;
+import commonInfra.Message;
+import commonInfra.MessageException;
+import commonInfra.ServerCom;
 import serverSide.sharedRegions.ContestantBenchInterface;
 
 public class ContestantBenchClientProxy extends Thread implements CoachCloning, RefereeCloning, ContestantCloning {

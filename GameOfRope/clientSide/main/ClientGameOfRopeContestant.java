@@ -1,7 +1,9 @@
 package clientSide.main;
 
-import clientSide.stubs.*;
 import clientSide.entities.Contestant;
+import clientSide.stubs.ContestantBenchStub;
+import clientSide.stubs.GeneralRepositoryStub;
+import clientSide.stubs.PlaygroundStub;
 import serverSide.main.SimulParse;
 
 public class ClientGameOfRopeContestant {

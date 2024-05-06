@@ -1,6 +1,11 @@
 package clientSide.stubs;
 
-import clientSide.entities.*;
+import clientSide.entities.Coach;
+import clientSide.entities.CoachState;
+import clientSide.entities.Contestant;
+import clientSide.entities.ContestantState;
+import clientSide.entities.Referee;
+import clientSide.entities.RefereeState;
 import commonInfra.ClientCom;
 import commonInfra.Message;
 import commonInfra.MessageType;

@@ -1,7 +1,8 @@
 package serverSide.sharedRegions;
 
-import clientSide.entities.Coach;
-import clientSide.entities.*;
+import clientSide.entities.CoachState;
+import clientSide.entities.ContestantState;
+import clientSide.entities.RefereeState;
 import commonInfra.Message;
 import commonInfra.MessageException;
 import commonInfra.MessageType;

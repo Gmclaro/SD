@@ -1,13 +1,13 @@
 package serverSide.sharedRegions;
 
-import serverSide.main.ServerGameOfRopePlayground;
-import serverSide.main.ServerGameOfRopeRefereeSite;
-import serverSide.main.SimulParse;
-import serverSide.entities.*;
-import clientSide.entities.*;
-import clientSide.stubs.*;
-
+import clientSide.entities.CoachState;
+import clientSide.entities.ContestantState;
+import clientSide.entities.RefereeState;
+import clientSide.stubs.GeneralRepositoryStub;
 import commonInfra.View;
+import serverSide.entities.PlaygroundClientProxy;
+import serverSide.main.ServerGameOfRopePlayground;
+import serverSide.main.SimulParse;
 
 /**
  * Playground

@@ -1,8 +1,10 @@
 package clientSide.main;
 
 import clientSide.entities.Coach;
-import clientSide.stubs.*;
-import commonInfra.Strategy;
+import clientSide.stubs.ContestantBenchStub;
+import clientSide.stubs.GeneralRepositoryStub;
+import clientSide.stubs.PlaygroundStub;
+import clientSide.stubs.RefereeSiteStub;
 import commonInfra.Strategy.StrategyType;
 import serverSide.main.SimulParse;
 

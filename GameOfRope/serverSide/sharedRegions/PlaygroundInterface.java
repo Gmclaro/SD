@@ -1,8 +1,12 @@
 package serverSide.sharedRegions;
 
-import clientSide.entities.*;
-import commonInfra.*;
-import serverSide.entities.*;
+import clientSide.entities.CoachState;
+import clientSide.entities.ContestantState;
+import clientSide.entities.RefereeState;
+import commonInfra.Message;
+import commonInfra.MessageException;
+import commonInfra.MessageType;
+import serverSide.entities.PlaygroundClientProxy;
 import serverSide.main.SimulParse;
 
 public class PlaygroundInterface {

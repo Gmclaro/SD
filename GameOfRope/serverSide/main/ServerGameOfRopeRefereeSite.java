@@ -5,7 +5,8 @@ import java.net.SocketTimeoutException;
 import clientSide.stubs.GeneralRepositoryStub;
 import commonInfra.ServerCom;
 import serverSide.entities.RefereeSiteClientProxy;
-import serverSide.sharedRegions.*;
+import serverSide.sharedRegions.RefereeSite;
+import serverSide.sharedRegions.RefereeSiteInterface;
 
 public class ServerGameOfRopeRefereeSite {
 

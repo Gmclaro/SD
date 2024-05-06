@@ -2,7 +2,7 @@ package serverSide.main;
 
 import java.net.SocketTimeoutException;
 
-import commonInfra.*;
+import commonInfra.ServerCom;
 import serverSide.entities.GeneralRepositoryClientProxy;
 import serverSide.sharedRegions.GeneralRepository;
 import serverSide.sharedRegions.GeneralRepositoryInterface;

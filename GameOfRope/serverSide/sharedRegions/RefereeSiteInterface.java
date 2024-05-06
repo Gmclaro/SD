@@ -1,8 +1,10 @@
 package serverSide.sharedRegions;
 
 import clientSide.entities.RefereeState;
-import commonInfra.*;
-import serverSide.entities.*;
+import commonInfra.Message;
+import commonInfra.MessageException;
+import commonInfra.MessageType;
+import serverSide.entities.RefereeSiteClientProxy;
 
 public class RefereeSiteInterface {
 

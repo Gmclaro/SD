@@ -1,6 +1,8 @@
 package serverSide.entities;
 
-import clientSide.entities.*;
+import clientSide.entities.CoachCloning;
+import clientSide.entities.ContestantCloning;
+import clientSide.entities.RefereeCloning;
 import commonInfra.Message;
 import commonInfra.MessageException;
 import commonInfra.ServerCom;

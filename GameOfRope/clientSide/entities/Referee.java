@@ -1,7 +1,9 @@
 package clientSide.entities;
 
+import clientSide.stubs.ContestantBenchStub;
+import clientSide.stubs.PlaygroundStub;
+import clientSide.stubs.RefereeSiteStub;
 import serverSide.main.SimulParse;
-import clientSide.stubs.*;
 
 /**
  * Custom Thread
