@@ -33,4 +33,4 @@ sshpass -f password scp $GENERAL_REPO_DIR.zip $HOSTNAME_SD@$GENERAL_REPO_IP:test
 echo "Decompressing data sent to the General Repository of Information."
 sshpass -f password ssh $HOSTNAME_SD@$GENERAL_REPO_IP "cd test/GameOfRope ; unzip -uq dirGeneralRepository.zip "
 echo "Executing program at the General Repository of Information node."
-sshpass -f password ssh $HOSTNAME_SD@$GENERAL_REPO_IP "cd test/GameOfRope/bin/dirGeneralRepository ; java -cp ".:./genclass.jar" serverSide.main.ServerGameOfRopeGeneralRepository $GENERAL_REPO_PORT "
+sshpass -f password ssh $HOSTNAME_SD@$GENERAL_REPO_IP "cd test/GameOfRope/bin/dirGeneralRepository ; java -cp ".:./genclass.jar" serverSide.main.ServerGameOfRopeGeneralRepository $GENERAL_REPO_PORT ; cat log ; "
