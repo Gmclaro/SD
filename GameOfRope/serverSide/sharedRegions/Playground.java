@@ -1,5 +1,7 @@
 package serverSide.sharedRegions;
 
+import serverSide.main.ServerGameOfRopePlayground;
+import serverSide.main.ServerGameOfRopeRefereeSite;
 import serverSide.main.SimulParse;
 import serverSide.entities.*;
 import clientSide.entities.*;
@@ -70,6 +72,8 @@ public class Playground {
      * Flag that indicates the end of the trial
      */
     private boolean endOfTrial;
+
+    private int nEntities = 0;
 
     /**
      * Playground instantiation
@@ -173,14 +177,14 @@ public class Playground {
      */
 
     public synchronized void getReady(int team, int id) {
-        while (nOfGetReady < (2*SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM)) {
+        while (nOfGetReady < (2 * SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM)) {
             try {
                 wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        
+
         notifyAll();
         repo.setActiveContestant(team, id);
     }
@@ -251,17 +255,17 @@ public class Playground {
      * @param id   The id of the contestants
      */
 
-    public void waitForAssertTrialDecision(int team, int id,int strength) {
+    public void waitForAssertTrialDecision(int team, int id, int strength) {
         /**
          * Contestant pulls the rope
          */
         PlaygroundClientProxy contestant;
         synchronized (this) {
             contestant = (PlaygroundClientProxy) Thread.currentThread();
-            
+
             strengthPerTeam[team] += strength;
             strength = pullTheRope(strength);
-            repo.setContestantStrength(team, id,strength);
+            repo.setContestantStrength(team, id, strength);
 
             contestant.setContestantState(ContestantState.DO_YOUR_BEST);
             contestant.setStrength(strength);
@@ -340,9 +344,19 @@ public class Playground {
         return aux;
     }
 
-    //TODO:javadoc
+    // TODO:javadoc
     public int pullTheRope(int strength) {
         return strength - 1;
     }
 
+    public synchronized void shutdown() {
+        nEntities += 1;
+        // TODO: When coach are done remove this, might have to add refereesitestub to
+        // the contestantas just to shut down all at the same time
+        if (nEntities >= 3) {
+            ServerGameOfRopePlayground.waitConnection = false;
+        }
+        System.out.println("NENTITIES: " + nEntities);
+        notifyAll();
+    }
 }

@@ -1,15 +1,11 @@
 package serverSide.sharedRegions;
 
-
-
 import commonInfra.*;
 import genclass.GenericIO;
 import genclass.TextFile;
 
-
 import serverSide.main.*;
 import clientSide.entities.*;
-import serverSide.main.SimulParse;
 import clientSide.stubs.*;
 
 /**
@@ -90,6 +86,8 @@ public class GeneralRepository {
    */
   private Boolean endOfMatch;
 
+  private int nEntities = 0;
+
   /**
    * General Repository
    * 
@@ -108,12 +106,11 @@ public class GeneralRepository {
       this.logFileName = logFileName;
     }
 
-
   }
 
   public void initSimul(int[][] contestantStrength) {
 
-        /*
+    /*
      * Initial state of the game
      */
     this.currentGame = 0;
@@ -154,7 +151,6 @@ public class GeneralRepository {
         this.contestantStrength[i][j] = -1;
       }
     }
-
 
     /*
      * Writing the header of the log file
@@ -359,7 +355,8 @@ public class GeneralRepository {
     for (int i = 0; i < SimulParse.COACH; i++) {
       str += coachState[i] + " ";
       for (int j = 0; j < SimulParse.CONTESTANT_PER_TEAM; j++) {
-        str += contestantState[i][j] + " " + String.format("%2s", (contestantStrength[i][j] == -1 ? "--" : (Integer.toString(contestantStrength[i][j])))) + " ";
+        str += contestantState[i][j] + " " + String.format("%2s",
+            (contestantStrength[i][j] == -1 ? "--" : (Integer.toString(contestantStrength[i][j])))) + " ";
       }
       if (i == 0) {
         str += " ";
@@ -568,6 +565,17 @@ public class GeneralRepository {
    */
   public void setEndOfGame() {
     this.endOfGame = true;
+  }
+
+  public synchronized void shutdown() {
+    nEntities += 1;
+    // TODO: When coach are done remove this, might have to add refereesitestub to
+    // the contestantas just to shut down all at the same time
+    if (nEntities >= 3) {
+      ServerGameOfRopeGeneralRepository.waitConnection = false;
+    }
+    System.out.println("NENTITIES: " + nEntities);
+    notifyAll();
   }
 
 }

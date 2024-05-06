@@ -66,6 +66,10 @@ public class ContestantBenchInterface {
                     throw new MessageException("Invalid Referee state!", inMessage);
                 }
                 break;
+
+            case MessageType.REQ_CONTESTANT_BENCH_SHUTDOWN:
+                // No validation required
+                break;
             default:
                 throw new MessageException("Invalid message type!", inMessage);
 
@@ -153,6 +157,10 @@ public class ContestantBenchInterface {
 
                 outMessage = new Message(MessageType.REP_DECLARE_MATCH_WINNER,
                         ((ContestantBenchClientProxy) Thread.currentThread()).getRefereeState());
+                break;
+            case MessageType.REQ_CONTESTANT_BENCH_SHUTDOWN:
+                contestantBench.shutdown();
+                outMessage = new Message(MessageType.REP_CONTESTANT_BENCH_SHUTDOWN);
                 break;
             default:
                 throw new MessageException("Invalid message type!", inMessage);

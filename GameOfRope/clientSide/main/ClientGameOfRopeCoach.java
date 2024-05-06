@@ -79,10 +79,10 @@ public class ClientGameOfRopeCoach {
             }
         }
 
-        // refereeSiteStub.shutdown();
-        // playgroundStub.shutdown();
-        // contestantBenchStub.shutdown();
-        // generalRepositoryStub.shutdown();
+        refereeSiteStub.shutdown();
+        playgroundStub.shutdown();
+        contestantBenchStub.shutdown();
+        generalRepositoryStub.shutdown();
     }
 
     public static StrategyType selectStrategy(int team) {

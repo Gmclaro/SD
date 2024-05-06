@@ -77,10 +77,12 @@ public class RefereeSite {
 
     public synchronized void shutdown() {
         nEntities += 1;
-        // TODO: When coach are done remove this, might have to add refereesitestub to the contestantas just to shut down all at the same time
-        //if (nEntities >= (SimulParse.COACH + 1)) {
+        // TODO: When coach are done remove this, might have to add refereesitestub to
+        // the contestantas just to shut down all at the same time
+        if (nEntities >= 2) {
             ServerGameOfRopeRefereeSite.waitConnection = false;
-        //}
+        }
+        System.out.println("NENTITIES:\t" + nEntities);
         notifyAll();
     }
 }

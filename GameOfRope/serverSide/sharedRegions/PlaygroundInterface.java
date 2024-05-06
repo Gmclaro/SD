@@ -88,6 +88,9 @@ public class PlaygroundInterface {
                     throw new MessageException("Invalid number of state !", inMessage);
                 }
                 break;
+            case MessageType.REQ_PLAYGROUND_SHUTDOWN:
+                // No validation parameters
+                break;
 
             default:
                 throw new MessageException("Invalid message type!", inMessage);
@@ -198,6 +201,10 @@ public class PlaygroundInterface {
 
                 outMessage = new Message(MessageType.REP_DECLARE_GAME_WINNER,
                         ((PlaygroundClientProxy) Thread.currentThread()).getRefereeState(), ropePosition);
+                break;
+            case MessageType.REQ_PLAYGROUND_SHUTDOWN:
+                playground.shutdown();
+                outMessage = new Message(MessageType.REP_PLAYGROUND_SHUTDOWN);
                 break;
             default:
                 throw new MessageException("Invalid message type!", inMessage);

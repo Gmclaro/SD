@@ -84,8 +84,8 @@ public class ClientGameOfRopeContestant {
             }
         }
 
-        // playgroundStub.shutdown();
-        // contestantBenchStub.shutdown();
-        // generalRepositoryStub.shutdown();
+        playgroundStub.shutdown();
+        contestantBenchStub.shutdown();
+        generalRepositoryStub.shutdown();
     }
 }

@@ -4,6 +4,8 @@ import commonInfra.View;
 import serverSide.entities.*;
 import clientSide.entities.*;
 import clientSide.stubs.*;
+import serverSide.main.ServerGameOfRopeContestantBench;
+import serverSide.main.ServerGameOfRopeRefereeSite;
 import serverSide.main.SimulParse;
 
 /**
@@ -40,6 +42,8 @@ public class ContestantBench {
      * Flag to indicate if the referee called the trial
      */
     private int callTrial;
+
+    private int nEntities = 0;
 
     /**
      * ContestantBench instantiation
@@ -180,8 +184,8 @@ public class ContestantBench {
             }
 
             if (order == 1) {
-                //TODO: uncomment REST
-                //contestant.rest();
+                // TODO: uncomment REST
+                // contestant.rest();
                 System.out.println("ATENCAO FALTA O REST");
                 contestants[team][id].setValue(contestant.getStrength() + 1);
                 repo.setContestantStrength(team, id, contestant.getStrength() + 1);
@@ -274,5 +278,16 @@ public class ContestantBench {
             }
 
         }
+    }
+
+    public synchronized void shutdown() {
+        nEntities += 1;
+        // TODO: When coach are done remove this, might have to add refereesitestub to
+        // the contestantas just to shut down all at the same time
+        if (nEntities >= 3) {
+            ServerGameOfRopeContestantBench.waitConnection = false;
+        }
+        System.out.println("NENTITIES: " + nEntities);
+        notifyAll();
     }
 }

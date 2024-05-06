@@ -74,9 +74,9 @@ public class ClientGameOfRopeReferee {
             System.exit(1);
         }
 
-        // refereeSiteStub.shutdown();
-        // playgroundStub.shutdown();
-        // contestantBenchStub.shutdown();
-        // generalRepositoryStub.shutdown();
+        refereeSiteStub.shutdown();
+        playgroundStub.shutdown();
+        contestantBenchStub.shutdown();
+        generalRepositoryStub.shutdown();
     }
 }
