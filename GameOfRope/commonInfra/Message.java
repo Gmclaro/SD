@@ -89,7 +89,7 @@ public class Message implements Serializable {
      * Message instantiation (form 2).
      * 
      * @param msgType type of the message
-     * @param value   set/get entity state
+     * @param value   value 
      */
     public Message(int msgType, int value) {
         this.msgType = msgType;
