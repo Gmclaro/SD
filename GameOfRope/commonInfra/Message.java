@@ -281,61 +281,138 @@ public class Message implements Serializable {
         this.state = state;
     }
 
+    /**
+     * Message instantion (form 14).
+     * @param msgType
+     * @param contestantStrength
+     */
+
     public Message(int msgType, int[][] contestantStrength){
         this.msgType = msgType;
         this.contestantStrength = contestantStrength;
     }
 
+
+    /**
+     * Get message type.
+     * @return message type
+     */
+
     public int getMsgType() {
         return msgType;
     }
+
+    /**
+     * Get entity state.
+     * @return entity state
+     */
 
     public int getEntityState() {
         return state;
     }
 
+    /**
+     * Set entity state.
+     * @param state entity state
+     * @return entity state
+     */
+
     public int setEntityState(int state) {
         return this.state = state;
     }
+
+    /**
+     * Get about contestants
+     * @return about contestants
+     */
 
     public View[] getAboutContestants() {
         return aboutContestants;
     }
 
+    /**
+     * Get team.
+     * @return team
+     */
     public int getTeam() {
         return team;
     }
+
+    /**
+     * Get ID.
+     * @return ID
+     */
 
     public int getID() {
         return id;
     }
 
+    /**
+     * Get strength.
+     * @return strength
+     */
+
     public int getStrength() {
         return strength;
     }
+
+    /**
+     * Get orders.
+     * @return orders
+     */
 
     public int getOrders() {
         return orders;
     }
 
+    /**
+     * Get selected contestants.
+     * @return selected contestants
+     */
+
     public int[] getSelected() {
         return selected;
     }
+
+    /**
+     * Get scores.
+     * @return scores
+     */
 
     public int[] getScores() {
         return scores;
     }
 
+    /**
+     * Get rope position.
+     * @return rope position
+     */
+
     public int getRopePosition() {
         return ropePostion;
     }
 
+    /**
+     * Get continue game.
+     * @return continue game
+     */
+
     public boolean getContinueGame() {
         return continueGame;
     }
+
+    /**
+     * Get contestant strengths.
+     * @return contestant strengths
+     */
     public int[][] getContestantStrengths() {
         return contestantStrength;
     }
+
+    /**
+     * To String method of the message messages
+     * @return string with the message
+     */
 
     @Override
     public String toString() {

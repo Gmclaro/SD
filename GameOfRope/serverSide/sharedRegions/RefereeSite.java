@@ -23,6 +23,10 @@ public class RefereeSite {
 
     private int teamsReady;
 
+    /**
+     * Number of entities
+     */
+
     private int nEntities = 0;
 
     /**

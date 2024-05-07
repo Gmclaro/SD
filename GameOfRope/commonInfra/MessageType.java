@@ -379,19 +379,51 @@ public class MessageType {
 
   //////////////////////////////////////////////
 
+  /**
+   * Playground - Operation General Repository Shutdown (REQUEST)
+   */
+
   public static final int REQ_GENERAL_REPOSITORY_SHUTDOWN = 90;
+
+  /**
+   * Playground - Operation General Repository Shutdown (REPLY)
+   */
 
   public static final int REP_GENERAL_REPOSITORY_SHUTDOWN = 91;
 
+  /**
+   * Playground - Operation Referee Site Shutdown (REQUEST)
+   */
+
   public static final int REQ_REFEREE_SITE_SHUTDOWN = 92;
+
+  /**
+   * Playground - Operation Referee Site Shutdown (REPLY)
+   */
 
   public static final int REP_REFEREE_SITE_SHUTDOWN = 93;
 
+  /**
+   * Playground - Operation Playground Shutdown (REQUEST)
+   */
+
   public static final int REQ_PLAYGROUND_SHUTDOWN = 94;
+
+  /**
+   * Playground - Operation Playground Shutdown (REPLY)
+   */
 
   public static final int REP_PLAYGROUND_SHUTDOWN = 95;
 
+  /**
+   * Playground - Operation Contestant Bench Shutdown (REQUEST)
+   */
+
   public static final int REQ_CONTESTANT_BENCH_SHUTDOWN = 96;
+
+  /**
+   * Playground - Operation Contestant Bench Shutdown (REPLY)
+   */
 
   public static final int REP_CONTESTANT_BENCH_SHUTDOWN = 97;
 

@@ -8,13 +8,40 @@ import commonInfra.MessageException;
 import commonInfra.MessageType;
 import serverSide.main.SimulParse;
 
+
+/**
+ * Interface to the General Repository
+ *  It is responsible to validate and process the incoming message, execute the corresponding method on the
+ *   General Repository and generate the outgoing message.
+ *   Implementation of a client-server model of type 2 (server replication).
+ *   Communication is based on a communication channel under the TCP protocol.
+ */
 public class GeneralRepositoryInterface {
 
+
+    /**
+     *  Reference to the General Repository
+     */
     private final GeneralRepository repo;
+
+    /**
+     *   Instantiation of an interface to the General Repository.
+     *
+     *     @param repo Reference to the General Repository
+     */
 
     public GeneralRepositoryInterface(GeneralRepository repo) {
         this.repo = repo;
     }
+
+    /**
+     *   Processing of the incoming messages
+     *   Validation, execution of the corresponding method and generation of the outgoing message.
+     *
+     * 	   @param inMessage service request
+     * 	   @return service reply
+     * 	   @throws MessageException if incoming message was not valid
+     */
 
     public Message processAndReply(Message inMessage) throws MessageException {
         Message outMessage = null;

@@ -56,6 +56,10 @@ public class Playground {
      */
     private int ropePosition;
 
+    /**
+     * Number of contestants that are ready to start the trial
+     */
+
     private int nOfGetReady;
 
     /*
