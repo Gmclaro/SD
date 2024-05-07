@@ -23,12 +23,17 @@ public class GeneralRepositoryClientProxy extends Thread {
     private ServerCom sconi;
 
     /**
+     * Reference General Repository Interface
+     */
+
+    private GeneralRepositoryInterface generalRepositoryInterface;
+
+    /**
      * Interface of a client proxy
      * 
      * @param sconi                      communication channel
      * @param generalRepositoryInterface general repository interface
      */
-    private GeneralRepositoryInterface generalRepositoryInterface;
 
     public GeneralRepositoryClientProxy(ServerCom sconi, GeneralRepositoryInterface generalRepositoryInterface) {
         super("GeneralRepositoryInterface(" + GeneralRepositoryClientProxy.getProxyId() + ")");
