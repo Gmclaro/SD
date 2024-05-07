@@ -4,6 +4,12 @@ import commonInfra.ClientCom;
 import commonInfra.Message;
 import commonInfra.MessageType;
 
+/**
+ * Stub to the General Repository of information
+ * It instaniates a remote refererence to the General Repository of Information
+ * Implementation of a client-server model of type 2 (server replication).
+ * Communication is based on a communication channel under the TCP protocol.
+ */
 public class GeneralRepositoryStub {
   /**
    * Name of the plataform where is located the general repo server

@@ -10,6 +10,12 @@ import commonInfra.ClientCom;
 import commonInfra.Message;
 import commonInfra.MessageType;
 
+/**
+ * Playground Stub
+ * It instaniates a remote refererence to the Playground
+ * Implementation of a client-server model of type 2 (server replication).
+ * Communication is based on a communication channel under the TCP protocol.
+ */
 public class PlaygroundStub {
     /**
      * Name of the platform where is located the Playground server

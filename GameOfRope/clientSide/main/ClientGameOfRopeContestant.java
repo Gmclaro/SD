@@ -6,6 +6,9 @@ import clientSide.stubs.GeneralRepositoryStub;
 import clientSide.stubs.PlaygroundStub;
 import serverSide.main.SimulParse;
 
+/**
+ * Main class for the Contestant entity.
+ */
 public class ClientGameOfRopeContestant {
     /**
      * Main method.

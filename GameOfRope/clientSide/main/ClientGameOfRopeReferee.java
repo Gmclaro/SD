@@ -6,6 +6,9 @@ import clientSide.stubs.GeneralRepositoryStub;
 import clientSide.stubs.PlaygroundStub;
 import clientSide.stubs.RefereeSiteStub;
 
+/**
+ * Main class for the Referee entity.
+ */
 public class ClientGameOfRopeReferee {
     /**
      * Main method.

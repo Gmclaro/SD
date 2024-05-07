@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 import serverSide.main.SimulParse;
 
+/**
+ *   This data type defines the message sent between the server and the clients.
+ *   The message is composed by a type and a set of parameters.
+ */
 public class Message implements Serializable {
     /**
      * Serialization key.
@@ -16,27 +20,60 @@ public class Message implements Serializable {
      */
 
     private int msgType = -1;
-
+    
+    /**
+     * State of the entity.
+     */
     private int state = -1;
 
+    /**
+     * Team of the entity.
+     */
     private int team = -1;
 
+    /**
+     * ID of the entity.
+     */
     private int id = -1;
 
+    /**
+     * Continue game flag.
+     */
     private boolean continueGame = false;
 
+    /**
+     * Rope position.
+     */
     private int ropePostion;
 
+    /**
+     * Scores of the teams.
+     */
     private int[] scores = new int[2];
 
+    /**
+     * Contestants information (id,strength)
+     */
     private View[] aboutContestants = new View[SimulParse.CONTESTANT_PER_TEAM];
 
+    /**
+     * Selected contestants for Playground.
+     */
     private int[] selected = new int[SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM];
 
+    /**
+     * Strength of the entity.
+     */
     private int strength = -1;
 
+    /**
+     * Orders of the entity.
+     */
     private int orders = -1;
 
+    /**
+     * Strength of the contestants.
+     */
     int[][] contestantStrength = new int[2][SimulParse.CONTESTANT_PER_TEAM];
 
     /**

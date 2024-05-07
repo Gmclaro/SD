@@ -8,6 +8,9 @@ import clientSide.stubs.RefereeSiteStub;
 import commonInfra.Strategy.StrategyType;
 import serverSide.main.SimulParse;
 
+/**
+ * Main class for the Coach entity.
+ */
 public class ClientGameOfRopeCoach {
     /**
      * Main method.

@@ -6,6 +6,12 @@ import commonInfra.ClientCom;
 import commonInfra.Message;
 import commonInfra.MessageType;
 
+/**
+ * This file contains the Referee Site Stub
+ * It instaniates a remote refererence to the Referee Site
+ * Implementation of a client-server model of type 2 (server replication).
+ * Communication is based on a communication channel under the TCP protocol.
+ */
 public class RefereeSiteStub {
     /**
      * Name of the platform where is located the RefereeSite server
