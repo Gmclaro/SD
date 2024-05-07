@@ -98,7 +98,7 @@ public class ClientGameOfRopeCoach {
      */
 
     public static StrategyType selectStrategy(int team) {
-        switch (((int) Math.random() * 3)) {
+        switch (((int) (Math.random() * 3))) {
             case 0:
                 System.out.println("Team " + team + "STRONGEST");
                 return StrategyType.STRONGEST;

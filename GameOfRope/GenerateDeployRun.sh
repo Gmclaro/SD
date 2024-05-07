@@ -108,7 +108,7 @@ mkdir -p $COACH_DIR $COACH_DIR/serverSide/main $COACH_DIR/serverSide/sharedRegio
 cp genclass.jar $COACH_DIR
 cp clientSide/main/ClientGameOfRopeCoach.class $COACH_DIR/clientSide/main
 cp clientSide/stubs/ContestantBenchStub.class clientSide/stubs/PlaygroundStub.class clientSide/stubs/GeneralRepositoryStub.class clientSide/stubs/RefereeSiteStub.class $COACH_DIR/clientSide/stubs
-cp commonInfra/Strategy*.class commonInfra/View.class commonInfra/ClientCom.class commonInfra/Message.class commonInfra/MessageType.class  $COACH_DIR/commonInfra
+cp commonInfra/Strategy*.class commonInfra/View.class commonInfra/ClientCom.class commonInfra/Message.class commonInfra/MessageType.class  commonInfra/MemFIFO.class commonInfra/MemException.class commonInfra/MemObject.class $COACH_DIR/commonInfra
 cp clientSide/entities/Coach.class clientSide/entities/CoachState.class clientSide/entities/Contestant.class clientSide/entities/ContestantState.class clientSide/entities/RefereeState.class clientSide/entities/Referee.class $COACH_DIR/clientSide/entities
 cp serverSide/main/SimulParse.class $COACH_DIR/serverSide/main
 
