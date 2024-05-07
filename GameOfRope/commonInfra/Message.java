@@ -79,7 +79,7 @@ public class Message implements Serializable {
     /**
      * Message instantiation (form 1).
      * 
-     * @param type type of the message
+     * @param msgType type of the message
      */
     public Message(int msgType) {
         this.msgType = msgType;
@@ -90,35 +90,9 @@ public class Message implements Serializable {
      * 
      * @param msgType type of the message
      * @param value   set/get entity state
-     * 
-     *                ---
-     *                Message instantiation (form 3).
-     * 
-     * @param msgType type of the message
-     * @param value   set ropePosition
-     * 
-     *                ---
-     *                Message instantiation (form 4).
-     * 
-     * @param msgType type of the message
-     * @param value   get orders
-     * 
-     *                ---
-     *                Message instantiation (form 5).
-     * 
-     * @param msgType type of the message
-     * @param value   get team
-     * 
-     *                ---
-     *                Message instantiation (form 6).
-     * 
-     * @param msgType type of the message
-     * @param value   get strength
      */
     public Message(int msgType, int value) {
         this.msgType = msgType;
-
-        // TODO: value can be refereeState/ropePosition/orders/team/strength
         if (msgType == MessageType.REQ_ANNOUNCE_NEW_GAME || msgType == MessageType.REP_ANNOUNCE_NEW_GAME
                 || msgType == MessageType.REQ_CALL_TRIAL || msgType == MessageType.REP_CALL_TRIAL
                 || msgType == MessageType.REQ_LOG_SET_REFEREE_STATE || msgType == MessageType.REP_LOG_SET_REFEREE_STATE
@@ -165,7 +139,8 @@ public class Message implements Serializable {
      * Message instantiation (form 9).
      * 
      * @param msgType type of the message
-     * @param value   get aboutContestants
+     * @param team  team
+     * @param aboutContestants information about contestants
      */
     public Message(int msgType, int team, View[] aboutContestants) {
         this.msgType = msgType;
@@ -267,10 +242,10 @@ public class Message implements Serializable {
      * Message instantiation (form 13).
      * 
      * @param msgType type of the message
-     * @param value1  set team
-     * @param value2  set id
-     * @param value3  set strength
-     * @param value4  set state
+     * @param team  set team
+     * @param id  set id
+     * @param strength  set strength
+     * @param state  set state
      */
 
     public Message(int msgType, int team, int id, int strength, int state) {

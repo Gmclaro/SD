@@ -25,7 +25,7 @@ public class RefereeSiteStub {
     /**
      * Instantiation of a Referee site stub
      * 
-     * @param hostName
+     * @param hostname
      *                 name of the platform where is located the referee site
      *                 server
      * @param port

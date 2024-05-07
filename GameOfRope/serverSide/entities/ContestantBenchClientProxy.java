@@ -150,16 +150,16 @@ public class ContestantBenchClientProxy extends Thread implements CoachCloning, 
     }
 
     /**
-     * Set the Contestant Strength
-     * @param strength Contestant Strength
+     * Get the Contestant Strength
+     * @return strength
      */
     public int getStrength() {
         return this.strength;
     }
 
     /**
-     * Get the Contestant Strength
-     * @return Contestant Strength
+     * Set the Contestant Strength
+     * @param strength
      */
     public void setStrength(int strength) {
         this.strength = strength;

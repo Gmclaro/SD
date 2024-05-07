@@ -66,6 +66,12 @@ public class GeneralRepositoryStub {
     System.out.println("\nGRS initSimul()");
   }
 
+  /**
+   * Set the state of the Referee.
+   * 
+   * @param state State of the Referee
+   */
+
   public void setRefereeState(int state) {
     ClientCom com;
     Message outMessage, inMessage;
@@ -95,11 +101,10 @@ public class GeneralRepositoryStub {
   }
 
   /**
-   * Update the internal state of one of the Coaches and call the method to write
-   * the change of state in the log file.
+   * Set the state of the Coach.
    * 
-   * @param coachID    Team of the Coach
-   * @param coachState State of the Coach
+   * @param team  Team of the Coach
+   * @param state State of the Coach
    */
 
   public void setCoachState(int team, int state) {
@@ -199,7 +204,7 @@ public class GeneralRepositoryStub {
     System.out.println("GRS setContestantStrength()");
   }
   /**
-   * Write the header of a new game in the log file
+   * To signal a start of a new Game
    */
   public void newGameStarted() {
     ClientCom com;
@@ -326,7 +331,7 @@ public class GeneralRepositoryStub {
   /**
    * Set the position of the rope.
    * 
-   * @param positionOfRope Position of the rope
+   * @param ropePosition Position of the rope
    */
   public void setRopePosition(int ropePosition) {
     ClientCom com;

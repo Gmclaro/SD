@@ -30,7 +30,7 @@ public class ContestantBenchStub {
     /**
      * Instantiation of a contestant bench stub
      * 
-     * @param hostName
+     * @param hostname
      *                 name of the platform where is located the contestant bench
      *                 server
      * @param port
@@ -227,11 +227,11 @@ public class ContestantBenchStub {
     }
 
     /**
-     * The referee declares the match winner
+     * The coach calls the contestants to the playground
      * 
-     * Reset the matchOver flag and notify all the threads
      * 
-     * @param scores Scores of the match
+     * @param team    Team of the Coach
+     * @param selected Selected contestants to play the trial
      */
     public void callContestants(int team, int[] selected) {
         ClientCom com;
@@ -265,6 +265,14 @@ public class ContestantBenchStub {
         com.close();
         System.out.println("\nCBS callContestants() ");
     }
+
+    /**
+     * Contestant is waiting for the coach to call him to the playground
+     * 
+     * @param team Team of the Contestant
+     * @param id   Id of the Contestant
+     * @return int order of the Contestant in the playground
+     */
 
     public int waitForCallContestant(int team, int id) {
         ClientCom com;

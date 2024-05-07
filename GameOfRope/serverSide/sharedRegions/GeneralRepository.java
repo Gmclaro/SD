@@ -97,7 +97,6 @@ public class GeneralRepository {
    * It is a shared region.
    * 
    * @param logFileName        Name of the log file
-   * @param contestantStrength Initial strength of the Contestants
    */
 
   public GeneralRepository(String logFileName) {
@@ -447,8 +446,8 @@ public class GeneralRepository {
    * Update the internal state of one of the Coaches and call the method to write
    * the change of state in the log file.
    * 
-   * @param coachID    Team of the Coach
-   * @param coachState State of the Coach
+   * @param team   Team of the Coach
+   * @param state State of the Coach
    */
   public void setCoachState(int team, int state) {
     this.coachState[team] = state;

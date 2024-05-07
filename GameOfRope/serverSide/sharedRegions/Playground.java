@@ -352,7 +352,7 @@ public class Playground {
      * Contestant pulls the rope
      * 
      * @param strength
-     * @return
+     * @return strengh -1 
      */
     public int pullTheRope(int strength) {
         return strength - 1;

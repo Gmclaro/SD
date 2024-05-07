@@ -29,7 +29,7 @@ public class PlaygroundStub {
     /**
      * Instantiation of a Playground stub
      * 
-     * @param hostName
+     * @param hostname
      *                 name of the platform where is located the playground
      *                 server
      * @param port

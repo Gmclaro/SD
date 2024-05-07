@@ -136,7 +136,11 @@ public class Contestant extends Thread {
         return this.strength;
     }
 
-    // TODO: javadoc
+    /**
+     * Set strength of the contestant
+     * 
+     * @param strength strength of the contestant
+     */
     public void setStrength(int strength) {
         this.strength = strength;
     }
