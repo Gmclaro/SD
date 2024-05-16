@@ -70,7 +70,7 @@ public class RefereeSiteInterface {
                 ((RefereeSiteClientProxy) Thread.currentThread()).setRefereeState(inMessage.getEntityState());
 
                 refereeSite.announceNewGame();
-                outMessage = new Message(MessageType.REP_ANNOUNCE_NEW_GAME, RefereeState.START_OF_A_GAME);
+                outMessage = new Message(MessageType.REP_ANNOUNCE_NEW_GAME, ((RefereeSiteClientProxy) Thread.currentThread()).getRefereeState());
                 break;
 
             case MessageType.REQ_REFEREE_SITE_SHUTDOWN:
