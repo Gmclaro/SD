@@ -1,8 +1,8 @@
 package clientSide.entities;
 
-import clientSide.stubs.ContestantBenchStub;
-import clientSide.stubs.PlaygroundStub;
-import clientSide.stubs.RefereeSiteStub;
+import interfaces.ContestantBenchInterface;
+import interfaces.PlaygroundInterface;
+import interfaces.RefereeSiteInterface;
 import serverSide.main.SimulParse;
 
 /**
@@ -21,17 +21,17 @@ public class Referee extends Thread {
     /**
      * Reference to the Playground
      */
-    private PlaygroundStub playground;
+    private PlaygroundInterface playgroundStub;
 
     /**
      * Reference to the Contestant Bench
      */
-    private ContestantBenchStub contestantBench;
+    private ContestantBenchInterface contestantBenchStub;
 
     /**
      * Reference to the Referee Site
      */
-    private RefereeSiteStub refereeSite;
+    private RefereeSiteInterface refereeSiteStub;
 
     /**
      * Scores of the games
@@ -46,11 +46,11 @@ public class Referee extends Thread {
      * @param contestantBench Reference to the Contestant Bench
      */
 
-    public Referee(PlaygroundStub playground, RefereeSiteStub refereeSite, ContestantBenchStub contestantBench) {
+    public Referee(PlaygroundInterface playgroundStub, RefereeSiteInterface refereeSiteStub, ContestantBenchInterface contestantBenchStub) {
         super("Referee()");
-        this.playground = playground;
-        this.refereeSite = refereeSite;
-        this.contestantBench = contestantBench;
+        this.playgroundStub = playgroundStub;
+        this.refereeSiteStub = refereeSiteStub;
+        this.contestantBenchStub = contestantBenchStub;
         this.state = RefereeState.START_OF_THE_MATCH;
 
         this.scores = new int[] { 0, 0 };
@@ -150,5 +150,15 @@ public class Referee extends Thread {
         contestantBench.declareMatchWinner(scores);
         System.out.println(this.whoAmI() + " -> declareMatchWinner()");
 
+    }
+
+    public void announceNewGame(){
+        try {
+            state = refereeSiteStub.announceNewGame();
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+            System.exit(1);
+        }
     }
 }

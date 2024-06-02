@@ -1,8 +1,7 @@
-package serverSide.sharedRegions;
+package serverSide.objects;
 
 import clientSide.entities.RefereeState;
 import clientSide.stubs.GeneralRepositoryStub;
-import serverSide.entities.RefereeSiteClientProxy;
 import serverSide.main.ServerGameOfRopeRefereeSite;
 
 /**

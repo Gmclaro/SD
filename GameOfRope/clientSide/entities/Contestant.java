@@ -2,6 +2,8 @@ package clientSide.entities;
 
 import clientSide.stubs.ContestantBenchStub;
 import clientSide.stubs.PlaygroundStub;
+import interfaces.ContestantBenchInterface;
+import interfaces.PlaygroundInterface;
 
 /**
  * Custom Thread
@@ -34,12 +36,12 @@ public class Contestant extends Thread {
     /**
      * Playground shared memory region declaration
      */
-    private final PlaygroundStub playground;
+    private final PlaygroundInterface playgroundStub;
 
     /**
      * ContestantBench shared memory region declaration
      */
-    private final ContestantBenchStub contestantBench;
+    private final ContestantBenchInterface contestantBenchStub;
 
     /**
      * Contestant Constructor

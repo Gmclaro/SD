@@ -1,8 +1,7 @@
 package clientSide.entities;
 
-import clientSide.stubs.ContestantBenchStub;
-import clientSide.stubs.PlaygroundStub;
-import clientSide.stubs.RefereeSiteStub;
+import java.rmi.*;
+import interfaces.*;
 import commonInfra.Strategy;
 import commonInfra.Strategy.StrategyType;
 import commonInfra.View;
@@ -10,7 +9,7 @@ import commonInfra.View;
 /**
  * Custom Thread
  * It simulates the life cycle of a coach
- * It will be a static solution
+ * Communication is based on remote calls under Java RMI protocol.
  */
 
 public class Coach extends Thread {
@@ -30,19 +29,19 @@ public class Coach extends Thread {
      * Reference to the Contestants Bench
      */
 
-    private final ContestantBenchStub contestantBench;
+    private final ContestantBenchInterface contestantBenchStub;
 
     /**
      * Reference to the Playground
      */
 
-    private PlaygroundStub playground;
+    private PlaygroundInterface playgroundStub;
 
     /**
      * Reference to the Referee Site
      */
 
-    private RefereeSiteStub refereeSite;
+    private RefereeSiteInterface refereeSiteStub;
 
     /**
      * Stratgies of the coach
@@ -108,14 +107,14 @@ public class Coach extends Thread {
      * @param coachStrategy   coach strategy
      */
 
-    public Coach(int team, ContestantBenchStub contestantBench, PlaygroundStub playground, RefereeSiteStub refereeSite,
+    public Coach(int team, ContestantBenchInterface contestantBenchStub, PlaygroundInterface playgroundStub, RefereeSiteInterface refereeSiteStub,
             StrategyType coachStrategy) {
         super("Coach(" + team + ")");
         this.team = team;
         this.state = -1;
-        this.contestantBench = contestantBench;
-        this.playground = playground;
-        this.refereeSite = refereeSite;
+        this.contestantBenchStub = contestantBenchStub;
+        this.playgroundStub = playgroundStub;
+        this.refereeSiteStub = refereeSiteStub;
         this.coachStrategy = new Strategy(coachStrategy);
     }
 
@@ -178,4 +177,5 @@ public class Coach extends Thread {
         return sel;
 
     }
+
 }

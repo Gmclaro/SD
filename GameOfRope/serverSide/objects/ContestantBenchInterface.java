@@ -1,4 +1,4 @@
-package serverSide.sharedRegions;
+package serverSide.objects;
 
 import clientSide.entities.ContestantState;
 import clientSide.entities.RefereeState;

@@ -1,4 +1,4 @@
-package serverSide.sharedRegions;
+package serverSide.objects;
 
 import clientSide.entities.CoachState;
 import clientSide.entities.ContestantState;
@@ -257,6 +257,7 @@ public class Playground {
      * 
      * @param team The coach team
      * @param id   The id of the contestants
+     * @param strength The strength of the contestant
      */
 
     public void waitForAssertTrialDecision(int team, int id, int strength) {
