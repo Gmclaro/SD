@@ -1,11 +1,12 @@
 package serverSide.objects;
 
+import java.rmi.RemoteException;
+
 import clientSide.entities.CoachState;
 import clientSide.entities.ContestantState;
 import clientSide.entities.RefereeState;
-import clientSide.stubs.GeneralRepositoryStub;
 import commonInfra.View;
-import serverSide.entities.PlaygroundClientProxy;
+import interfaces.*;
 import serverSide.main.ServerGameOfRopePlayground;
 import serverSide.main.SimulParse;
 
@@ -14,13 +15,13 @@ import serverSide.main.SimulParse;
  * Shared Memory Region where the game takes place
  */
 
-public class Playground {
+public class Playground implements PlaygroundInterface{
 
     /**
      * Reference to the General Repository
      */
 
-    private final GeneralRepositoryStub repo;
+    private final GeneralRepositoryInterface repo;
 
     /**
      * Characteristics of contestants in the playground
@@ -85,7 +86,7 @@ public class Playground {
      * @param repo Reference to the General Repository
      */
 
-    public Playground(GeneralRepositoryStub repo) {
+    public Playground(GeneralRepositoryInterface repo) {
         this.repo = repo;
         contestants = new View[2][SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM];
 
@@ -136,14 +137,14 @@ public class Playground {
     /**
      * The Referee will start the trial
      */
-    public synchronized void startTrial() {
-        ((PlaygroundClientProxy) Thread.currentThread()).setRefereeState(RefereeState.WAIT_FOR_TRIAL_CONCLUSION);
+    public synchronized int startTrial() throws RemoteException{
         repo.setRefereeState(RefereeState.WAIT_FOR_TRIAL_CONCLUSION);
 
         startOfTrial = true;
         endOfTrial = false;
         playedTrial++;
         notifyAll();
+        return RefereeState.WAIT_FOR_TRIAL_CONCLUSION;
     }
 
     /**
@@ -205,7 +206,7 @@ public class Playground {
      * Contestants wait for the decision of the referee
      */
 
-    public synchronized void waitForAmDone() {
+    public synchronized void waitForAmDone() throws RemoteException{
         while (nOfAmDone < (2 * SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM)) {
             try {
                 wait();
@@ -226,7 +227,7 @@ public class Playground {
      * 
      * @return boolean The decision of the referee
      */
-    public synchronized boolean assertTrialDecision() {
+    public synchronized boolean assertTrialDecision() throws RemoteException{
         nOfGetReady = 0;
         endOfTrial = true;
         notifyAll();
@@ -331,8 +332,7 @@ public class Playground {
      * 
      * @return int The difference of strength between the teams
      */
-    public synchronized int declareGameWinner() {
-        ((PlaygroundClientProxy) Thread.currentThread()).setRefereeState(RefereeState.END_OF_A_GAME);
+    public synchronized int declareGameWinner() throws RemoteException {
         repo.setRefereeState(RefereeState.END_OF_A_GAME);
 
         repo.setEndOfGame();
@@ -346,7 +346,7 @@ public class Playground {
         int aux = ropePosition;
         ropePosition = 0;
 
-        return aux;
+        return RefereeState.END_OF_A_GAME;
     }
 
     /**

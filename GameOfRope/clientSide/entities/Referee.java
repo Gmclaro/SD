@@ -46,7 +46,8 @@ public class Referee extends Thread {
      * @param contestantBench Reference to the Contestant Bench
      */
 
-    public Referee(PlaygroundInterface playgroundStub, RefereeSiteInterface refereeSiteStub, ContestantBenchInterface contestantBenchStub) {
+    public Referee(PlaygroundInterface playgroundStub, RefereeSiteInterface refereeSiteStub,
+            ContestantBenchInterface contestantBenchStub) {
         super("Referee()");
         this.playgroundStub = playgroundStub;
         this.refereeSiteStub = refereeSiteStub;
@@ -107,7 +108,7 @@ public class Referee extends Thread {
             System.out.println("Game: " + currentGame
                     + " ----------------------------------------------------------");
 
-            refereeSite.announceNewGame();
+            announceNewGame();
             System.out.println(this.whoAmI() + " -> announceNewGame()");
 
             boolean continueGame;
@@ -115,28 +116,28 @@ public class Referee extends Thread {
 
             do {
 
-                contestantBench.callTrial();
+                callTrial();
                 System.out.println(
                         "Trial " + (++currentTrial) + ": ----------------------------------------------------------");
                 System.out.println(this.whoAmI() + " -> callTrial()");
 
-                refereeSite.waitForInformReferee();
+                waitForInformReferee();
                 System.out.println(this.whoAmI() + " -> waitForInformReferee()");
 
-                playground.startTrial();
+                startTrial();
                 System.out.println(this.whoAmI() + " -> startTrial()");
 
-                playground.waitForAmDone();
+                waitForAmDone();
                 System.out.println(this.whoAmI() + " -> waitForAmDone()");
 
-                continueGame = playground.assertTrialDecision();
+                continueGame = assertTrialDecision();
                 System.out.println(this.whoAmI() + " -> assertTrialDecision()");
             } while (continueGame);
 
-            contestantBench.waitForSeatAtBench();
+            waitForSeatAtBench();
             System.out.println(this.whoAmI() + " -> waitForSeatAtBench()");
 
-            ropePosition = playground.declareGameWinner();
+            ropePosition = declareGameWinner();
             System.out.println(this.whoAmI() + " -> declareGameWinner()");
 
             if (ropePosition > 0)
@@ -147,18 +148,156 @@ public class Referee extends Thread {
             }
         }
 
-        contestantBench.declareMatchWinner(scores);
+        declareMatchWinner(scores);
         System.out.println(this.whoAmI() + " -> declareMatchWinner()");
 
     }
 
-    public void announceNewGame(){
+    /**
+     * The referee announces a new game
+     */
+
+    private void announceNewGame() {
         try {
             state = refereeSiteStub.announceNewGame();
         } catch (Exception e) {
-            System.out.println("Error: " + e.getMessage());
+            System.err.println("Error: " + e.getMessage());
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+    }
+
+    /**
+     * The referee waits for the coaches to inform the teams are ready
+     */
+
+    private void waitForInformReferee() {
+        try {
+            refereeSiteStub.waitForInformReferee();
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
             e.printStackTrace();
             System.exit(1);
         }
     }
+
+    /**
+     * The referee calls the trial
+     */
+
+    private void callTrial() {
+        try {
+            state = contestantBenchStub.callTrial();
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
+
+    /**
+     * The referee starts the trial
+     */
+
+    private void startTrial() {
+        try {
+            state = playgroundStub.startTrial();
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
+
+    /**
+     * The referee waits for the contestants to finish the trial
+     */
+
+    private void waitForAmDone() {
+        try {
+            playgroundStub.waitForAmDone();
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
+
+    /**
+     * The referee asserts the decision of the trial
+     * 
+     * @return boolean true if the trial is not over, false otherwise
+     */
+
+     //TODO: fix this i think perguntar ao daniel
+     private boolean assertTrialDecision(){
+        boolean result = false;
+
+        try {
+            result = playgroundStub.assertTrialDecision();
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        return result;
+     }
+
+    /**
+     * The referee waits for the contestants to seat at the bench
+     */
+
+    private void waitForSeatAtBench() {
+        try {
+            contestantBenchStub.waitForSeatAtBench();
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
+
+    /**
+     * The referee declares the winner of the game
+     * 
+     * @return int the position of the rope
+     */
+
+    // TODO : isto nao pode estar bem
+    private int declareGameWinner() {
+        int result = 0;
+
+        try {
+            result = playgroundStub.declareGameWinner();
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+            e.printStackTrace();
+            System.exit(1);
+        }
+
+        return result;
+    }
+
+    /**
+     * The referee declares the winner of the match
+     * 
+     * @param scores the scores of the games
+     */
+
+    private void declareMatchWinner(int[] scores) {
+        try {
+            contestantBenchStub.declareMatchWinner(scores);
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
+
+    
+
+
+
 }

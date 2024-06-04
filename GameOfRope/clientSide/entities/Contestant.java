@@ -1,7 +1,7 @@
 package clientSide.entities;
 
-import clientSide.stubs.ContestantBenchStub;
-import clientSide.stubs.PlaygroundStub;
+import java.rmi.RemoteException;
+
 import interfaces.ContestantBenchInterface;
 import interfaces.PlaygroundInterface;
 
@@ -52,8 +52,8 @@ public class Contestant extends Thread {
      * @param playground         reference to playground
      * @param contestantBench    reference to contestantBench
      */
-    public Contestant(int team, int id, int contestantStrength, PlaygroundStub playground,
-            ContestantBenchStub contestantBench) {
+    public Contestant(int team, int id, int contestantStrength, PlaygroundInterface playgroundStub,
+            ContestantBenchInterface contestantBenchStub) {
         super("Contestant(T" + team + "," + id + ")");
         this.id = id;
         this.team = team;
@@ -61,8 +61,8 @@ public class Contestant extends Thread {
         this.state = ContestantState.SEAT_AT_THE_BENCH;
 
         // shared regions
-        this.playground = playground;
-        this.contestantBench = contestantBench;
+        this.playgroundStub = playgroundStub;
+        this.contestantBenchStub = contestantBenchStub;
     }
 
     /**
@@ -196,4 +196,24 @@ public class Contestant extends Thread {
     private void rest() {
         this.strength++;
     }
+
+    /**
+     * Operation seatDown
+     * Remote operation.
+     * Contestatn is placed in the bench
+     * @param team Team of the Contestant
+     * @param id   Id of the Contestantc
+     */
+
+     private void seatDown(int team, int id) {
+        try{
+            state = contestantBenchStub.seatDown(team, id);
+        }catch(RemoteException e){
+            System.out.println("Contestant remote exception on seatDown: " + e.getMessage());
+            e.printStackTrace();
+            System.exit(1);
+        }
+     }
+
+
 }

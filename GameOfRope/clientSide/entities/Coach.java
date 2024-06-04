@@ -151,7 +151,7 @@ public class Coach extends Thread {
             playground.waitForFollowCoachAdvice(team);
             System.out.println(this.whoAmI() + " -> waitForFollowCoachAdvice()");
 
-            refereeSite.informReferee();
+            informReferee();
             System.out.println(this.whoAmI() + " -> informReferee()");
 
             playground.waitForAssertTrialDecision(team);
@@ -178,4 +178,17 @@ public class Coach extends Thread {
 
     }
 
+    /**
+     * Inform the referee that the team is ready
+     * 
+     */
+    private void informReferee() {
+        try {
+            refereeSiteStub.informReferee();
+        } catch (RemoteException e) {
+            System.out.println(this.whoAmI() + " -> " + e.getMessage());
+            System.exit(1);
+        }
+
+    }
 }

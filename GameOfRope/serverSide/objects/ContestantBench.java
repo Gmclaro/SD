@@ -2,22 +2,24 @@ package serverSide.objects;
 
 import clientSide.entities.CoachState;
 import clientSide.entities.ContestantState;
+import clientSide.entities.Referee;
 import clientSide.entities.RefereeState;
-import clientSide.stubs.GeneralRepositoryStub;
 import commonInfra.View;
-import serverSide.entities.ContestantBenchClientProxy;
+import interfaces.*;
+import interfaces.GeneralRepositoryInterface;
 import serverSide.main.ServerGameOfRopeContestantBench;
 import serverSide.main.SimulParse;
+import java.rmi.*;
 
 /**
  * ContestantBench shared memory region.
  */
-public class ContestantBench {
+public class ContestantBench implements ContestantBenchInterface {
 
     /**
      * General Repository of Information
      */
-    private final GeneralRepositoryStub repo;
+    private final GeneralRepositoryInterface repo;
 
     /**
      * Characteristics of the Contestants in the bench
@@ -51,7 +53,7 @@ public class ContestantBench {
      * 
      * @param repo General Repository of Information
      */
-    public ContestantBench(GeneralRepositoryStub repo) {
+    public ContestantBench(GeneralRepositoryInterface repo) {
         this.repo = repo;
 
         this.contestants = new View[2][SimulParse.CONTESTANT_PER_TEAM];
@@ -70,14 +72,15 @@ public class ContestantBench {
     /**
      * Referee has announce a new trial.
      */
-    public synchronized void callTrial() {
+    public synchronized int callTrial() throws RemoteException{
         this.matchOver = false;
         this.callTrial = 2;
         notifyAll();
 
-        ((ContestantBenchClientProxy) Thread.currentThread()).setRefereeState(RefereeState.TEAMS_READY);
         repo.setRefereeState(RefereeState.TEAMS_READY);
         repo.setNewTrial();
+
+        return RefereeState.TEAMS_READY;
     }
 
     /**
@@ -253,18 +256,20 @@ public class ContestantBench {
      * 
      * @param scores Scores of the match
      */
-    public synchronized void declareMatchWinner(int[] scores) {
+    public synchronized int declareMatchWinner(int[] scores) throws RemoteException{
         matchOver = true;
         notifyAll();
-        ((ContestantBenchClientProxy) Thread.currentThread()).setRefereeState(RefereeState.END_OF_THE_MATCH);
+        
         repo.setRefereeState(RefereeState.END_OF_THE_MATCH);
         repo.setMatchWinner(scores);
+
+        return RefereeState.END_OF_THE_MATCH;
     }
 
     /**
      * Contestant waits for the referee to declare the match winner
      */
-    public synchronized void waitForSeatAtBench() {
+    public synchronized void waitForSeatAtBench() throws RemoteException{
 
         while (inBench[0] < SimulParse.CONTESTANT_PER_TEAM || inBench[1] < SimulParse.CONTESTANT_PER_TEAM) {
             try {
@@ -284,7 +289,7 @@ public class ContestantBench {
         nEntities += 1;
         // the contestantas just to shut down all at the same time
         if (nEntities >= 3) {
-            ServerGameOfRopeContestantBench.waitConnection = false;
+            ServerGameOfRopeContestantBench.shutdown();
         }
         notifyAll();
     }

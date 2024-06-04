@@ -8,6 +8,7 @@ import genclass.GenericIO;
 import genclass.TextFile;
 import serverSide.main.ServerGameOfRopeGeneralRepository;
 import serverSide.main.SimulParse;
+import interfaces.GeneralRepositoryInterface;
 
 /**
  * General Repository
@@ -16,7 +17,7 @@ import serverSide.main.SimulParse;
  * 
  * It is a shared region.
  */
-public class GeneralRepository {
+public class GeneralRepository implements GeneralRepositoryInterface{
   /**
    * Name of the log file
    */
@@ -283,7 +284,7 @@ public class GeneralRepository {
    * entity state changes.
    * 
    */
-  private void updateInfoTemplate() {
+  public void updateInfoTemplate(){
     TextFile log = new TextFile();
     if (!log.openForAppending(".", logFileName)) {
       GenericIO.writelnString("The operation of creating the file " + logFileName + " failed!");
@@ -580,7 +581,7 @@ public class GeneralRepository {
     nEntities += 1;
     // the contestantas just to shut down all at the same time
     if (nEntities >= 3) {
-      ServerGameOfRopeGeneralRepository.waitConnection = false;
+      ServerGameOfRopeGeneralRepository.shutdown();
     }
     notifyAll();
   }

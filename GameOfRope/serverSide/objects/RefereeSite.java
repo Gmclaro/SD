@@ -1,7 +1,9 @@
 package serverSide.objects;
 
+import java.rmi.RemoteException;
+
 import clientSide.entities.RefereeState;
-import clientSide.stubs.GeneralRepositoryStub;
+import interfaces.*;
 import serverSide.main.ServerGameOfRopeRefereeSite;
 
 /**
@@ -9,12 +11,12 @@ import serverSide.main.ServerGameOfRopeRefereeSite;
  * Shared Memory Region
  */
 
-public class RefereeSite {
+public class RefereeSite implements RefereeSiteInterface{
 
     /**
      * Reference to the General Repository
      */
-    private final GeneralRepositoryStub repo;
+    private final GeneralRepositoryInterface repo;
 
     /**
      * Number of teams ready
@@ -34,7 +36,7 @@ public class RefereeSite {
      * @param repo General Repository
      */
 
-    public RefereeSite(GeneralRepositoryStub repo) {
+    public RefereeSite(GeneralRepositoryInterface repo) {
         this.repo = repo;
         teamsReady = 0;
     }
@@ -42,18 +44,18 @@ public class RefereeSite {
     /**
      * The referee announces a new game
      */
-    public synchronized void announceNewGame() {
+    
+    public synchronized int announceNewGame() throws RemoteException{
         repo.newGameStarted();
-
-        ((RefereeSiteClientProxy) Thread.currentThread()).setRefereeState(RefereeState.START_OF_A_GAME);
         repo.setRefereeState(RefereeState.START_OF_A_GAME);
+        return RefereeState.START_OF_A_GAME;
     }
 
     /**
      * The referee waits for the coaches to inform the teams are ready
      */
 
-    public synchronized void informReferee() {
+    public synchronized void informReferee() throws RemoteException{
         teamsReady++;
         notifyAll();
     }
@@ -61,7 +63,7 @@ public class RefereeSite {
     /**
      * The referee waits for the coaches to inform the teams are ready
      */
-    public synchronized void waitForInformReferee() {
+    public synchronized void waitForInformReferee()throws RemoteException{
         while (teamsReady < 2) {
             try {
                 wait();
@@ -82,12 +84,12 @@ public class RefereeSite {
      *   Operation server shutdown.
      */
 
-    public synchronized void shutdown() {
+    public synchronized void shutdown() throws RemoteException{
         nEntities += 1;
 
         // the contestantas just to shut down all at the same time
         if (nEntities >= 2) {
-            ServerGameOfRopeRefereeSite.waitConnection = false;
+            ServerGameOfRopeRefereeSite.shutdown();
         }
         notifyAll();
     }
