@@ -13,9 +13,10 @@ public interface RefereeSiteInterface extends Remote {
     /** 
      * Operations announceNewGame
      * The Referee announces a new game
+     * @return the state of the referee
      * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
      */
-    public void announceNewGame() throws RemoteException;
+    public int announceNewGame() throws RemoteException;
 
     /** 
      * TOperations informReferee

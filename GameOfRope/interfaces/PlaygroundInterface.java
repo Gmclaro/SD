@@ -38,7 +38,7 @@ public interface PlaygroundInterface extends Remote {
      *                         communication with the registry service fails
      */
 
-    public void startTrial() throws RemoteException;
+    public int startTrial() throws RemoteException;
 
     /**
      * Operation waitForStartTrial

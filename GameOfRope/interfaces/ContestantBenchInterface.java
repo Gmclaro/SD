@@ -16,7 +16,7 @@ public interface ContestantBenchInterface extends Remote {
      * @throws RemoteException if either the invocation of the remote method, or the
      *                         communication with the registry service fails
      */
-    public void callTrial() throws RemoteException;
+    public int callTrial() throws RemoteException;
 
     /**
      * Operation waitForCallTrial
@@ -79,7 +79,7 @@ public interface ContestantBenchInterface extends Remote {
      *                         communication with the registry service fails
      */
 
-    public void declareMatchWinner(int[] scores) throws RemoteException;
+    public int declareMatchWinner(int[] scores) throws RemoteException;
 
     /**
      * Operation waitForSeatAtBench
