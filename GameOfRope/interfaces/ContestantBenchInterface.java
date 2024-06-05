@@ -1,5 +1,7 @@
 package interfaces;
 
+import commonInfra.View;
+
 import java.rmi.*;
 
 /**
@@ -26,7 +28,7 @@ public interface ContestantBenchInterface extends Remote {
      *                         communication with the registry service fails
      */
 
-    public int waitForCallTrial(int team) throws RemoteException;
+    public ReturnInt waitForCallTrial(int team) throws RemoteException;
 
     /**
      * Operation callContestants
@@ -47,7 +49,7 @@ public interface ContestantBenchInterface extends Remote {
      *                         communication with the registry service fails
      */
 
-    public int waitForCallContestants(int team, int id) throws RemoteException;
+    public ReturnInt waitForCallContestants(int team, int i,int strengh) throws RemoteException;
 
     /**
      * Operation seatDown
@@ -58,7 +60,7 @@ public interface ContestantBenchInterface extends Remote {
      *                         communication with the registry service fails
      */
 
-    public void seatDown(int team, int id) throws RemoteException;
+    public int seatDown(int team, int id,int strengh) throws RemoteException;
 
     /**
      * Operation reviewNotes
@@ -75,6 +77,7 @@ public interface ContestantBenchInterface extends Remote {
      * Operation declare match winner
      * The referee declares the match winner
      * @param scores Match result
+     * @return int State of the referee
      * @throws RemoteException if either the invocation of the remote method, or the
      *                         communication with the registry service fails
      */

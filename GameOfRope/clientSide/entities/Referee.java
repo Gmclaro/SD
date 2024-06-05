@@ -3,6 +3,7 @@ package clientSide.entities;
 import interfaces.ContestantBenchInterface;
 import interfaces.PlaygroundInterface;
 import interfaces.RefereeSiteInterface;
+import interfaces.ReturnInt;
 import serverSide.main.SimulParse;
 
 /**
@@ -148,7 +149,7 @@ public class Referee extends Thread {
             }
         }
 
-        declareMatchWinner(scores);
+        declareMatchWinner();
         System.out.println(this.whoAmI() + " -> declareMatchWinner()");
 
     }
@@ -230,7 +231,6 @@ public class Referee extends Thread {
      * @return boolean true if the trial is not over, false otherwise
      */
 
-     //TODO: fix this i think perguntar ao daniel
      private boolean assertTrialDecision(){
         boolean result = false;
 
@@ -264,20 +264,19 @@ public class Referee extends Thread {
      * 
      * @return int the position of the rope
      */
-
-    // TODO : isto nao pode estar bem
     private int declareGameWinner() {
-        int result = 0;
+        ReturnInt result = null;
 
         try {
             result = playgroundStub.declareGameWinner();
+            setEntityState(result.getIntStateVal());
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
             e.printStackTrace();
             System.exit(1);
         }
 
-        return result;
+        return result.getIntVal();
     }
 
     /**
@@ -286,9 +285,9 @@ public class Referee extends Thread {
      * @param scores the scores of the games
      */
 
-    private void declareMatchWinner(int[] scores) {
+    private void declareMatchWinner() {
         try {
-            contestantBenchStub.declareMatchWinner(scores);
+            state = contestantBenchStub.declareMatchWinner(scores);
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
             e.printStackTrace();

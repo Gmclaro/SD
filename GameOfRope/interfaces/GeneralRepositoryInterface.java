@@ -127,6 +127,18 @@ public interface GeneralRepositoryInterface extends Remote {
 
 
     /**
+     * Operation setRemoveContestant
+     * Set the remove contestant
+     * 
+     * @param team The team of the contestant
+     * @param id   The id of the contestant
+     * @throws RemoteException
+     */
+
+    public void setRemoveContestant(int team, int id) throws RemoteException;
+
+
+    /**
      * Operation setNewTrial
      * Set the new trial
      * 

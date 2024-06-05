@@ -92,8 +92,7 @@ public class ContestantBench implements ContestantBenchInterface {
      * @param team Team of the Coach
      * @return int order of the Coach in the playground
      */
-    public synchronized int waitForCallTrial(int team) {
-        ((ContestantBenchClientProxy) Thread.currentThread()).setCoachState(CoachState.WAIT_FOR_REFEREE_COMMAND);
+    public synchronized ReturnInt waitForCallTrial(int team) throws RemoteException{
         repo.setCoachState(team, CoachState.WAIT_FOR_REFEREE_COMMAND);
 
         while (!matchOver && callTrial == 0) {
@@ -105,12 +104,12 @@ public class ContestantBench implements ContestantBenchInterface {
         }
 
         if (matchOver) {
-            return 0;
+            return new ReturnInt(0, CoachState.WAIT_FOR_REFEREE_COMMAND);
         }
 
         callTrial--;
         notifyAll();
-        return 1;
+        return new ReturnInt(1, CoachState.WAIT_FOR_REFEREE_COMMAND);
     }
 
     /**
@@ -121,7 +120,7 @@ public class ContestantBench implements ContestantBenchInterface {
      * @param team     Team of the Coach
      * @param selected Ids of Contestants selected to play
      */
-    public synchronized void callContestants(int team, int[] selected) {
+    public synchronized void callContestants(int team, int[] selected) throws RemoteException{
         for (int i = 0; i < SimulParse.CONTESTANT_PER_TEAM; i++)
             playgroundQueue[team][i] = 1;
         for (int id : selected)
@@ -137,18 +136,15 @@ public class ContestantBench implements ContestantBenchInterface {
      * @return int Order of the Contestant in the playground
      */
 
-    public int waitForCallContestants(int team, int id) {
+    public ReturnInt waitForCallContestants(int team, int id, int strength) throws RemoteException {
         /**
          * Updates Contestant current state and placed the Contestant in Bench
          */
-        ContestantBenchClientProxy contestant;
         synchronized (this) {
-            contestant = (ContestantBenchClientProxy) Thread.currentThread();
-            // contestant.setEntityState(ContestantState.SEAT_AT_THE_BENCH);
 
-            // repo.setContestantState(team, id, ContestantState.SEAT_AT_THE_BENCH);
+            repo.setContestantState(team, id, ContestantState.SEAT_AT_THE_BENCH);
 
-            contestants[team][id].setValue(contestant.getStrength());
+            contestants[team][id].setValue(strength);
 
             // inBench[team]++;
             notifyAll();
@@ -174,7 +170,7 @@ public class ContestantBench implements ContestantBenchInterface {
              * Since match is over, Contestant Thread will be ended.
              */
             if (matchOver) {
-                return 0;
+                return new ReturnInt(0, ContestantState.SEAT_AT_THE_BENCH);
             }
 
             /**
@@ -187,15 +183,15 @@ public class ContestantBench implements ContestantBenchInterface {
             }
 
             if (order == 1) {
-                contestants[team][id].setValue(contestant.getStrength() + 1);
-                repo.setContestantStrength(team, id, contestant.getStrength() + 1);
+                contestants[team][id].setValue(strength + 1);
+                repo.setContestantStrength(team, id, strength + 1);
             }
 
             /**
              * Restart the life cycle of the Contestant
              */
             playgroundQueue[team][id] = 0;
-            return order;
+            return new ReturnInt(order, ContestantState.SEAT_AT_THE_BENCH);
         }
 
     }
@@ -206,7 +202,7 @@ public class ContestantBench implements ContestantBenchInterface {
      * @param team Team of the Contestant
      * @param id   Id of the Contestant
      */
-    public synchronized void seatDown(int team, int id) {
+    public synchronized int seatDown(int strengh,int team, int id) throws RemoteException {
         while (matchOver) {
             try {
                 wait();
@@ -215,18 +211,17 @@ public class ContestantBench implements ContestantBenchInterface {
             }
         }
 
-        ContestantBenchClientProxy contestant = (ContestantBenchClientProxy) Thread.currentThread();
-        contestant.setContestantState(ContestantState.SEAT_AT_THE_BENCH);
 
         repo.setContestantState(team, id, ContestantState.SEAT_AT_THE_BENCH);
 
-        contestants[team][id].setValue(contestant.getStrength());
+        contestants[team][id].setValue(strengh);
 
         inBench[team]++;
 
         repo.setRemoveContestant(team, id);
 
         notifyAll();
+        return ContestantState.SEAT_AT_THE_BENCH;
     }
 
     /**
@@ -235,7 +230,7 @@ public class ContestantBench implements ContestantBenchInterface {
      * @param team Team of the Coach
      * @return View[] Array of Views with the Contestants information
      */
-    public synchronized View[] reviewNotes(int team) {
+    public synchronized View[] reviewNotes(int team) throws RemoteException{
         // while (inBench[team] < SimulParse.CONTESTANT_PER_TEAM) {
         // while ((inBench[0] + inBench[1]) < (2 * SimulParse.CONTESTANT_PER_TEAM)) {
         while ((inBench[0] < SimulParse.CONTESTANT_PER_TEAM) || (inBench[1] < SimulParse.CONTESTANT_PER_TEAM)) {
@@ -293,4 +288,6 @@ public class ContestantBench implements ContestantBenchInterface {
         }
         notifyAll();
     }
+
+    
 }

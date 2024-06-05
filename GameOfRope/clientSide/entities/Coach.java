@@ -131,33 +131,32 @@ public class Coach extends Thread {
          */
         int orders;
 
-        View[] aboutContestants = contestantBench.reviewNotes(team);
+        View[] aboutContestants = reviewNotes();
         System.out.println(this.whoAmI() + " -> reviewNotes()");
 
         int[] selected = selectContestants(aboutContestants);
         System.out.println(this.whoAmI() + " -> selectContestants()");
 
         while (true) {
-            orders = contestantBench.waitForCallTrial(team);
+            orders = waitForCallTrial();
             System.out.println(this.whoAmI() + " -> waitForCallTrial()");
 
             if (orders == 0) {
                 return;
             }
-
-            contestantBench.callContestants(team, selected);
+            callContestants(selected);
             System.out.println(this.whoAmI() + " -> callContestants()");
-
-            playground.waitForFollowCoachAdvice(team);
+            
+            waitForFollowCoachAdvice();
             System.out.println(this.whoAmI() + " -> waitForFollowCoachAdvice()");
 
             informReferee();
             System.out.println(this.whoAmI() + " -> informReferee()");
 
-            playground.waitForAssertTrialDecision(team);
+            waitForAssertTrialDecision();
             System.out.println(this.whoAmI() + " -> waitForAssertTrialDecision()");
 
-            aboutContestants = contestantBench.reviewNotes(team);
+            aboutContestants = reviewNotes();
             System.out.println(this.whoAmI() + " -> reviewNotes()");
 
             selected = selectContestants(aboutContestants);
@@ -191,4 +190,91 @@ public class Coach extends Thread {
         }
 
     }
+
+    /**
+     * Review the notes of the contestants
+     * 
+     */
+
+     private View[] reviewNotes() {
+        View[] aboutContestants = null;
+        try {
+            aboutContestants = contestantBenchStub.reviewNotes(team);
+        } catch (RemoteException e) {
+            System.out.println(this.whoAmI() + " -> " + e.getMessage());
+            System.exit(1);
+        }
+        return aboutContestants;
+    }
+
+    /**
+     * Wait for the referee to call the trial
+     * 
+     * @return int The number of orders
+     */
+
+
+    private int waitForCallTrial() {
+        ReturnInt orders = null;
+        try {
+            orders = contestantBenchStub.waitForCallTrial(team);
+        } catch (RemoteException e) {
+            System.out.println(this.whoAmI() + " -> " + e.getMessage());
+            System.exit(1);
+        }
+        if (orders.getIntVal()<0 || orders.getIntVal()>1) {
+            System.err.println("Invalid return value from waitForCallTrial: " + orders.getIntVal());
+            System.exit(1);
+        }
+        state = orders.getIntVal();
+        return orders.getIntVal();
+    }
+
+    /**
+     * Call the selected contestants
+     * 
+     * @param selected The selected contestants
+     * @param team     The team of the coach
+     * 
+     */
+
+    private void callContestants(int[] selected) {
+        try {
+            contestantBenchStub.callContestants(team, selected);
+        } catch (RemoteException e) {
+            System.out.println(this.whoAmI() + " -> " + e.getMessage());
+            System.exit(1);
+        }
+    }
+
+    /**
+     * Wait for follow coach advice
+     * 
+     * @param team The team of the coach
+     */
+
+    private void waitForFollowCoachAdvice() {
+        try {
+            state = playgroundStub.waitForFollowCoachAdvice(team);
+        } catch (RemoteException e) {
+            System.out.println(this.whoAmI() + " -> " + e.getMessage());
+            System.exit(1);
+        }
+    }
+
+    /**
+     * Wait For Assert Trial Decision
+     * 
+     * @param team The team of the coach
+     */
+
+    private void waitForAssertTrialDecision() {
+        try {
+            state = playgroundStub.waitForAssertTrialDecision(team);
+        } catch (RemoteException e) {
+            System.out.println(this.whoAmI() + " -> " + e.getMessage());
+            System.exit(1);
+        }
+    }
+
 }

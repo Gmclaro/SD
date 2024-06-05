@@ -28,7 +28,7 @@ public interface PlaygroundInterface extends Remote {
      *                         communication with the registry service fails
      */
 
-    public void waitForFollowCoachAdvice(int team) throws RemoteException;
+    public int waitForFollowCoachAdvice(int team) throws RemoteException;
 
     /**
      * Operarion startTrial
@@ -50,7 +50,7 @@ public interface PlaygroundInterface extends Remote {
      *                         communication with the registry service fails
      */
 
-    public void waitForStartTrial(int team, int id) throws RemoteException;
+    public int waitForStartTrial(int team, int id) throws RemoteException;
 
     /**
      * Operation getReady
@@ -63,6 +63,16 @@ public interface PlaygroundInterface extends Remote {
      */
 
     public void getReady(int team, int id) throws RemoteException;
+
+    /**
+     * Operatoin amDone
+     * The contestant informs that he is done
+     * @throws RemoteException
+     */
+
+    public void amDone() throws RemoteException;
+
+
 
     /**
      * Operation waitForAmDone
@@ -92,14 +102,24 @@ public interface PlaygroundInterface extends Remote {
      * is done and wait for the decision of referee
      * 
      * @param team     Team of the Contestant
-     * @param id       Id of the Contestant
-     * @param strength Strength of the Contestant
      * 
      * @throws RemoteException if either the invocation of the remote method, or the
      *                         communication with the registry service fails
      */
 
-    public void waitForAssertTrialDecision(int team, int id, int strength) throws RemoteException;
+    public int waitForAssertTrialDecision(int team) throws RemoteException;
+
+    /**
+     * Operation waitForAssertTrialDecision
+     * Contestants will do trial lifecycle, where he pulls the rope, inform that he
+     * @param team The team of the Contestant
+     * @param id   The id of the Contestant
+     * @param strength The strength of the Contestant
+     * 
+     * @throws RemoteException
+     */
+
+    public int waitForAssertTrialDecision(int team, int id, int strength) throws RemoteException;
 
     /**
      * Operation declareGameWinner
@@ -110,19 +130,8 @@ public interface PlaygroundInterface extends Remote {
      *                         communication with the registry service fails
      */
 
-    public int declareGameWinner() throws RemoteException;
+    public ReturnInt declareGameWinner() throws RemoteException;
 
-    /**
-     * Operation pullTheRope
-     * 
-     * @param strength The strength of the contestant
-     * @return int The strength of the contestant
-     * 
-     * @throws RemoteException if either the invocation of the remote method, or the
-     *                         communication with the registry service fails
-     */
-
-    public int pullTheRope(int strength) throws RemoteException;
 
     /**
      * Operation server shutdown

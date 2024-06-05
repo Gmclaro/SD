@@ -107,7 +107,7 @@ public class Playground implements PlaygroundInterface{
      * 
      * @param team The team of the contestant
      */
-    public synchronized void followCoachAdvice(int team) {
+    public synchronized void followCoachAdvice(int team) throws RemoteException{
         arrivedContestants[team]++;
         notifyAll();
     }
@@ -118,8 +118,7 @@ public class Playground implements PlaygroundInterface{
      * @param team The team of the coach
      */
 
-    public synchronized void waitForFollowCoachAdvice(int team) {
-        ((PlaygroundClientProxy) Thread.currentThread()).setCoachState(CoachState.ASSEMBLE_TEAM);
+    public synchronized int waitForFollowCoachAdvice(int team) throws RemoteException{
         repo.setCoachState(team, CoachState.ASSEMBLE_TEAM);
 
         while (arrivedContestants[team] < SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM) {
@@ -130,8 +129,8 @@ public class Playground implements PlaygroundInterface{
             }
         }
         notifyAll();
-
         // arrivedContestants[team] = 0;
+        return CoachState.ASSEMBLE_TEAM;
     }
 
     /**
@@ -153,8 +152,7 @@ public class Playground implements PlaygroundInterface{
      * @param team The team of the contestant
      * @param id   The id of the contestant
      */
-    public synchronized void waitForStartTrial(int team, int id) {
-        ((PlaygroundClientProxy) Thread.currentThread()).setContestantState(ContestantState.STAND_IN_POSITION);
+    public synchronized int waitForStartTrial(int team, int id) throws RemoteException{
 
         repo.setContestantState(team, id, ContestantState.STAND_IN_POSITION);
 
@@ -172,6 +170,8 @@ public class Playground implements PlaygroundInterface{
         nOfGetReady++;
         notifyAll();
 
+        return ContestantState.STAND_IN_POSITION;
+
     }
 
     /**
@@ -181,7 +181,7 @@ public class Playground implements PlaygroundInterface{
      * @param id   The id of the contestant
      */
 
-    public synchronized void getReady(int team, int id) {
+    public synchronized void getReady(int team, int id)  throws RemoteException{
         while (nOfGetReady < (2 * SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM)) {
             try {
                 wait();
@@ -197,7 +197,7 @@ public class Playground implements PlaygroundInterface{
     /**
      * Contestants inform that they are done pulling the rope
      */
-    public synchronized void amDone() {
+    public synchronized void amDone() throws RemoteException{
         this.nOfAmDone++;
         notifyAll();
     }
@@ -261,31 +261,20 @@ public class Playground implements PlaygroundInterface{
      * @param strength The strength of the contestant
      */
 
-    public void waitForAssertTrialDecision(int team, int id, int strength) {
+    public int waitForAssertTrialDecision(int team, int id, int strength) throws RemoteException{
         /**
          * Contestant pulls the rope
          */
-        PlaygroundClientProxy contestant;
+
         synchronized (this) {
-            contestant = (PlaygroundClientProxy) Thread.currentThread();
 
             strengthPerTeam[team] += strength;
-            strength = pullTheRope(strength);
             repo.setContestantStrength(team, id, strength);
 
-            contestant.setContestantState(ContestantState.DO_YOUR_BEST);
-            contestant.setStrength(strength);
+
             repo.setContestantState(team, id, ContestantState.DO_YOUR_BEST);
         }
 
-        /**
-         * Contestant sleeps for a random time
-         */
-        try {
-            contestant.sleep((long) (1 + 100 * Math.random()));
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         /**
          * Contestant informs that he is done pulling the rope
@@ -303,6 +292,7 @@ public class Playground implements PlaygroundInterface{
             arrivedContestants[team]--;
             notifyAll();
         }
+        return ContestantState.DO_YOUR_BEST;
 
     }
 
@@ -311,9 +301,8 @@ public class Playground implements PlaygroundInterface{
      * 
      * @param team The team of the coach
      */
-    public void waitForAssertTrialDecision(int team) {
+    public int waitForAssertTrialDecision(int team)throws RemoteException {
         synchronized (this) {
-            ((PlaygroundClientProxy) Thread.currentThread()).setCoachState(CoachState.WATCH_TRIAL);
             repo.setCoachState(team, CoachState.WATCH_TRIAL);
 
             while (!endOfTrial || arrivedContestants[0] > 0 || arrivedContestants[1] > 0) {
@@ -325,6 +314,7 @@ public class Playground implements PlaygroundInterface{
             }
             notifyAll();
         }
+        return CoachState.WATCH_TRIAL;
     }
 
     /**
@@ -332,7 +322,7 @@ public class Playground implements PlaygroundInterface{
      * 
      * @return int The difference of strength between the teams
      */
-    public synchronized int declareGameWinner() throws RemoteException {
+    public synchronized ReturnInt declareGameWinner() throws RemoteException {
         repo.setRefereeState(RefereeState.END_OF_A_GAME);
 
         repo.setEndOfGame();
@@ -346,18 +336,11 @@ public class Playground implements PlaygroundInterface{
         int aux = ropePosition;
         ropePosition = 0;
 
-        return RefereeState.END_OF_A_GAME;
+        return new ReturnInt(aux,RefereeState.END_OF_A_GAME);
+
+        
     }
 
-    /**
-     * Contestant pulls the rope
-     * 
-     * @param strength
-     * @return strengh -1 
-     */
-    public int pullTheRope(int strength) {
-        return strength - 1;
-    }
 
     /**
      * Operation server shutdown.
@@ -366,7 +349,7 @@ public class Playground implements PlaygroundInterface{
         nEntities += 1;
         // the contestantas just to shut down all at the same time
         if (nEntities >= 3) {
-            ServerGameOfRopePlayground.waitConnection = false;
+            ServerGameOfRopePlayground.shutdown();
         }
         notifyAll();
     }

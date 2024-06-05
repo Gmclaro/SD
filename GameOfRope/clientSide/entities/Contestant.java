@@ -5,6 +5,8 @@ import java.rmi.RemoteException;
 import interfaces.ContestantBenchInterface;
 import interfaces.PlaygroundInterface;
 
+import interfaces.*;
+
 /**
  * Custom Thread
  * 
@@ -153,12 +155,12 @@ public class Contestant extends Thread {
     @Override
     public void run() {
         System.out.println(this.whoAmI() + " has started.");
-        contestantBench.seatDown(this.team, this.id);
+        seatDown();
         System.out.println(this.whoAmI() + " -> seatDown()");
 
         int orders;
         while (true) {
-            orders = contestantBench.waitForCallContestant(team, id);
+            orders = waitForCallContestant();
             System.out.println(this.whoAmI() + " -> waitForCallContestant()");
 
             switch (orders) {
@@ -172,19 +174,21 @@ public class Contestant extends Thread {
                     break; // contestant was selected, go to playground and continue the lifecycle
             }
 
-            playground.followCoachAdvice(this.team);
+            followCoachAdvice();
             System.out.println(this.whoAmI() + " -> followCoachAdvice()");
 
-            playground.waitForStartTrial(this.team, this.id);
+            waitForStartTrial();
             System.out.println(this.whoAmI() + " -> waitForStartTrial()");
 
-            playground.getReady(this.team, this.id);
+            getReady();
             System.out.println(this.whoAmI() + " -> getReady()");
 
-            playground.waitForAssertTrialDecision(this.team, this.id, this.strength);
+            pullTheRope();
+
+            waitForAssertTrialDecision();
             System.out.println(this.whoAmI() + " -> waitForAssertTrialDecision()");
 
-            contestantBench.seatDown(this.team, this.id);
+            seatDown();
             System.out.println(this.whoAmI() + " -> seatDown()");
         }
     }
@@ -197,23 +201,115 @@ public class Contestant extends Thread {
         this.strength++;
     }
 
+    private void pullTheRope() {
+        /**
+         * Contestant sleeps for a random time
+         */
+        try {
+            sleep((long) (1 + 100 * Math.random()));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        this.strength--;
+    }
+
     /**
      * Operation seatDown
      * Remote operation.
      * Contestatn is placed in the bench
+     * 
      * @param team Team of the Contestant
      * @param id   Id of the Contestantc
      */
 
-     private void seatDown(int team, int id) {
-        try{
-            state = contestantBenchStub.seatDown(team, id);
-        }catch(RemoteException e){
-            System.out.println("Contestant remote exception on seatDown: " + e.getMessage());
+    private void seatDown() {
+        try {
+            state = contestantBenchStub.seatDown(team, id, strength);
+        } catch (RemoteException e) {
             e.printStackTrace();
-            System.exit(1);
         }
-     }
+    }
 
+    /**
+     * Operation followCoachAdvice
+     * Remote operation.
+     * Contestants go to the playground and inform when they have arrived
+     * 
+     * @param team The team of the contestant
+     */
+
+    private void followCoachAdvice() {
+        try {
+            playgroundStub.followCoachAdvice(team);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Operation waitForCallContestant
+     * Remote operation.
+     * Contestant waits to be called by the coach
+     * 
+     * 
+     */
+
+    private int waitForCallContestant() {
+        ReturnInt orders = null;
+        try {
+            orders = contestantBenchStub.waitForCallContestants(team, id, strength);
+            setEntityState(orders.getIntStateVal());
+
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return orders.getIntVal();
+    }
+
+    /**
+     * Operation waitForStartTrial
+     * Remote operation.
+     * Contestant waits for the trial to start
+     * 
+     */
+
+    private void waitForStartTrial() {
+        try {
+            state = playgroundStub.waitForStartTrial(team, id);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Operation getReady
+     * Remote operation.
+     * Contestant gets ready
+     * 
+     */
+
+    private void getReady() {
+        try {
+            playgroundStub.getReady(team, id);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Operation waitForAssertTrialDecision
+     * 
+     * Contestant waits for the decision of the referee
+     * 
+     * 
+     */
+
+    private void waitForAssertTrialDecision() {
+        try {
+            state= playgroundStub.waitForAssertTrialDecision(team, id,strength);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
