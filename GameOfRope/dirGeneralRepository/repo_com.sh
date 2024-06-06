@@ -2,4 +2,4 @@ CODEBASE="http://localhost/"$1"/classes/"
 java -Djava.rmi.server.codebase=$CODEBASE\
      -Djava.rmi.server.useCodebaseOnly=true\
      -Djava.security.policy=java.policy\
-     serverSide.main.ServerRegisterRemoteObject 22140 localhost 22147
+     serverSide.main.ServerGameOfRopeGeneralRepository 22141 localhost 22147

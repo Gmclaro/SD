@@ -47,7 +47,7 @@ public class ServerGameOfRopeContestantBench {
             System.out.println("args[0] is not a number!");
             System.exit(1);
         }
-        if ((portNumb < 22130) || (portNumb >= 22139)) {
+        if ((portNumb < 4000) || (portNumb >= 65536)) {
             System.out.println("args[0] is not a valid port number!");
             System.exit(1);
         }
@@ -59,7 +59,7 @@ public class ServerGameOfRopeContestantBench {
             System.out.println("args[2] is not a number!");
             System.exit(1);
         }
-        if ((rmiRegPortNumb < 22130) || (rmiRegPortNumb >= 22139)) {
+        if ((rmiRegPortNumb < 4000) || (rmiRegPortNumb >= 65536)) {
             System.out.println("args[2] is not a valid port number!");
             System.exit(1);
         }
@@ -94,18 +94,6 @@ public class ServerGameOfRopeContestantBench {
             e.printStackTrace();
             System.exit(1);
         }
-        try {
-            generalRepositoryStub = (GeneralRepositoryInterface) registry.lookup("GeneralRepository");
-        } catch (RemoteException e) {
-            System.out.println("GeneralRepository lookup exception: " + e.getMessage());
-            e.printStackTrace();
-            System.exit(1);
-        } catch (NotBoundException e) {
-            System.out.println("GeneralRepository not bound to registry: " + e.getMessage());
-            e.printStackTrace();
-            System.exit(1);
-        }
-
         // instantiate ContestantBench object
         ContestantBench contestantBench = new ContestantBench(generalRepositoryStub);
         ContestantBenchInterface contestantBenchStub = null;
@@ -169,7 +157,7 @@ public class ServerGameOfRopeContestantBench {
 
         boolean shutdownDone = false;
 
-        try{
+        try {
             reg.unbind(nameEntryObject);
         } catch (RemoteException e) {
             System.out.println("ContestantBench deregistration exception: " + e.getMessage());

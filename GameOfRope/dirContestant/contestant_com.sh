@@ -1,0 +1,1 @@
+java clientSide.main.ClientGameOfRopeContestant localhost 22147 

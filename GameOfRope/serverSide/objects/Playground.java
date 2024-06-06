@@ -345,7 +345,7 @@ public class Playground implements PlaygroundInterface{
     /**
      * Operation server shutdown.
      */
-    public synchronized void shutdown() {
+    public synchronized void shutdown() throws RemoteException{
         nEntities += 1;
         // the contestantas just to shut down all at the same time
         if (nEntities >= 3) {

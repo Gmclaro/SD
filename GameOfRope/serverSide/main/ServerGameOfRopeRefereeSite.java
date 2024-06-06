@@ -46,7 +46,7 @@ public class ServerGameOfRopeRefereeSite {
             System.out.println("args[0] is not a number!");
             System.exit(1);
         }
-        if ((portNumb < 22130) || (portNumb >= 22139)) {
+        if ((portNumb < 4000) || (portNumb >= 65536)) {
             System.out.println("args[0] is not a valid port number!");
             System.exit(1);
         }
@@ -58,7 +58,7 @@ public class ServerGameOfRopeRefereeSite {
             System.out.println("args[2] is not a number!");
             System.exit(1);
         }
-        if ((rmiRegPortNumb < 22130) || (rmiRegPortNumb >= 22139)) {
+        if ((rmiRegPortNumb < 4000) || (rmiRegPortNumb >= 65536)) {
             System.out.println("args[2] is not a valid port number!");
             System.exit(1);
         }
