@@ -49,7 +49,7 @@ public interface ContestantBenchInterface extends Remote {
      *                         communication with the registry service fails
      */
 
-    public ReturnInt waitForCallContestants(int team, int i,int strengh) throws RemoteException;
+    public int waitForCallContestants(int team, int i,int strengh) throws RemoteException;
 
     /**
      * Operation seatDown
@@ -60,7 +60,7 @@ public interface ContestantBenchInterface extends Remote {
      *                         communication with the registry service fails
      */
 
-    public int seatDown(int team, int id,int strengh) throws RemoteException;
+    public int seatDown(int team, int id,int strength) throws RemoteException;
 
     /**
      * Operation reviewNotes
@@ -71,7 +71,7 @@ public interface ContestantBenchInterface extends Remote {
      *                         communication with the registry service fails
      */
 
-    public View[] reviewNotes(int team) throws RemoteException;
+    public ReturnInt[] reviewNotes(int team) throws RemoteException;
 
     /**
      * Operation declare match winner

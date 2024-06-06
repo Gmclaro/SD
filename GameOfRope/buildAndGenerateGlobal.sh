@@ -8,7 +8,7 @@ echo "Distributing intermediate code to the different execution environments."
 
 echo "  RMI registry"
 rm -rf dirRMIRegistry/interfaces
-mkdir -p dirRMIRegistry/interfaces
+mkdir -p dirRMIRegistry/interfaces 
 cp interfaces/*.class dirRMIRegistry/interfaces
 
 ######################################################################

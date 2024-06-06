@@ -51,6 +51,8 @@ public class ClientGameOfRopeReferee {
         PlaygroundInterface playgroundStub = null;
         String nameEntryRefereeSite = "RefereeSite";
         RefereeSiteInterface refereeSiteStub = null;
+        GeneralRepositoryInterface generalRepositoryStub = null;
+        String nameEntryGeneralRepository = "GeneralRepository";
 
         Registry registry = null;
 
@@ -95,6 +97,18 @@ public class ClientGameOfRopeReferee {
             System.exit(1);
         }
 
+        try {
+            generalRepositoryStub = (GeneralRepositoryInterface) registry.lookup(nameEntryGeneralRepository);
+        } catch (RemoteException e) {
+            System.out.println("GeneralRepository lookup exception: " + e.getMessage());
+            e.printStackTrace();
+            System.exit(1);
+        } catch (NotBoundException e) {
+            System.out.println("GeneralRepository not bound exception: " + e.getMessage());
+            e.printStackTrace();
+            System.exit(1);
+        }
+
         referee = new Referee(playgroundStub, refereeSiteStub, contestantBenchStub);
 
         System.out.println("Lauching Referee Thread.");
@@ -126,6 +140,13 @@ public class ClientGameOfRopeReferee {
             refereeSiteStub.shutdown();
         }catch(RemoteException e){
             System.out.println("RefereeSite shutdown exception: " + e.getMessage());
+            e.printStackTrace();
+            System.exit(1);
+        }
+        try{
+            generalRepositoryStub.shutdown();
+        }catch(RemoteException e){
+            System.out.println("GeneralRepository shutdown exception: " + e.getMessage());
             e.printStackTrace();
             System.exit(1);
         }

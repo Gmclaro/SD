@@ -52,6 +52,8 @@ public class ClientGameOfRopeCoach {
         PlaygroundInterface playgroundStub = null;
         String nameEntryRefereeSite = "RefereeSite";
         RefereeSiteInterface refereeSiteStub = null;
+        String nameEntryGeneralRepository = "GeneralRepository";
+        GeneralRepositoryInterface generalRepositoryStub = null;
 
         Registry registry = null;
         Coach[] coach = new Coach[SimulParse.COACH];
@@ -98,6 +100,17 @@ public class ClientGameOfRopeCoach {
             e.printStackTrace();
             System.exit(1);
         }
+        try {
+            generalRepositoryStub = (GeneralRepositoryInterface) registry.lookup(nameEntryGeneralRepository);
+        } catch (RemoteException e) {
+            System.out.println("General Repository lookup exception: " + e.getMessage());
+            e.printStackTrace();
+            System.exit(1);
+        } catch (NotBoundException e) {
+            System.out.println("General Repository not bound exception: " + e.getMessage());
+            e.printStackTrace();
+            System.exit(1);
+        }
 
         for (int i = 0; i < SimulParse.COACH; i++) {
             coach[i] = new Coach(i, contestantBenchStub, playgroundStub, refereeSiteStub, selectStrategy(i));
@@ -134,6 +147,12 @@ public class ClientGameOfRopeCoach {
             refereeSiteStub.shutdown();
         } catch (RemoteException e) {
             System.out.println("Remote exception on refereeSite shutdown: " + e.getMessage());
+            System.exit(1);
+        }
+        try {
+            generalRepositoryStub.shutdown();
+        } catch (RemoteException e) {
+            System.out.println("Remote exception on generalRepositoryStub shutdown: " + e.getMessage());
             System.exit(1);
         }
     }

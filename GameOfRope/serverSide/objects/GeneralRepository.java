@@ -18,7 +18,7 @@ import java.rmi.*;
  * 
  * It is a shared region.
  */
-public class GeneralRepository implements GeneralRepositoryInterface{
+public class GeneralRepository implements GeneralRepositoryInterface {
   /**
    * Name of the log file
    */
@@ -98,7 +98,7 @@ public class GeneralRepository implements GeneralRepositoryInterface{
    * 
    * It is a shared region.
    * 
-   * @param logFileName        Name of the log file
+   * @param logFileName Name of the log file
    */
 
   public GeneralRepository(String logFileName) {
@@ -117,7 +117,7 @@ public class GeneralRepository implements GeneralRepositoryInterface{
    */
 
   public void initSimul(int[][] contestantStrength) {
-
+    System.out.println("GeneralRepository initSimul");
     /*
      * Initial state of the game
      */
@@ -285,7 +285,7 @@ public class GeneralRepository implements GeneralRepositoryInterface{
    * entity state changes.
    * 
    */
-  public void updateInfoTemplate(){
+  public void updateInfoTemplate() {
     TextFile log = new TextFile();
     if (!log.openForAppending(".", logFileName)) {
       GenericIO.writelnString("The operation of creating the file " + logFileName + " failed!");
@@ -439,7 +439,7 @@ public class GeneralRepository implements GeneralRepositoryInterface{
    *
    * @param refereeState State of the Referee
    */
-  public void setRefereeState(int refereeState) throws RemoteException{
+  public void setRefereeState(int refereeState) throws RemoteException {
     this.refereeState = refereeState;
     this.updateInfoTemplate();
   }
@@ -448,10 +448,10 @@ public class GeneralRepository implements GeneralRepositoryInterface{
    * Update the internal state of one of the Coaches and call the method to write
    * the change of state in the log file.
    * 
-   * @param team   Team of the Coach
+   * @param team  Team of the Coach
    * @param state State of the Coach
    */
-  public void setCoachState(int team, int state) throws RemoteException{
+  public void setCoachState(int team, int state) throws RemoteException {
     this.coachState[team] = state;
     this.updateInfoTemplate();
   }
@@ -464,7 +464,7 @@ public class GeneralRepository implements GeneralRepositoryInterface{
    * @param id    ID of the Contestant
    * @param state State of the Contestant
    */
-  public void setContestantState(int team, int id, int state) throws RemoteException{
+  public void setContestantState(int team, int id, int state) throws RemoteException {
     contestantState[team][id] = state;
     this.updateInfoTemplate();
   }
@@ -476,7 +476,7 @@ public class GeneralRepository implements GeneralRepositoryInterface{
    * @param id       ID of the Contestant
    * @param strength Strength of the Contestant
    */
-  public void setContestantStrength(int team, int id, int strength) throws RemoteException{
+  public void setContestantStrength(int team, int id, int strength) throws RemoteException {
     contestantStrength[team][id] = strength;
   }
 
@@ -497,7 +497,7 @@ public class GeneralRepository implements GeneralRepositoryInterface{
    * @param team Team of the Contestant
    * @param id   ID of the Contestant
    */
-  public void setRemoveContestant(int team, int id) throws RemoteException{
+  public void setRemoveContestant(int team, int id) throws RemoteException {
     activeContestants[team][id].setKey(-1);
     activeContestants[team][id].setValue(-1);
     nActiveContestants[team] = nActiveContestants[team] - 1;
@@ -508,14 +508,14 @@ public class GeneralRepository implements GeneralRepositoryInterface{
    * 
    * @param positionOfRope Position of the rope
    */
-  public synchronized void setRopePosition(int positionOfRope) throws RemoteException{
+  public synchronized void setRopePosition(int positionOfRope) throws RemoteException {
     this.positionOfRope = positionOfRope;
   }
 
   /**
    * Add a new trial to the game.
    */
-  public void setNewTrial()  throws RemoteException{
+  public void setNewTrial() throws RemoteException {
     currentTrial++;
   }
 
@@ -529,7 +529,7 @@ public class GeneralRepository implements GeneralRepositoryInterface{
    * @param scores Scores of the match
    */
 
-  public void setMatchWinner(int[] scores) throws RemoteException{
+  public void setMatchWinner(int[] scores) throws RemoteException {
     if (scores[0] > scores[1]) {
       matchWinner = 0;
     } else if (scores[0] < scores[1]) {
@@ -571,14 +571,15 @@ public class GeneralRepository implements GeneralRepositoryInterface{
   /**
    * Set the end of the game.
    */
-  public void setEndOfGame() throws RemoteException{
+  public void setEndOfGame() throws RemoteException {
     this.endOfGame = true;
   }
-    /**
+
+  /**
    * Operation of shutting down the general repository server.
    */
 
-  public synchronized void shutdown()throws RemoteException{
+  public synchronized void shutdown() throws RemoteException {
     nEntities += 1;
     // the contestantas just to shut down all at the same time
     if (nEntities >= 3) {

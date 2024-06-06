@@ -255,15 +255,15 @@ public class Contestant extends Thread {
      */
 
     private int waitForCallContestant() {
-        ReturnInt orders = null;
+        int orders = 0;
         try {
             orders = contestantBenchStub.waitForCallContestants(team, id, strength);
-            setEntityState(orders.getIntStateVal());
+
 
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        return orders.getIntVal();
+        return orders;
     }
 
     /**

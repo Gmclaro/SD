@@ -136,13 +136,13 @@ public class ContestantBench implements ContestantBenchInterface {
      * @return int Order of the Contestant in the playground
      */
 
-    public ReturnInt waitForCallContestants(int team, int id, int strength) throws RemoteException {
+    public int waitForCallContestants(int team, int id, int strength) throws RemoteException {
         /**
          * Updates Contestant current state and placed the Contestant in Bench
          */
         synchronized (this) {
 
-            repo.setContestantState(team, id, ContestantState.SEAT_AT_THE_BENCH);
+            // repo.setContestantState(team, id, ContestantState.SEAT_AT_THE_BENCH);
 
             contestants[team][id].setValue(strength);
 
@@ -170,7 +170,7 @@ public class ContestantBench implements ContestantBenchInterface {
              * Since match is over, Contestant Thread will be ended.
              */
             if (matchOver) {
-                return new ReturnInt(0, ContestantState.SEAT_AT_THE_BENCH);
+                return 0;
             }
 
             /**
@@ -191,7 +191,7 @@ public class ContestantBench implements ContestantBenchInterface {
              * Restart the life cycle of the Contestant
              */
             playgroundQueue[team][id] = 0;
-            return new ReturnInt(order, ContestantState.SEAT_AT_THE_BENCH);
+            return order;
         }
 
     }
@@ -202,7 +202,7 @@ public class ContestantBench implements ContestantBenchInterface {
      * @param team Team of the Contestant
      * @param id   Id of the Contestant
      */
-    public synchronized int seatDown(int strengh,int team, int id) throws RemoteException {
+    public synchronized int seatDown(int team, int id,int strength) throws RemoteException {
         while (matchOver) {
             try {
                 wait();
@@ -214,7 +214,7 @@ public class ContestantBench implements ContestantBenchInterface {
 
         repo.setContestantState(team, id, ContestantState.SEAT_AT_THE_BENCH);
 
-        contestants[team][id].setValue(strengh);
+        contestants[team][id].setValue(strength);
 
         inBench[team]++;
 
@@ -230,7 +230,7 @@ public class ContestantBench implements ContestantBenchInterface {
      * @param team Team of the Coach
      * @return View[] Array of Views with the Contestants information
      */
-    public synchronized View[] reviewNotes(int team) throws RemoteException{
+    public synchronized ReturnInt[] reviewNotes(int team) throws RemoteException{
         // while (inBench[team] < SimulParse.CONTESTANT_PER_TEAM) {
         // while ((inBench[0] + inBench[1]) < (2 * SimulParse.CONTESTANT_PER_TEAM)) {
         while ((inBench[0] < SimulParse.CONTESTANT_PER_TEAM) || (inBench[1] < SimulParse.CONTESTANT_PER_TEAM)) {
@@ -241,7 +241,12 @@ public class ContestantBench implements ContestantBenchInterface {
             }
 
         }
-        return contestants[team];
+
+        ReturnInt[] returnContestants = new ReturnInt[SimulParse.CONTESTANT_PER_TEAM];
+        for (int i = 0; i < SimulParse.CONTESTANT_PER_TEAM; i++) {
+            returnContestants[i] = new ReturnInt(contestants[team][i].getKey(), contestants[team][i].getValue());
+        }
+        return returnContestants;
     }
 
     /**

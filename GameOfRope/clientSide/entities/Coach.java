@@ -199,7 +199,11 @@ public class Coach extends Thread {
      private View[] reviewNotes() {
         View[] aboutContestants = null;
         try {
-            aboutContestants = contestantBenchStub.reviewNotes(team);
+            ReturnInt[] returnContestants = contestantBenchStub.reviewNotes(team);
+            aboutContestants = new View[returnContestants.length];
+            for (int i = 0; i < returnContestants.length; i++) {
+                aboutContestants[i] = new View(returnContestants[i].getIntVal(), returnContestants[i].getIntStateVal());
+            }
         } catch (RemoteException e) {
             System.out.println(this.whoAmI() + " -> " + e.getMessage());
             System.exit(1);
