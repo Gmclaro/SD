@@ -1,4 +1,4 @@
-# TODO : change all this shit
+
 echo "Transfering data to the RMIregistry node."
 sshpass -f password ssh sd105@l040101-ws07.ua.pt 'kill $(lsof -i :22147 -t)'
 sshpass -f password ssh sd105@l040101-ws07.ua.pt 'mkdir -p GameOfRope'

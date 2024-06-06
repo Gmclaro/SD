@@ -1,4 +1,4 @@
-# TODO : change all this shit
+
 
 xterm  -T "General Repository" -hold -e "sh GeneralReposDeployAndRun.sh" &
 sleep 2

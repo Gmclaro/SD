@@ -1,4 +1,4 @@
-# TODO : change all this shit
+
 
 echo "Transfering data to the referee Site node."
 sshpass -f password ssh sd105@l040101-ws08.ua.pt 'kill $(lsof -i :22148 -t)'

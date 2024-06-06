@@ -1,5 +1,5 @@
 
-# TODO : change all this shit
+
 xterm  -T "RMI registry" -hold -e "sh RMIRegistryDeployAndRun.sh" &
 sleep 5
 xterm  -T "Registry" -hold -e "sh RegistryDeployAndRun.sh" &

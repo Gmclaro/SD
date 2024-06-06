@@ -1,4 +1,4 @@
-# TODO : change all this shit
+
 
 echo "Transfering data to the contestant bench node."
 sshpass -f password ssh sd105@l040101-ws09.ua.pt 'kill $(lsof -i :22149 -t)'
