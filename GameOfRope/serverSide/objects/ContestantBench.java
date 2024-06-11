@@ -6,7 +6,6 @@ import clientSide.entities.Referee;
 import clientSide.entities.RefereeState;
 import commonInfra.View;
 import interfaces.*;
-import interfaces.GeneralRepositoryInterface;
 import serverSide.main.ServerGameOfRopeContestantBench;
 import serverSide.main.SimulParse;
 import java.rmi.*;
@@ -71,6 +70,10 @@ public class ContestantBench implements ContestantBenchInterface {
 
     /**
      * Referee has announce a new trial.
+     * 
+     * @return int Referee State
+     * 
+     * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
      */
     public synchronized int callTrial() throws RemoteException{
         this.matchOver = false;
@@ -119,6 +122,8 @@ public class ContestantBench implements ContestantBenchInterface {
      * 
      * @param team     Team of the Coach
      * @param selected Ids of Contestants selected to play
+     * 
+     * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
      */
     public synchronized void callContestants(int team, int[] selected) throws RemoteException{
         for (int i = 0; i < SimulParse.CONTESTANT_PER_TEAM; i++)
@@ -133,7 +138,10 @@ public class ContestantBench implements ContestantBenchInterface {
      * 
      * @param team Team of the Contestant
      * @param id   Id of the Contestant
+     * @param strength Strength of the Contestant
      * @return int Order of the Contestant in the playground
+     * 
+     * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
      */
 
     public int waitForCallContestants(int team, int id, int strength) throws RemoteException {
@@ -201,6 +209,11 @@ public class ContestantBench implements ContestantBenchInterface {
      * 
      * @param team Team of the Contestant
      * @param id   Id of the Contestant
+     * @param strength Strength of the Contestant
+     * 
+     * @return int Contestant State
+     * 
+     * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
      */
     public synchronized int seatDown(int team, int id,int strength) throws RemoteException {
         while (matchOver) {
@@ -229,6 +242,8 @@ public class ContestantBench implements ContestantBenchInterface {
      * 
      * @param team Team of the Coach
      * @return View[] Array of Views with the Contestants information
+     * 
+     * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
      */
     public synchronized ReturnInt[] reviewNotes(int team) throws RemoteException{
         // while (inBench[team] < SimulParse.CONTESTANT_PER_TEAM) {
@@ -255,6 +270,10 @@ public class ContestantBench implements ContestantBenchInterface {
      * Reset the matchOver flag and notify all the threads
      * 
      * @param scores Scores of the match
+     * 
+     * @return int Referee State
+     * 
+     * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
      */
     public synchronized int declareMatchWinner(int[] scores) throws RemoteException{
         matchOver = true;
@@ -268,6 +287,8 @@ public class ContestantBench implements ContestantBenchInterface {
 
     /**
      * Contestant waits for the referee to declare the match winner
+     * 
+     * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
      */
     public synchronized void waitForSeatAtBench() throws RemoteException{
 
@@ -283,9 +304,11 @@ public class ContestantBench implements ContestantBenchInterface {
 
     /**
      * Operation server shutdown.
+     * 
+     * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
      */
 
-    public synchronized void shutdown() {
+    public synchronized void shutdown() throws RemoteException{
         nEntities += 1;
         // the contestantas just to shut down all at the same time
         if (nEntities >= 3) {

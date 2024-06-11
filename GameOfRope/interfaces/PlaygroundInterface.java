@@ -15,6 +15,7 @@ public interface PlaygroundInterface extends Remote {
      * Contestants go to the playground and inform when they have arrived
      * 
      * @param team The team of the contestant
+     * @throws RemoteException if either the invocation of the remote method, or the
      */
 
     public void followCoachAdvice(int team) throws RemoteException;
@@ -24,6 +25,7 @@ public interface PlaygroundInterface extends Remote {
      * Coaches wait for the contestants to arrive at the playground
      * 
      * @param team The team of the coach
+     * @return int coach state
      * @throws RemoteException if either the invocation of the remote method, or the
      *                         communication with the registry service fails
      */
@@ -33,6 +35,8 @@ public interface PlaygroundInterface extends Remote {
     /**
      * Operarion startTrial
      * The referee starts the trial
+     * 
+     * @return int The state of the referee
      * 
      * @throws RemoteException if either the invocation of the remote method, or the
      *                         communication with the registry service fails
@@ -46,6 +50,8 @@ public interface PlaygroundInterface extends Remote {
      * 
      * @param team The team of the coach
      * @param id   The id of the coach
+     * 
+     * @return int The state of the contestant
      * @throws RemoteException if either the invocation of the remote method, or the
      *                         communication with the registry service fails
      */
@@ -58,6 +64,7 @@ public interface PlaygroundInterface extends Remote {
      * 
      * @param team Team of the Contestant
      * @param id   Id of the Contestant
+     * 
      * @throws RemoteException if either the invocation of the remote method, or the
      *                         communication with the registry service fails
      */
@@ -67,12 +74,13 @@ public interface PlaygroundInterface extends Remote {
     /**
      * Operatoin amDone
      * The contestant informs that he is done
-     * @throws RemoteException
+     * 
+     * @throws RemoteException if either the invocation of the remote method, or the
+     *                         communication with the registry service fails
+     * 
      */
 
     public void amDone() throws RemoteException;
-
-
 
     /**
      * Operation waitForAmDone
@@ -101,7 +109,9 @@ public interface PlaygroundInterface extends Remote {
      * Contestants will do trial lifecycle, where he pulls the rope, inform that he
      * is done and wait for the decision of referee
      * 
-     * @param team     Team of the Contestant
+     * @param team Team of the Contestant
+     * 
+     * @return int The state of the coach
      * 
      * @throws RemoteException if either the invocation of the remote method, or the
      *                         communication with the registry service fails
@@ -112,9 +122,12 @@ public interface PlaygroundInterface extends Remote {
     /**
      * Operation waitForAssertTrialDecision
      * Contestants will do trial lifecycle, where he pulls the rope, inform that he
-     * @param team The team of the Contestant
-     * @param id   The id of the Contestant
+     * 
+     * @param team     The team of the Contestant
+     * @param id       The id of the Contestant
      * @param strength The strength of the Contestant
+     * 
+     * @return int The state of the contestant
      * 
      * @throws RemoteException
      */
@@ -131,7 +144,6 @@ public interface PlaygroundInterface extends Remote {
      */
 
     public ReturnInt declareGameWinner() throws RemoteException;
-
 
     /**
      * Operation server shutdown

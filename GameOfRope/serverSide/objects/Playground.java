@@ -15,7 +15,7 @@ import serverSide.main.SimulParse;
  * Shared Memory Region where the game takes place
  */
 
-public class Playground implements PlaygroundInterface{
+public class Playground implements PlaygroundInterface {
 
     /**
      * Reference to the General Repository
@@ -106,8 +106,11 @@ public class Playground implements PlaygroundInterface{
      * Contestants go to the playground and inform when they have arrived
      * 
      * @param team The team of the contestant
+     * 
+     * @throws RemoteException if either the invocation of the remote method, or the
+     *                         communication with the registry service fails
      */
-    public synchronized void followCoachAdvice(int team) throws RemoteException{
+    public synchronized void followCoachAdvice(int team) throws RemoteException {
         arrivedContestants[team]++;
         notifyAll();
     }
@@ -116,9 +119,13 @@ public class Playground implements PlaygroundInterface{
      * Coaches wait for the contestants to arrive at the playground
      * 
      * @param team The team of the coach
+     * @return int The state of the coach
+     * 
+     * @throws RemoteException if either the invocation of the remote method, or the
+     *                         communication with the registry service fails
      */
 
-    public synchronized int waitForFollowCoachAdvice(int team) throws RemoteException{
+    public synchronized int waitForFollowCoachAdvice(int team) throws RemoteException {
         repo.setCoachState(team, CoachState.ASSEMBLE_TEAM);
 
         while (arrivedContestants[team] < SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM) {
@@ -135,8 +142,13 @@ public class Playground implements PlaygroundInterface{
 
     /**
      * The Referee will start the trial
+     * 
+     * @return int The state of the referee
+     * 
+     * @throws RemoteException if either the invocation of the remote method, or the
+     *                         communication with the registry service fails
      */
-    public synchronized int startTrial() throws RemoteException{
+    public synchronized int startTrial() throws RemoteException {
         repo.setRefereeState(RefereeState.WAIT_FOR_TRIAL_CONCLUSION);
 
         startOfTrial = true;
@@ -151,8 +163,13 @@ public class Playground implements PlaygroundInterface{
      * 
      * @param team The team of the contestant
      * @param id   The id of the contestant
+     * 
+     * @return int The state of the contestant
+     * 
+     * @throws RemoteException if either the invocation of the remote method, or the
+     *                         communication with the registry service fails
      */
-    public synchronized int waitForStartTrial(int team, int id) throws RemoteException{
+    public synchronized int waitForStartTrial(int team, int id) throws RemoteException {
 
         repo.setContestantState(team, id, ContestantState.STAND_IN_POSITION);
 
@@ -179,9 +196,12 @@ public class Playground implements PlaygroundInterface{
      * 
      * @param team The team of the contestant
      * @param id   The id of the contestant
+     * 
+     * @throws RemoteException if either the invocation of the remote method, or the
+     *                         communication with the registry service fails
      */
 
-    public synchronized void getReady(int team, int id)  throws RemoteException{
+    public synchronized void getReady(int team, int id) throws RemoteException {
         while (nOfGetReady < (2 * SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM)) {
             try {
                 wait();
@@ -197,16 +217,19 @@ public class Playground implements PlaygroundInterface{
     /**
      * Contestants inform that they are done pulling the rope
      */
-    public synchronized void amDone() throws RemoteException{
+    public synchronized void amDone() throws RemoteException {
         this.nOfAmDone++;
         notifyAll();
     }
 
     /**
      * Contestants wait for the decision of the referee
+     * 
+     * @throws RemoteException if either the invocation of the remote method, or the
+     *                         communication with the registry service fails
      */
 
-    public synchronized void waitForAmDone() throws RemoteException{
+    public synchronized void waitForAmDone() throws RemoteException {
         while (nOfAmDone < (2 * SimulParse.CONTESTANT_IN_PLAYGROUND_PER_TEAM)) {
             try {
                 wait();
@@ -226,8 +249,11 @@ public class Playground implements PlaygroundInterface{
      * true : trial has not ended
      * 
      * @return boolean The decision of the referee
+     * 
+     * @throws RemoteException if either the invocation of the remote method, or the
+     *                         communication with the registry service fails
      */
-    public synchronized boolean assertTrialDecision() throws RemoteException{
+    public synchronized boolean assertTrialDecision() throws RemoteException {
         nOfGetReady = 0;
         endOfTrial = true;
         notifyAll();
@@ -256,12 +282,17 @@ public class Playground implements PlaygroundInterface{
      * Contestants will do trial lifecycle, where he pulls the rope, inform that he
      * is done and wait for the decision of referee
      * 
-     * @param team The coach team
-     * @param id   The id of the contestants
+     * @param team     The coach team
+     * @param id       The id of the contestants
      * @param strength The strength of the contestant
+     * 
+     * @return int The state of the contestant
+     * 
+     * @throws RemoteException if either the invocation of the remote method, or the
+     *                         communication with the registry service fails
      */
 
-    public int waitForAssertTrialDecision(int team, int id, int strength) throws RemoteException{
+    public int waitForAssertTrialDecision(int team, int id, int strength) throws RemoteException {
         /**
          * Contestant pulls the rope
          */
@@ -271,10 +302,8 @@ public class Playground implements PlaygroundInterface{
             strengthPerTeam[team] += strength;
             repo.setContestantStrength(team, id, strength);
 
-
             repo.setContestantState(team, id, ContestantState.DO_YOUR_BEST);
         }
-
 
         /**
          * Contestant informs that he is done pulling the rope
@@ -300,8 +329,13 @@ public class Playground implements PlaygroundInterface{
      * Coach will wait until the decision of the referee of the trial
      * 
      * @param team The team of the coach
+     * 
+     * @return int The state of the coach
+     * 
+     * @throws RemoteException if either the invocation of the remote method, or the
+     *                         communication with the registry service fails
      */
-    public int waitForAssertTrialDecision(int team)throws RemoteException {
+    public int waitForAssertTrialDecision(int team) throws RemoteException {
         synchronized (this) {
             repo.setCoachState(team, CoachState.WATCH_TRIAL);
 
@@ -321,6 +355,11 @@ public class Playground implements PlaygroundInterface{
      * The referee will declare the winner of the game
      * 
      * @return int The difference of strength between the teams
+     * 
+     * @return the position of the rope
+     * @throws RemoteException if either the invocation of the remote method, or the
+     *                         communication with the registry service fails
+     * 
      */
     public synchronized ReturnInt declareGameWinner() throws RemoteException {
         repo.setRefereeState(RefereeState.END_OF_A_GAME);
@@ -336,16 +375,17 @@ public class Playground implements PlaygroundInterface{
         int aux = ropePosition;
         ropePosition = 0;
 
-        return new ReturnInt(aux,RefereeState.END_OF_A_GAME);
+        return new ReturnInt(aux, RefereeState.END_OF_A_GAME);
 
-        
     }
-
 
     /**
      * Operation server shutdown.
+     * 
+     * @throws RemoteException if either the invocation of the remote method, or the
+     *                         communication with the registry service fails
      */
-    public synchronized void shutdown() throws RemoteException{
+    public synchronized void shutdown() throws RemoteException {
         nEntities += 1;
         // the contestantas just to shut down all at the same time
         if (nEntities >= 3) {

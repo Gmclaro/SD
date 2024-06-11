@@ -251,7 +251,7 @@ public class Contestant extends Thread {
      * Remote operation.
      * Contestant waits to be called by the coach
      * 
-     * 
+     * @return int orders
      */
 
     private int waitForCallContestant() {
@@ -298,7 +298,7 @@ public class Contestant extends Thread {
 
     /**
      * Operation waitForAssertTrialDecision
-     * 
+     * Remote operation.
      * Contestant waits for the decision of the referee
      * 
      * 

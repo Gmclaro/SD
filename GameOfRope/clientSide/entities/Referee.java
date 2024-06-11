@@ -170,6 +170,8 @@ public class Referee extends Thread {
     }
 
     /**
+     * Operation waitForInformReferee
+     * Remote Operation
      * The referee waits for the coaches to inform the teams are ready
      */
 
@@ -184,6 +186,8 @@ public class Referee extends Thread {
     }
 
     /**
+     * Operation callTrial
+     * Remote Operation
      * The referee calls the trial
      */
 
@@ -198,6 +202,8 @@ public class Referee extends Thread {
     }
 
     /**
+     * Operation startTrial
+     * Remote Operation
      * The referee starts the trial
      */
 
@@ -212,6 +218,8 @@ public class Referee extends Thread {
     }
 
     /**
+     * Operation waitForAmDone
+     * Remote Operation
      * The referee waits for the contestants to finish the trial
      */
 
@@ -226,6 +234,8 @@ public class Referee extends Thread {
     }
 
     /**
+     * Operation assertTrialDecision
+     * Remote Operation
      * The referee asserts the decision of the trial
      * 
      * @return boolean true if the trial is not over, false otherwise
@@ -246,6 +256,8 @@ public class Referee extends Thread {
      }
 
     /**
+     * Operation waitForSeatAtBench
+     * Remote Operation
      * The referee waits for the contestants to seat at the bench
      */
 
@@ -260,6 +272,8 @@ public class Referee extends Thread {
     }
 
     /**
+     * Operation declareGameWinner
+     * Remote Operation
      * The referee declares the winner of the game
      * 
      * @return int the position of the rope
@@ -280,9 +294,10 @@ public class Referee extends Thread {
     }
 
     /**
+     * Operation declareMatchWinner
+     * Remote Operation
      * The referee declares the winner of the match
      * 
-     * @param scores the scores of the games
      */
 
     private void declareMatchWinner() {

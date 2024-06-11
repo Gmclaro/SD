@@ -179,6 +179,7 @@ public class Coach extends Thread {
 
     /**
      * Inform the referee that the team is ready
+     * Remote Operation
      * 
      */
     private void informReferee() {
@@ -192,7 +193,8 @@ public class Coach extends Thread {
     }
 
     /**
-     * Review the notes of the contestants
+     * Review the notes after the end of the trial
+     * Remote Operation
      * 
      */
 
@@ -213,7 +215,7 @@ public class Coach extends Thread {
 
     /**
      * Wait for the referee to call the trial
-     * 
+     * Remote Operation
      * @return int The number of orders
      */
 
@@ -236,9 +238,9 @@ public class Coach extends Thread {
 
     /**
      * Call the selected contestants
+     * Remote Operation
      * 
      * @param selected The selected contestants
-     * @param team     The team of the coach
      * 
      */
 
@@ -253,8 +255,7 @@ public class Coach extends Thread {
 
     /**
      * Wait for follow coach advice
-     * 
-     * @param team The team of the coach
+     * Remote Operation
      */
 
     private void waitForFollowCoachAdvice() {
@@ -268,8 +269,7 @@ public class Coach extends Thread {
 
     /**
      * Wait For Assert Trial Decision
-     * 
-     * @param team The team of the coach
+     * Remote Operation
      */
 
     private void waitForAssertTrialDecision() {

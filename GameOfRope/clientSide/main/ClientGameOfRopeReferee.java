@@ -7,7 +7,7 @@ import java.rmi.registry.*;;
 
 /**
  * Client side of the Game of Rope problem(Referee).
- * Impletation of a client-server model of type 2 (server replication).
+ * Implemention of a client-server model of type 2 (server replication).
  * Communication is based on Java RMI.
  */
 public class ClientGameOfRopeReferee {

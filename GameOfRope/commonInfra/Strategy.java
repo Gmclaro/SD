@@ -49,12 +49,12 @@ public class Strategy {
             case STRONGEST:
                 this.strategy = new StrongestStrategy();
                 break;
-            case FIFO:
-                this.strategy = new FifoStrategy();
-                break;
-            case RANDOM:
-                this.strategy = new RandomStrategy();
-                break;
+            // case FIFO:
+            //     this.strategy = new FifoStrategy();
+            //     break;
+            // case RANDOM:
+            //     this.strategy = new RandomStrategy();
+            //     break;
 
             default:
                 this.strategy = new StrongestStrategy();

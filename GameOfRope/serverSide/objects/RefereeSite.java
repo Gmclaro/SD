@@ -43,6 +43,10 @@ public class RefereeSite implements RefereeSiteInterface{
 
     /**
      * The referee announces a new game
+     * 
+     * @return the state of the referee
+     * 
+     * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
      */
     
     public synchronized int announceNewGame() throws RemoteException{
@@ -53,6 +57,8 @@ public class RefereeSite implements RefereeSiteInterface{
 
     /**
      * The referee waits for the coaches to inform the teams are ready
+     * 
+     * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
      */
 
     public synchronized void informReferee() throws RemoteException{
@@ -62,6 +68,8 @@ public class RefereeSite implements RefereeSiteInterface{
 
     /**
      * The referee waits for the coaches to inform the teams are ready
+     * 
+     * @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
      */
     public synchronized void waitForInformReferee()throws RemoteException{
         while (teamsReady < 2) {
@@ -82,6 +90,8 @@ public class RefereeSite implements RefereeSiteInterface{
 
     /**
      *   Operation server shutdown.
+     * 
+     *  @throws RemoteException if either the invocation of the remote method, or the communication with the registry service fails
      */
 
     public synchronized void shutdown() throws RemoteException{

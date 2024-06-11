@@ -15,6 +15,7 @@ public interface ContestantBenchInterface extends Remote {
     /**
      * Operation call trial
      * The referee calls a trial
+     * @return int Referee state
      * @throws RemoteException if either the invocation of the remote method, or the
      *                         communication with the registry service fails
      */
@@ -24,6 +25,7 @@ public interface ContestantBenchInterface extends Remote {
      * Operation waitForCallTrial
      * The coach waits for the referee to call a trial
      * @param team Team of the Coach
+     * @return Order of the Coach in the playground
      * @throws RemoteException if either the invocation of the remote method, or the
      *                         communication with the registry service fails
      */
@@ -35,6 +37,7 @@ public interface ContestantBenchInterface extends Remote {
      * The coach calls the selected contestants
      * @param team                Team of the Coach
      * @param selectedContestants Selected Contestants
+     * @throws RemoteException if either the invocation of the remote method, or the
      */
 
     public void callContestants(int team, int[] selectedContestants) throws RemoteException;
@@ -44,7 +47,7 @@ public interface ContestantBenchInterface extends Remote {
      * The contestant waits for the coach to call him
      * @param team Team of the Coach
      * @param id   Id of the Contestant
-     *             return int Order of the Contestant in the playground
+     * @return int Order of the Contestant in the playground
      * @throws RemoteException if either the invocation of the remote method, or the
      *                         communication with the registry service fails
      */
