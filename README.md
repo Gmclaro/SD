@@ -1,4 +1,4 @@
-# SD_assignment
+# SD
 
 The code for each of the three assignment is different branchs
 
